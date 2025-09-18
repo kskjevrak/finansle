@@ -1,0 +1,42 @@
+name: Update Daily Stock Data
+
+on:
+  schedule:
+    # Run every day at 4 AM UTC (6 AM CET, before Oslo market opens at 9 AM)
+    - cron: '0 4 * * *'
+  workflow_dispatch: # Allow manual trigger for testing
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Install dependencies
+      run: |
+        pip install yfinance python-dotenv
+        
+    - name: Update stock data
+      run: |
+        python scripts/update_data.py
+        
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add data/
+        
+        # Only commit if there are changes
+        if git diff --cached --quiet; then
+          echo "No changes to commit"
+        else
+          git commit -m "Update daily stock data for $(date '+%Y-%m-%d')"
+          git push
+        fi
