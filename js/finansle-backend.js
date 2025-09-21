@@ -9,6 +9,9 @@ class FinansleGame {
     this.dailyStock = null;
     this.clueTypes = [];
 
+    this.guessedCompanies = new Set(); // Track guessed company names/tickers
+
+
     this.init();
   }
 
@@ -88,6 +91,37 @@ class FinansleGame {
       if (!Array.isArray(this.allStocks)) this.allStocks = [];
     }
   }
+
+  updateHintBar() {
+  const hintBar = document.getElementById("hint-bar");
+  if (!hintBar || !this.clueTypes) return;
+
+  // Clear existing hints (keep only the "5 år siden i dag" header)
+  hintBar.innerHTML = '';
+
+  // Build hint items for unlocked clues
+  const hintItems = [];
+  this.clueTypes.forEach(clue => {
+    if (clue.unlock <= this.currentAttempt) {
+      const value = clue.getValue();
+      hintItems.push(`
+        <div class="hint-item">
+          <span class="hint-label">${clue.icon} ${clue.title}:</span>
+          <span class="hint-value revealed">${value}</span>
+        </div>
+      `);
+    } else {
+      hintItems.push(`
+        <div class="hint-item">
+          <span class="hint-label">${clue.icon} ${clue.title}:</span>
+          <span class="hint-value locked">🔒 Låst</span>
+        </div>
+      `);
+    }
+  });
+
+  hintBar.innerHTML = hintItems.join('');
+}
 
   normalizeDailyJson(raw) {
     const isFlat = !!raw.chart_data || !!raw.company_name || !!raw.ticker;
@@ -280,30 +314,47 @@ class FinansleGame {
     setTimeout(() => this.processGuess(guess), 200);
   }
 
-  processGuess(guess) {
-    try {
-      const g = (this.allStocks || []).find(
-        s => s.name?.toLowerCase() === guess.toLowerCase() ||
-             s.english_name?.toLowerCase() === guess.toLowerCase() ||
-             s.ticker?.toLowerCase() === guess.toLowerCase() ||
-             s.tickerOL?.toLowerCase() === guess.toLowerCase()
-      );
-      if (!g) { this.showError("Aksjen ble ikke funnet. Velg fra listen."); return; }
+  async processGuess() {
+  try {
+    this.setGuessButtonState(true);
+    
+    const input = document.getElementById("stock-search");
+    const query = input?.value?.trim();
+    if (!query) { this.showError("Skriv inn et selskap å gjette på."); return; }
 
-      const dailyNorm = this.normalizeTicker(this.dailyStock.ticker);
-      const guessNorm = this.normalizeTicker(g.ticker);
-      const isCorrect = guessNorm === dailyNorm || g.name === this.dailyStock.company_name;
+    const g = (this.allStocks || []).find(s =>
+      s.name?.toLowerCase() === query.toLowerCase() ||
+      s.ticker?.toLowerCase() === query.toLowerCase() ||
+      s.tickerOL?.toLowerCase() === query.toLowerCase() ||
+      s.english_name?.toLowerCase() === query.toLowerCase()
+    );
 
-      if (isCorrect) { this.endGame(true, this.currentAttempt); return; }
+    if (!g) { this.showError("Ugyldig selskap. Velg fra listen."); return; }
 
-      this.processWrongGuess(g);
-    } catch (e) {
-      console.error("❌ processGuess:", e);
-      this.showError("En feil oppstod. Prøv igjen.");
-    } finally {
-      this.setGuessButtonState(false);
+    // CHECK FOR DUPLICATE GUESS
+    const companyIdentifier = g.name || g.ticker;
+    if (this.guessedCompanies.has(companyIdentifier.toLowerCase())) {
+      this.showError("Du har allerede gjettet på dette selskapet. Prøv et annet.");
+      return;
     }
+
+    // Add to guessed companies set
+    this.guessedCompanies.add(companyIdentifier.toLowerCase());
+
+    const dailyNorm = this.normalizeTicker(this.dailyStock.ticker);
+    const guessNorm = this.normalizeTicker(g.ticker);
+    const isCorrect = guessNorm === dailyNorm || g.name === this.dailyStock.company_name;
+
+    if (isCorrect) { this.endGame(true, this.currentAttempt); return; }
+
+    this.processWrongGuess(g);
+  } catch (e) {
+    console.error("❌ processGuess:", e);
+    this.showError("En feil oppstod. Prøv igjen.");
+  } finally {
+    this.setGuessButtonState(false);
   }
+}
 
   processWrongGuess() {
     this.updateAttemptDots();
@@ -402,57 +453,112 @@ class FinansleGame {
   }
 
   drawChartLine() {
-    const svg = document.getElementById("main-stock-chart");
-    const data = this.dailyStock?.chart_data || [];
-    if (!svg || data.length < 2) return;
+  const svg = document.getElementById("main-stock-chart");
+  const data = this.dailyStock?.chart_data || [];
+  if (!svg || data.length < 2) return;
 
-    const rect = svg.getBoundingClientRect();
-    const width  = Math.max(300, rect.width  || 0);
-    const height = Math.max(150, rect.height || 0);
+  const rect = svg.getBoundingClientRect();
+  const width  = Math.max(300, rect.width  || 0);
+  const height = Math.max(150, rect.height || 0);
 
-    if (!width || !height) {
-      requestAnimationFrame(() => this.drawChartLine());
-      return;
-    }
-
-    const padX = 28, padY = 20;
-
-    const prices = data.map(d => d.price);
-    const min = Math.min(...prices);
-    const max = Math.max(...prices);
-    const yMin = min - (max - min) * 0.1;
-    const yMax = max + (max - min) * 0.1;
-
-    const x = i => padX + (i / (data.length - 1)) * (width  - 2 * padX);
-    const y = p => height - padY - ((p - yMin) / (yMax - yMin)) * (height - 2 * padY);
-
-    const pts = data.map((p, i) => `${x(i)},${y(p.price)}`).join(" ");
-    const areaPts = `${x(0)},${height - padY} ${pts} ${x(data.length - 1)},${height - padY}`;
-
-    [...svg.querySelectorAll("polyline,polygon,circle")].forEach(n => n.remove());
-
-    const area = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
-    area.setAttribute("fill", "url(#chartGradient)");
-    area.setAttribute("points", areaPts);
-
-    const line = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
-    line.setAttribute("fill", "none");
-    line.setAttribute("stroke", "#22c55e");
-    line.setAttribute("stroke-width", "2.6");
-    line.setAttribute("points", pts);
-    line.style.filter = "drop-shadow(0 0 2px rgba(34,197,94,0.28))";
-
-    const last = data[data.length - 1];
-    const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    dot.setAttribute("cx", x(data.length - 1));
-    dot.setAttribute("cy", y(last.price));
-    dot.setAttribute("r", "4.2");
-    dot.setAttribute("fill", "#22c55e");
-
-    svg.appendChild(area);
-    svg.appendChild(line);
-    svg.appendChild(dot);
+  if (!width || !height) {
+    requestAnimationFrame(() => this.drawChartLine());
+    return;
   }
+
+  const padX = 55, padY = 20;
+
+  // Clear existing elements
+  [...svg.querySelectorAll("polyline,polygon,circle,text,line")].forEach(n => n.remove());
+
+  const prices = data.map(d => d.price);
+  const minPrice = Math.min(...prices);
+  const maxPrice = Math.max(...prices);
+
+  // Round to nearest 50 NOK intervals for clean grid
+  const yAxisMin = Math.floor(minPrice / 50) * 50;
+  const yAxisMax = Math.ceil(maxPrice / 50) * 50;
+
+  // Ensure minimum range of 100 NOK for readability
+  const minRange = 100;
+  if (yAxisMax - yAxisMin < minRange) {
+    const center = (yAxisMin + yAxisMax) / 2;
+    const yAxisMinAdjusted = Math.floor((center - minRange/2) / 50) * 50;
+    const yAxisMaxAdjusted = Math.ceil((center + minRange/2) / 50) * 50;
+    const yAxisMinFinal = yAxisMinAdjusted;
+    const yAxisMaxFinal = yAxisMaxAdjusted;
+  } else {
+    var yAxisMinFinal = yAxisMin;
+    var yAxisMaxFinal = yAxisMax;
+  }
+
+  // Calculate grid steps
+  const priceRange = yAxisMaxFinal - yAxisMinFinal;
+  const numSteps = priceRange / 50;
+
+  // Coordinate functions
+  const x = i => padX + (i / (data.length - 1)) * (width - 2 * padX);
+  const y = p => height - padY - ((p - yAxisMinFinal) / (yAxisMaxFinal - yAxisMinFinal)) * (height - 2 * padY);
+
+  // Generate chart coordinates
+  const pts = data.map((p, i) => `${x(i)},${y(p.price)}`).join(" ");
+  const areaPts = `${x(0)},${height - padY} ${pts} ${x(data.length - 1)},${height - padY}`;
+
+  // Draw Y-axis grid lines and labels at 50 NOK intervals
+  for (let i = 0; i <= numSteps; i++) {
+    const priceLevel = yAxisMinFinal + (i * 50);
+    const yPos = y(priceLevel);
+    
+    // Price label
+    const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    label.setAttribute("x", padX - 8);
+    label.setAttribute("y", yPos + 4);
+    label.setAttribute("text-anchor", "end");
+    label.setAttribute("font-size", "11");
+    label.setAttribute("fill", "#94a3b8");
+    label.setAttribute("font-weight", "500");
+    label.textContent = priceLevel + " NOK";
+    
+    svg.appendChild(label);
+    
+    // Horizontal grid line (skip top and bottom)
+    if (i > 0 && i < numSteps) {
+      const gridLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      gridLine.setAttribute("x1", padX);
+      gridLine.setAttribute("y1", yPos);
+      gridLine.setAttribute("x2", width - padX);
+      gridLine.setAttribute("y2", yPos);
+      gridLine.setAttribute("stroke", "rgba(255,255,255,0.15)");
+      gridLine.setAttribute("stroke-width", "0.5");
+      
+      svg.appendChild(gridLine);
+    }
+  }
+
+  // Draw chart area (gradient fill)
+  const area = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+  area.setAttribute("fill", "url(#chartGradient)");
+  area.setAttribute("points", areaPts);
+  svg.appendChild(area);
+
+  // Draw chart line
+  const line = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+  line.setAttribute("fill", "none");
+  line.setAttribute("stroke", "#22c55e");
+  line.setAttribute("stroke-width", "2.6");
+  line.setAttribute("points", pts);
+  line.style.filter = "drop-shadow(0 0 2px rgba(34,197,94,0.28))";
+  svg.appendChild(line);
+
+  // Draw current price dot
+  const last = data[data.length - 1];
+  const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+  dot.setAttribute("cx", x(data.length - 1));
+  dot.setAttribute("cy", y(last.price));
+  dot.setAttribute("r", "4.2");
+  dot.setAttribute("fill", "#22c55e");
+  svg.appendChild(dot);
+}
 
   buildYearAxisLabels() {
     const now = new Date();
@@ -497,24 +603,12 @@ class FinansleGame {
         </div>`;
       host.appendChild(card);
     });
+    this.updateHintBar();
   }
 
-  unlockClues() {
-    this.clueTypes.forEach(c => {
-      if (c.unlock <= this.currentAttempt) {
-        const card = document.getElementById(`clue-${c.id}`);
-        const val  = document.getElementById(`clue-${c.id}-value`);
-        if (card && val) {
-          card.classList.remove("locked");
-          card.classList.add("revealed");
-          val.textContent = c.getValue();
-        }
-      }
-    });
-  }
-
-  unlockAllClues() {
-    this.clueTypes.forEach(c => {
+unlockClues() {
+  this.clueTypes.forEach(c => {
+    if (c.unlock <= this.currentAttempt) {
       const card = document.getElementById(`clue-${c.id}`);
       const val  = document.getElementById(`clue-${c.id}-value`);
       if (card && val) {
@@ -522,8 +616,26 @@ class FinansleGame {
         card.classList.add("revealed");
         val.textContent = c.getValue();
       }
-    });
-  }
+    }
+  });
+  
+  // ADD THIS LINE to update the hint bar when clues are unlocked
+  this.updateHintBar();
+}
+  unlockAllClues() {
+  this.clueTypes.forEach(c => {
+    const card = document.getElementById(`clue-${c.id}`);
+    const val  = document.getElementById(`clue-${c.id}-value`);
+    if (card && val) {
+      card.classList.remove("locked");
+      card.classList.add("revealed");
+      val.textContent = c.getValue();
+    }
+  });
+  
+  // ADD THIS LINE to update the hint bar when all clues are unlocked
+  this.updateHintBar();
+}
 
   // ------------------ End game & Stats ------------------
   endGame(won, attempts) {
