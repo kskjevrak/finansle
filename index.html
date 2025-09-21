@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Finansle - Gjett Oslo Børs aksjen</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+
+  <!-- SEO -->
+  <meta name="description" content="Finansle - Det daglige aksje-gjettelekspillet for Oslo Børs. Gjett dagens norske aksje på 6 forsøk!">
+  <meta property="og:title" content="Finansle - Norwegian Stock Guessing Game">
+  <meta property="og:description" content="Guess today's Oslo Børs stock in 6 attempts!">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yourdomain.github.io/finansle">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
+
+  <style>
+    :root{
+      --primary-green:#22c55e;--primary-dark:#1a1a2e;--secondary-dark:#16213e;
+      --accent-blue:#3b82f6;--text-light:#f8fafc;--text-gray:#94a3b8;
+      --error-red:#ef4444;--warning-yellow:#f59e0b;--card-bg:rgba(255,255,255,0.05);
+      --border-color:rgba(255,255,255,0.1);--gradient-bg:linear-gradient(135deg,#1e293b 0%,#0f172a 100%);
+
+      /* ⬇️ Bigger chart height so box is taller */
+      --chart-height: 340px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--gradient-bg);color:var(--text-light);min-height:100vh;display:flex;flex-direction:column}
+
+    /* ⬇️ Wider page so the chart can be wider */
+    .container{max-width:1180px;margin:0 auto;padding:24px;flex:1}
+
+    .header{text-align:center;margin-bottom:26px;padding:8px 0}
+    .logo{font-size:3rem;font-weight:700;margin-bottom:8px;background:linear-gradient(135deg,var(--primary-green),var(--accent-blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .subtitle{font-size:1.1rem;color:var(--text-gray)}
+
+    /* chart container (wider + a bit taller padding) */
+    .chart-container{background:var(--card-bg);border:1px solid var(--border-color);border-radius:18px;padding:24px;margin:28px auto 16px;min-height:200px}
+    .chart-placeholder{color:var(--text-gray);font-style:italic;text-align:center}
+
+    /* STICKY Financhle-style hint bar */
+    .hint-bar{
+      position:sticky;top:0;z-index:50;
+      display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:center;
+      padding:12px 14px;margin:0 0 18px 0;
+      background:rgba(15,23,42,.7);border:1px solid var(--border-color);border-radius:12px;
+      backdrop-filter:blur(8px);box-shadow:0 8px 24px rgba(0,0,0,.25)
+    }
+    .hint-bar::before{
+      content:"5 år siden i dag";width:100%;text-align:center;font-style:italic;font-weight:700;color:var(--text-light);margin-bottom:6px
+    }
+    .hint-item{display:inline-flex;align-items:baseline;gap:6px;white-space:nowrap;font-size:.95rem}
+    .hint-label{color:var(--text-gray);font-weight:600}
+    .hint-value{color:var(--text-light);font-weight:600}
+    .hint-value.revealed{color:var(--primary-green)}
+    .hint-value.locked{color:var(--text-gray);opacity:.75;font-style:italic;border-bottom:1px dotted var(--border-color)}
+
+    .search-container{position:relative;margin-bottom:16px}
+    .search-input{width:100%;padding:15px 20px;font-size:1.1rem;border:2px solid var(--border-color);border-radius:12px;background:var(--card-bg);color:var(--text-light);transition:.2s;outline:none}
+    .search-input:focus{border-color:var(--primary-green);box-shadow:0 0 0 3px rgba(34,197,94,.1)}
+    .search-input::placeholder{color:var(--text-gray)}
+    .autocomplete-dropdown{position:absolute;top:100%;left:0;right:0;background:var(--secondary-dark);border:1px solid var(--border-color);border-radius:8px;max-height:200px;overflow-y:auto;z-index:100;display:none}
+    .autocomplete-item{padding:12px 16px;cursor:pointer;border-bottom:1px solid var(--border-color);transition:background .15s}
+    .autocomplete-item:hover{background:rgba(255,255,255,.05)}
+    .action-buttons{display:flex;gap:12px;margin-top:8px}
+    .btn{flex:1;padding:14px 20px;border:none;border-radius:10px;font-size:1rem;font-weight:600;cursor:pointer;transition:.2s}
+    .btn-primary{background:var(--primary-green);color:#fff}
+    .btn-primary:hover:not(:disabled){background:#16a34a;transform:translateY(-2px)}
+    .btn-secondary{background:transparent;color:var(--text-gray);border:2px solid var(--border-color)}
+    .btn-secondary:hover{background:var(--card-bg);color:var(--text-light)}
+    .btn:disabled{opacity:.5;cursor:not-allowed}
+    .loading{display:inline-block;width:20px;height:20px;border:3px solid rgba(255,255,255,.3);border-radius:50%;border-top-color:var(--primary-green);animation:spin 1s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    .attempts-tracker{text-align:center;margin:16px 0 10px}
+    .attempts-text{color:var(--text-gray);margin-bottom:10px}
+    .attempts-dots{display:flex;justify-content:center;gap:8px}
+    .attempt-dot{width:12px;height:12px;border-radius:50%;background:var(--border-color);transition:.2s}
+    .attempt-dot.used{background:var(--error-red)}
+    .attempt-dot.current{background:var(--warning-yellow);animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.2);opacity:.7}}
+
+    /* detailed clue cards (mobile/fallback) */
+    .clues-section{margin-bottom:20px}
+    .clue-card{background:var(--card-bg);border:1px solid var(--border-color);border-radius:16px;margin-bottom:12px;overflow:hidden;transition:.3s;transform:translateY(20px);opacity:0}
+    .clue-card.revealed{transform:translateY(0);opacity:1}
+    .clue-card.locked{opacity:.6;filter:blur(2px)}
+    .clue-header{padding:16px 20px;background:rgba(255,255,255,.03);border-bottom:1px solid var(--border-color);display:flex;align-items:center;gap:10px}
+    .clue-icon{width:20px;height:20px;border-radius:50%;background:var(--primary-green);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.8rem}
+    .clue-title{font-weight:600;color:var(--text-light)}
+    .clue-content{padding:20px}
+    .clue-value{font-size:1.05rem;font-weight:500;color:var(--primary-green)}
+
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;z-index:1000;padding:20px}
+    .modal{background:var(--secondary-dark);border-radius:20px;padding:30px;max-width:400px;width:100%;text-align:center;border:1px solid var(--border-color)}
+    .modal-title{font-size:1.5rem;font-weight:700;margin-bottom:15px}
+    .modal-content{margin-bottom:20px;line-height:1.5}
+    .company-info{background:var(--card-bg);border-radius:12px;padding:20px;margin:20px 0;text-align:left}
+    .company-name{font-size:1.2rem;font-weight:600;color:var(--primary-green);margin-bottom:10px}
+    .company-details{display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:.9rem}
+    .detail-item{display:flex;justify-content:space-between;align-items:center}
+    .detail-label{color:var(--text-gray)} .detail-value{color:var(--text-light);font-weight:500}
+    .stats-section{margin-top:20px;background:var(--card-bg);border-radius:12px;padding:20px}
+    .stats-title{font-weight:600;margin-bottom:15px;text-align:center}
+    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;text-align:center}
+    .stat-item{padding:10px;background:rgba(255,255,255,.05);border-radius:8px}
+    .stat-value{font-size:1.2rem;font-weight:600;color:var(--primary-green)}
+    .share-button{background:var(--accent-blue);color:#fff;border:none;padding:12px 24px;border-radius:8px;font-weight:600;cursor:pointer;margin-top:15px;transition:.2s}
+    .share-button:hover{background:#2563eb}
+
+    /* responsive tweaks */
+    @media (max-width: 860px){
+      :root{ --chart-height: 300px; }
+      .logo{font-size:2.5rem}
+    }
+    @media (max-width:640px){
+      :root{ --chart-height: 240px; }
+      .container{padding:16px}
+      .logo{font-size:2rem}
+      .search-input{padding:12px 16px;font-size:1rem}
+      .action-buttons{flex-direction:column}
+      .stats-grid{grid-template-columns:repeat(2,1fr)}
+      #clues-section{display:block}
+      .hint-bar{position:static} /* avoid sticky overlap on very small screens */
+    }
+    @media (min-width:641px){ #clues-section{display:none} }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <h1 class="logo">Finansle</h1>
+      <p class="subtitle">Gjett dagens Oslo Børs aksje</p>
+      <!-- ⬇️ Removed the three stats under the title as requested -->
+    </header>
+
+    <!-- Big 5-year chart (rendered by JS) -->
+    <div class="chart-container">
+      <div class="chart-placeholder">📈 5-års aksje-graf vises ved spillstart</div>
+    </div>
+
+    <!-- Sticky Financhle-style hint bar (updates each guess) -->
+    <div id="hint-bar" class="hint-bar" aria-live="polite"></div>
+
+    <!-- Detailed clues (mobile/fallback) -->
+    <div class="clues-section" id="clues-section"></div>
+
+    <!-- Attempts -->
+    <div class="attempts-tracker">
+      <div class="attempts-text">Forsøk <span id="current-attempt">1</span> av 6</div>
+      <div class="attempts-dots">
+        <div class="attempt-dot current"></div>
+        <div class="attempt-dot"></div>
+        <div class="attempt-dot"></div>
+        <div class="attempt-dot"></div>
+        <div class="attempt-dot"></div>
+        <div class="attempt-dot"></div>
+      </div>
+    </div>
+
+    <!-- Guess box -->
+    <div class="search-container">
+      <input id="stock-search" class="search-input" type="text" autocomplete="off"
+             placeholder="Søk etter aksje (f.eks. Equinor, Telenor...)">
+      <div class="autocomplete-dropdown" id="autocomplete-dropdown"></div>
+    </div>
+
+    <!-- Actions -->
+    <div class="action-buttons">
+      <button class="btn btn-primary" id="guess-btn" disabled>
+        <span id="guess-btn-text">Gjett</span>
+        <div class="loading" id="guess-loading" style="display:none"></div>
+      </button>
+      <button class="btn btn-secondary" id="hint-btn" type="button">💡 Tips</button>
+    </div>
+  </div>
+
+  <!-- Game Over Modal -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <h2 class="modal-title" id="modal-title">Gratulerer!</h2>
+      <div class="modal-content" id="modal-content">Du gjettet riktig!</div>
+      <div class="company-info" id="company-info">
+        <div class="company-name" id="company-name">Equinor ASA</div>
+        <div class="company-details"><!-- populated by JS --></div>
+      </div>
+
+      <div class="stats-section">
+        <div class="stats-title">Din statistikk</div>
+        <div class="stats-grid">
+          <div class="stat-item"><div class="stat-value">0</div><div class="stat-label">Spilt</div></div>
+          <div class="stat-item"><div class="stat-value">0%</div><div class="stat-label">Vunnet</div></div>
+          <div class="stat-item"><div class="stat-value">0</div><div class="stat-label">Streak</div></div>
+          <div class="stat-item"><div class="stat-value">0</div><div class="stat-label">Snitt</div></div>
+        </div>
+      </div>
+
+      <button class="share-button" id="share-btn">📤 Del resultat</button>
+    </div>
+  </div>
+
+  <!-- Game script -->
+  <script src="js/finansle-backend.js"></script>
+</body>
+</html>

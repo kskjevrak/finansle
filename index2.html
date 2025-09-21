@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finansle - Gjett Oslo Børs aksjen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Finansle - Det daglige aksje-gjettelekspillet for Oslo Børs. Gjett dagens norske aksje på 6 forsøk!">
+    <meta property="og:title" content="Finansle - Norwegian Stock Guessing Game">
+    <meta property="og:description" content="Guess today's Oslo Børs stock in 6 attempts!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.github.io/finansle">
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
+    
+    <!-- Include your existing CSS from the previous artifact here -->
+    <style>
+        /* Previous CSS stays the same - copying key parts for brevity */
+        :root {
+            --primary-green: #22c55e;
+            --primary-dark: #1a1a2e;
+            --secondary-dark: #16213e;
+            --accent-blue: #3b82f6;
+            --text-light: #f8fafc;
+            --text-gray: #94a3b8;
+            --error-red: #ef4444;
+            --warning-yellow: #f59e0b;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --gradient-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--gradient-bg);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            flex: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--primary-green), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--text-gray);
+            margin-bottom: 10px;
+        }
+
+        .game-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 15px;
+        }
+
+        .game-stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-green);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+        }
+
+        /* Search Input */
+        .search-container {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            background: var(--card-bg);
+            color: var(--text-light);
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-gray);
+        }
+
+        .autocomplete-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--secondary-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+        }
+
+        .autocomplete-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            border-bottom: 1px solid var(--border-color);
+            transition: background 0.2s ease;
+        }
+
+        .autocomplete-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .attempts-tracker {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .attempts-text {
+            color: var(--text-gray);
+            margin-bottom: 10px;
+        }
+
+        .attempts-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .attempt-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .attempt-dot.used {
+            background: var(--error-red);
+        }
+
+        .attempt-dot.current {
+            background: var(--warning-yellow);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        .clues-section {
+            margin-bottom: 30px;
+        }
+
+        .clue-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            transform: translateY(20px);
+            opacity: 0;
+        }
+
+        .clue-card.revealed {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .clue-card.locked {
+            opacity: 0.6;
+            filter: blur(2px);
+        }
+
+        .clue-header {
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .clue-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .clue-title {
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .clue-content {
+            padding: 20px;
+        }
+
+        .clue-value {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--primary-green);
+            margin-bottom: 8px;
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chart-placeholder {
+            color: var(--text-gray);
+            font-style: italic;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .btn-primary {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #16a34a;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-gray);
+            border: 2px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--card-bg);
+            color: var(--text-light);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal {
+            background: var(--secondary-dark);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .modal-content {
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .company-info {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .company-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-green);
+            margin-bottom: 10px;
+        }
+
+        .company-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .detail-label {
+            color: var(--text-gray);
+        }
+
+        .detail-value {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .stats-section {
+            margin-top: 20px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .stats-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-green);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            margin-top: 4px;
+        }
+
+        .share-button {
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .share-button:hover {
+            background: #2563eb;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary-green);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .game-info {
+                gap: 20px;
+            }
+            
+            .search-input {
+                padding: 12px 16px;
+                font-size: 1rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="logo">Finansle</h1>
+            <p class="subtitle">Gjett dagens Oslo Børs aksje</p>
+            <div class="game-info">
+                <div class="game-stat">
+                    <div class="stat-number">206</div>
+                    <div class="stat-label">Aksjer</div>
+                </div>
+                <div class="game-stat">
+                    <div class="stat-number" id="daily-number">1</div>
+                    <div class="stat-label">Dag</div>
+                </div>
+                <div class="game-stat">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Forsøk</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Stock Chart - Large, prominent display -->
+        <div class="chart-container" style="margin-bottom: 30px;">
+            <div class="chart-placeholder">📈 5-års aksje-graf vises ved spillstart</div>
+        </div>
+
+        <!-- Clues Section - Now ABOVE the search -->
+        <div class="clues-section" id="clues-section" style="margin-bottom: 30px;">
+            <!-- Clues will be dynamically generated here -->
+        </div>
+
+        <!-- Attempts Tracker -->
+        <div class="attempts-tracker">
+            <div class="attempts-text">Forsøk <span id="current-attempt">1</span> av 6</div>
+            <div class="attempts-dots">
+                <div class="attempt-dot current"></div>
+                <div class="attempt-dot"></div>
+                <div class="attempt-dot"></div>
+                <div class="attempt-dot"></div>
+                <div class="attempt-dot"></div>
+                <div class="attempt-dot"></div>
+            </div>
+        </div>
+
+        <!-- Search Input -->
+        <div class="search-container">
+            <input 
+                type="text" 
+                id="stock-search" 
+                class="search-input" 
+                placeholder="Søk etter aksje (f.eks. Equinor, Telenor...)"
+                autocomplete="off"
+            >
+            <div class="autocomplete-dropdown" id="autocomplete-dropdown"></div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn btn-primary" id="guess-btn" disabled>
+                <span id="guess-btn-text">Gjett</span>
+                <div class="loading" id="guess-loading" style="display: none;"></div>
+            </button>
+            <button class="btn btn-secondary" id="hint-btn">💡 Tips</button>
+        </div>
+    </div>
+
+    <!-- Game Over Modal -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal">
+            <h2 class="modal-title" id="modal-title">Gratulerer!</h2>
+            <div class="modal-content" id="modal-content">
+                Du gjettet riktig!
+            </div>
+            
+            <div class="company-info" id="company-info">
+                <div class="company-name" id="company-name">Equinor ASA</div>
+                <div class="company-details">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <div class="stats-section">
+                <div class="stats-title">Din statistikk</div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">0</div>
+                        <div class="stat-label">Spilt</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">0%</div>
+                        <div class="stat-label">Vunnet</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">0</div>
+                        <div class="stat-label">Streak</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">0</div>
+                        <div class="stat-label">Snitt</div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="share-button" id="share-btn">📤 Del resultat</button>
+        </div>
+    </div>
+
+    <!-- Include the backend integration script -->
+    <script src="js/finansle-backend.js"></script>
+</body>
+</html>
