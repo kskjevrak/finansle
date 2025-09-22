@@ -10,10 +10,18 @@ jobs:
   update-data:
     runs-on: ubuntu-latest
     
+    # Add these permissions to allow the workflow to push changes
+    permissions:
+      contents: write
+      actions: read
+    
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-      
+      with:
+        # Use the GITHUB_TOKEN with write permissions
+        token: ${{ secrets.GITHUB_TOKEN }}
+        
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
@@ -39,4 +47,3 @@ jobs:
         else
           git commit -m "Update daily stock data for $(date '+%Y-%m-%d')"
           git push
-        fi
