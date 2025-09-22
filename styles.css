@@ -68,14 +68,13 @@ body {
 
 /* Chart Container */
 .chart-container {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
   border-radius: 18px;
-  padding: 20px; /* Reduced from 24px */
-  margin: 20px auto 16px; /* Reduced top margin from 28px */
-  max-height: calc(var(--chart-height) + 60px); /* Constrain total height */
+  padding: 20px;
+  margin: 20px auto 16px;
+  max-height: calc(var(--chart-height) + 60px);
   overflow: hidden;
   min-height: 200px;
+  /* REMOVED: background and border properties */
 }
 
 .chart-placeholder {

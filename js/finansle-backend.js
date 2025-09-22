@@ -10,7 +10,8 @@ class FinansleGame {
     this.clueTypes = [];
 
     this.guessedCompanies = new Set(); // Track guessed company names/tickers
-
+    
+    this.shortDescriptions = null; // Add this line
 
     this.init();
   }
@@ -20,8 +21,8 @@ class FinansleGame {
       console.log("🚀 Initializing Finansle…");
 
       await this.loadDailyJson();
-      // Always ensure the full universe is loaded from obx.json
       await this.loadStocksList();
+      await this.loadShortDescriptions();  
 
       this.setupEventListeners();
 
@@ -379,71 +380,63 @@ class FinansleGame {
   }
 
   // ------------------ Chart ------------------
-  showMainChart() {
-    const wrap = document.querySelector(".chart-container");
-    if (!wrap) return;
+showMainChart() {
+  const wrap = document.querySelector(".chart-container");
+  if (!wrap) return;
 
-    const perf = this.dailyStock?.performance_5y ?? 0;
-    const perfText = `${perf >= 0 ? "+" : ""}${perf}%`;
+  const perf = this.dailyStock?.performance_5y ?? 0;
+  const perfText = `${perf >= 0 ? "+" : ""}${perf}%`;
 
-    const cssH = getComputedStyle(document.documentElement).getPropertyValue("--chart-height").trim();
-    const chartHeight = parseInt(cssH, 10) || 380;
+  const cssH = getComputedStyle(document.documentElement).getPropertyValue("--chart-height").trim();
+  const chartHeight = parseInt(cssH, 10) || 380;
 
-    wrap.innerHTML = `
-      <div class="chart-card" style="width:100%; background:var(--card-bg); border:1px solid var(--border-color); border-radius:14px; padding:16px;">
-        <div style="text-align:center; margin-bottom:10px;">
-          <div style="color:var(--primary-green); font-weight:600; font-size:1.05rem;">
-            ${perfText} <em style="color:var(--text-gray); font-weight:normal;">Siste 5 år</em>
-          </div>
-        </div>
-
-        <div class="chart-stage" style="height:${chartHeight}px; position:relative; background:rgba(255,255,255,0.02); border-radius:12px; overflow:hidden;">
-          <svg id="main-stock-chart"
-               viewBox="0 0 1000 ${chartHeight}"
-               preserveAspectRatio="none"
-               style="display:block; width:100%; height:100%;">
-            <defs>
-              <linearGradient id="chartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" style="stop-color:#22c55e;stop-opacity:0.3"/>
-                <stop offset="100%" style="stop-color:#22c55e;stop-opacity:0.05"/>
-              </linearGradient>
-              <pattern id="grid" width="64" height="36" patternUnits="userSpaceOnUse">
-                <path d="M 64 0 L 0 0 0 36" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#grid)"/>
-          </svg>
-
-          <div style="position:absolute; right:12px; top:10px; font-size:12px; color:var(--primary-green);
-                      font-weight:600; background:rgba(34,197,94,0.08); padding:3px 6px; border-radius:4px;">
-            ${this.dailyStock.current_price} NOK
-          </div>
-        </div>
-
-        <div style="display:flex; justify-content:space-between; margin:8px 6px 0;
-                    font-size:12px; color:var(--text-gray); font-weight:500;">
-          ${this.buildYearAxisLabels()}
-        </div>
-
-        <div class="chart-meta" style="display:flex; justify-content:center; flex-wrap:wrap; gap:32px; margin-top:12px; padding-top:12px; border-top:1px solid var(--border-color);">
-          <div style="text-align:center;">
-            <div style="font-size:12px; color:var(--text-gray);">Markedsverdi</div>
-            <div style="font-size:15px; color:var(--primary-green); font-weight:600;">${this.dailyStock.market_cap}</div>
-          </div>
-          <div style="text-align:center;">
-            <div style="font-size:12px; color:var(--text-gray);">Ansatte</div>
-            <div style="font-size:15px; color:var(--primary-green); font-weight:600;">${(this.dailyStock.employees||0).toLocaleString("no-NO")}</div>
-          </div>
-          <div style="text-align:center;">
-            <div style="font-size:12px; color:var(--text-gray);">52-ukers område</div>
-            <div style="font-size:15px; color:var(--primary-green); font-weight:600;">${this.dailyStock.price_52w_low}–${this.dailyStock.price_52w_high} NOK</div>
-          </div>
+  wrap.innerHTML = `
+    <div style="width:100%;">
+      <div style="text-align:center; margin-bottom:10px;">
+        <div style="color:var(--primary-green); font-weight:600; font-size:1.05rem;">
+          ${perfText} <em style="color:var(--text-gray); font-weight:normal;">Siste 5 år</em>
         </div>
       </div>
-    `;
 
-    requestAnimationFrame(() => this.drawChartLine());
-  }
+      <div class="chart-stage" style="height:${chartHeight}px; position:relative; border-radius:12px; overflow:hidden;">
+        <svg id="main-stock-chart"
+             viewBox="0 0 1000 ${chartHeight}"
+             preserveAspectRatio="none"
+             style="display:block; width:100%; height:100%;">
+          <defs>
+            <linearGradient id="chartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#22c55e;stop-opacity:0.3"/>
+              <stop offset="100%" style="stop-color:#22c55e;stop-opacity:0.5"/>
+            </linearGradient>
+          </defs>
+        </svg>
+
+        <div style="position:absolute; right:12px; top:10px; font-size:12px; color:var(--primary-green);
+                    font-weight:600; background:rgba(34,197,94,0.08); padding:3px 6px; border-radius:4px;">
+          ${this.dailyStock.current_price} NOK
+        </div>
+      </div>
+
+      <div class="chart-meta" style="display:flex; justify-content:center; flex-wrap:wrap; gap:32px; margin-top:12px; padding-top:12px; border-top:1px solid var(--border-color);">
+        <div style="text-align:center;">
+          <div style="font-size:12px; color:var(--text-gray);">Markedsverdi</div>
+          <div style="font-size:15px; color:var(--primary-green); font-weight:600;">${this.dailyStock.market_cap}</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:12px; color:var(--text-gray);">Ansatte</div>
+          <div style="font-size:15px; color:var(--primary-green); font-weight:600;">${(this.dailyStock.employees||0).toLocaleString("no-NO")}</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:12px; color:var(--text-gray);">52-ukers område</div>
+          <div style="font-size:15px; color:var(--primary-green); font-weight:600;">${this.dailyStock.price_52w_low}–${this.dailyStock.price_52w_high} NOK</div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  requestAnimationFrame(() => this.drawChartLine());
+}
+
 
   redrawChart() {
     const svg = document.getElementById("main-stock-chart");
@@ -466,7 +459,7 @@ class FinansleGame {
     return;
   }
 
-  const padX = 55, padY = 20;
+  const padX = 55, padY = 35; // Increased padY for X-axis labels
 
   // Clear existing elements
   [...svg.querySelectorAll("polyline,polygon,circle,text,line")].forEach(n => n.remove());
@@ -475,26 +468,18 @@ class FinansleGame {
   const minPrice = Math.min(...prices);
   const maxPrice = Math.max(...prices);
 
-  // Round to nearest 50 NOK intervals for clean grid
-  const yAxisMin = Math.floor(minPrice / 50) * 50;
+  // Always start Y-axis at 0, round max to nearest 50 NOK intervals
+  const yAxisMin = 0;
   const yAxisMax = Math.ceil(maxPrice / 50) * 50;
 
   // Ensure minimum range of 100 NOK for readability
   const minRange = 100;
-  if (yAxisMax - yAxisMin < minRange) {
-    const center = (yAxisMin + yAxisMax) / 2;
-    const yAxisMinAdjusted = Math.floor((center - minRange/2) / 50) * 50;
-    const yAxisMaxAdjusted = Math.ceil((center + minRange/2) / 50) * 50;
-    const yAxisMinFinal = yAxisMinAdjusted;
-    const yAxisMaxFinal = yAxisMaxAdjusted;
-  } else {
-    var yAxisMinFinal = yAxisMin;
-    var yAxisMaxFinal = yAxisMax;
-  }
+  let yAxisMinFinal = yAxisMin;
+  let yAxisMaxFinal = Math.max(yAxisMax, minRange);
 
-  // Calculate grid steps
+  // Calculate grid steps (ensure we have proper 50 NOK intervals)
   const priceRange = yAxisMaxFinal - yAxisMinFinal;
-  const numSteps = priceRange / 50;
+  const numSteps = Math.round(priceRange / 50);
 
   // Coordinate functions
   const x = i => padX + (i / (data.length - 1)) * (width - 2 * padX);
@@ -504,7 +489,7 @@ class FinansleGame {
   const pts = data.map((p, i) => `${x(i)},${y(p.price)}`).join(" ");
   const areaPts = `${x(0)},${height - padY} ${pts} ${x(data.length - 1)},${height - padY}`;
 
-  // Draw Y-axis grid lines and labels at 50 NOK intervals
+  // Draw Y-axis grid lines and labels at exactly 50 NOK intervals
   for (let i = 0; i <= numSteps; i++) {
     const priceLevel = yAxisMinFinal + (i * 50);
     const yPos = y(priceLevel);
@@ -521,19 +506,52 @@ class FinansleGame {
     
     svg.appendChild(label);
     
-    // Horizontal grid line (skip top and bottom)
-    if (i > 0 && i < numSteps) {
-      const gridLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
-      gridLine.setAttribute("x1", padX);
-      gridLine.setAttribute("y1", yPos);
-      gridLine.setAttribute("x2", width - padX);
-      gridLine.setAttribute("y2", yPos);
-      gridLine.setAttribute("stroke", "rgba(255,255,255,0.15)");
-      gridLine.setAttribute("stroke-width", "0.5");
-      
-      svg.appendChild(gridLine);
-    }
+    // Horizontal grid line - draw all lines for consistency
+    const gridLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    gridLine.setAttribute("x1", padX);
+    gridLine.setAttribute("y1", yPos);
+    gridLine.setAttribute("x2", width - padX);
+    gridLine.setAttribute("y2", yPos);
+    gridLine.setAttribute("stroke", "rgba(255,255,255,0.15)");
+    gridLine.setAttribute("stroke-width", "0.5");
+    
+    svg.appendChild(gridLine);
   }
+
+  // Draw X-axis labels (years)
+  const now = new Date();
+  const yearPositions = [];
+  
+  // Calculate positions for 5 years ago, then each year up to "I dag"
+  for (let i = 5; i >= 1; i--) {
+    const yearDate = new Date(now);
+    yearDate.setFullYear(now.getFullYear() - i);
+    const position = (5 - i) / 5; // Position from 0 to 0.8
+    yearPositions.push({
+      label: yearDate.getFullYear().toString(),
+      x: padX + position * (width - 2 * padX)
+    });
+  }
+  
+  // Add "I dag" at the end
+  yearPositions.push({
+    label: "I dag",
+    x: width - padX
+  });
+
+  // Draw the year labels
+  yearPositions.forEach(pos => {
+    const yearLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    yearLabel.setAttribute("x", pos.x);
+    yearLabel.setAttribute("y", height - 8);
+    yearLabel.setAttribute("text-anchor", "middle");
+    yearLabel.setAttribute("font-size", "11");
+    yearLabel.setAttribute("fill", "#94a3b8");
+    yearLabel.setAttribute("font-weight", "500");
+    yearLabel.textContent = pos.label;
+    
+    svg.appendChild(yearLabel);
+  });
 
   // Draw chart area (gradient fill)
   const area = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
@@ -580,7 +598,7 @@ class FinansleGame {
       { id: "price-range", icon: "💵", title: "52-ukers prisområde", unlock: 3, getValue: () => (s?.price_52w_low != null && s?.price_52w_high != null ? `${s.price_52w_low} - ${s.price_52w_high} NOK` : "Ikke tilgjengelig") },
       { id: "location",    icon: "📍", title: "Hovedkontor",         unlock: 4, getValue: () => s?.headquarters || "Norge" },
       { id: "industry",    icon: "⚙️", title: "Bransje",             unlock: 5, getValue: () => s?.industry || "Ikke tilgjengelig" },
-      { id: "description", icon: "📝", title: "Virksomhet",          unlock: 6, getValue: () => s?.description || "Norsk børsnotert selskap" },
+      { id: "description", icon: "📝", title: "Virksomhet", unlock: 6, getValue: () => this.getShortDescription(s?.ticker, s?.description) }
     ];
 
     const host = document.getElementById("clues-section");
@@ -605,6 +623,54 @@ class FinansleGame {
     });
     this.updateHintBar();
   }
+
+async loadShortDescriptions() {
+  try {
+    const res = await fetch(`data/oslo_companies_short.json?ts=${Date.now()}`, { cache: "no-store" });
+    if (!res.ok) throw new Error(`HTTP ${res.status} loading oslo_companies_short.json`);
+    const data = await res.json();
+    
+    // Create lookup map by ticker for fast access
+    this.shortDescriptions = {};
+    data.forEach(company => {
+      if (company.ticker && company.original_description) {
+        // Store both with and without .OL suffix for flexibility
+        const baseTicker = company.ticker.replace('.OL', '');
+        this.shortDescriptions[company.ticker] = company.original_description;
+        this.shortDescriptions[baseTicker] = company.original_description;
+      }
+    });
+    
+    console.log(`📝 Loaded ${Object.keys(this.shortDescriptions).length / 2} short descriptions`);
+  } catch (e) {
+    console.warn("⚠️ Could not load short descriptions:", e);
+    this.shortDescriptions = {};
+  }
+}
+
+// Get short description with fallback
+getShortDescription(ticker, fallbackDescription) {
+  if (!this.shortDescriptions) return fallbackDescription || "Norsk børsnotert selskap";
+  
+  // Try exact match first
+  if (this.shortDescriptions[ticker]) {
+    return this.shortDescriptions[ticker];
+  }
+  
+  // Try without .OL suffix
+  const baseTicker = ticker.replace('.OL', '');
+  if (this.shortDescriptions[baseTicker]) {
+    return this.shortDescriptions[baseTicker];
+  }
+  
+  // Try with .OL suffix if not present
+  if (!ticker.includes('.OL') && this.shortDescriptions[ticker + '.OL']) {
+    return this.shortDescriptions[ticker + '.OL'];
+  }
+  
+  // Fallback to original or default
+  return fallbackDescription || "Norsk børsnotert selskap";
+}
 
 unlockClues() {
   this.clueTypes.forEach(c => {
