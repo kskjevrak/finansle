@@ -47,3 +47,4 @@ jobs:
         else
           git commit -m "Update daily stock data for $(date '+%Y-%m-%d')"
           git push
+        fi
