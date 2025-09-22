@@ -47,14 +47,14 @@ body {
 /* Header */
 .header {
   text-align: center;
-  margin-bottom: 26px;
+  margin-bottom: 8px;
   padding: 8px 0;
 }
 
 .logo {
   font-size: 3rem;
   font-weight: 700;
-  margin-bottom: 8px;
+  margin-bottom: 4px; /* Reduced from 8px */
   background: linear-gradient(135deg, var(--primary-green), var(--accent-blue));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -64,17 +64,25 @@ body {
 .subtitle {
   font-size: 1.1rem;
   color: var(--text-gray);
+  margin-bottom: 4px; /* Add this line to reduce space below */
+}
+
+.subtitle.revealed {
+  color: var(--text-gray);
+  font-weight: 600;
+  font-size: 2.2rem;
+  margin-bottom: 4px; /* Reduced from 8px */
+  transition: all 0.5s ease;
 }
 
 /* Chart Container */
 .chart-container {
   border-radius: 18px;
   padding: 20px;
-  margin: 20px auto 16px;
+  margin: 8px auto 16px;
   max-height: calc(var(--chart-height) + 60px);
   overflow: hidden;
   min-height: 200px;
-  /* REMOVED: background and border properties */
 }
 
 .chart-placeholder {
@@ -181,6 +189,11 @@ body {
   cursor: pointer;
   border-bottom: 1px solid var(--border-color);
   transition: background 0.15s;
+}
+
+.autocomplete-item.highlighted {
+  background: rgba(34, 197, 94, 0.2);
+  color: var(--text-light);
 }
 
 .autocomplete-item:hover {
@@ -371,15 +384,47 @@ body {
 .modal {
   background: var(--secondary-dark);
   border-radius: 20px;
-  padding: 30px;
-  max-width: 450px; /* Slightly wider */
+  padding: 25px; /* Reduced from 30px */
+  max-width: 450px;
   width: 100%;
   text-align: center;
   border: 1px solid var(--border-color);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  max-height: 90vh; /* Prevent overflow on small screens */
-  overflow-y: auto;
+  max-height: 85vh; /* Reduced from 90vh */
+  overflow: hidden; /* Changed from overflow-y: auto */
   position: relative;
+}
+
+/* Modal close button */
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-gray);
+  cursor: pointer;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 1;
+  line-height: 1;
+}
+
+.modal-close:hover {
+  color: var(--text-light);
+  transform: scale(1.1);
+}
+
+.modal-close:active {
+  transform: scale(0.95);
 }
 
 /* Modal title */
@@ -392,18 +437,18 @@ body {
 
 /* Modal content text */
 .modal-content {
-  margin-bottom: 20px;
-  line-height: 1.5;
+  margin-bottom: 15px; /* Reduced from 20px */
+  line-height: 1.4; /* Reduced from 1.5 */
   color: var(--text-light);
-  font-size: 1.1rem;
+  font-size: 1.05rem; /* Reduced from 1.1rem */
 }
 
 /* Company info section */
 .company-info {
   background: var(--card-bg);
   border-radius: 12px;
-  padding: 20px;
-  margin: 20px 0;
+  padding: 15px; /* Reduced from 20px */
+  margin: 15px 0; /* Reduced from 20px 0 */
   text-align: left;
   border: 1px solid var(--border-color);
 }
@@ -450,10 +495,10 @@ body {
 
 /* Stats section */
 .stats-section {
-  margin-top: 20px;
+  margin-top: 15px; /* Reduced from 20px */
   background: var(--card-bg);
   border-radius: 12px;
-  padding: 20px;
+  padding: 15px; /* Reduced from 20px */
   border: 1px solid var(--border-color);
 }
 
@@ -474,7 +519,7 @@ body {
 }
 
 .stat-item {
-  padding: 12px 8px;
+  padding: 10px 6px; /* Reduced from 12px 8px */
   background: rgba(255, 255, 255, 0.05);
   border-radius: 8px;
   border: 1px solid rgba(255,255,255,0.1);
@@ -499,11 +544,11 @@ body {
   background: var(--accent-blue);
   color: #fff;
   border: none;
-  padding: 14px 28px;
+  padding: 12px 24px; /* Reduced from 14px 28px */
   border-radius: 10px;
   font-weight: 600;
   cursor: pointer;
-  margin-top: 20px;
+  margin-top: 15px; /* Reduced from 20px */
   transition: all 0.2s ease;
   font-size: 1rem;
   width: 100%;

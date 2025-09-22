@@ -22,7 +22,7 @@
     <!-- Header -->
     <header class="header">
       <h1 class="logo">Finansle</h1>
-      <p class="subtitle">Gjett dagens Oslo Børs aksje</p>
+      <p class="subtitle" id="main-subtitle">Gjett dagens Oslo Børs aksje</p>
     </header>
 
     <!-- Big 5-year chart (rendered by JS) -->
@@ -69,6 +69,7 @@
   <!-- Game Over Modal -->
   <div class="modal-overlay" id="modal-overlay">
     <div class="modal">
+      <button class="modal-close" id="modal-close" aria-label="Lukk">✕</button>
       <h2 class="modal-title" id="modal-title">Gratulerer!</h2>
       <div class="modal-content" id="modal-content">Du gjettet riktig!</div>
       <div class="company-info" id="company-info">

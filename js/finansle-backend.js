@@ -103,7 +103,10 @@ class FinansleGame {
   // Build hint items for unlocked clues
   const hintItems = [];
   this.clueTypes.forEach(clue => {
-    if (clue.unlock <= this.currentAttempt) {
+    // Check if game ended (won or lost) OR if clue should be unlocked based on attempts
+    const shouldUnlock = this.gameEnded || clue.unlock <= this.currentAttempt;
+    
+    if (shouldUnlock) {
       const value = clue.getValue();
       hintItems.push(`
         <div class="hint-item">
@@ -225,6 +228,12 @@ class FinansleGame {
     shareBtn?.addEventListener("click", () => this.shareResults());
     overlay?.addEventListener("click", (e) => { if (e.target === overlay) overlay.style.display = "none"; });
 
+    // Add close button event listener
+    const modalClose = document.getElementById("modal-close");
+    modalClose?.addEventListener("click", () => {
+      if (overlay) overlay.style.display = "none";
+    });
+
     document.addEventListener("click", (e) => {
       if (!e.target.closest(".search-container") && dropdown) dropdown.style.display = "none";
     });
@@ -274,21 +283,27 @@ class FinansleGame {
   }
 
   showAutocompleteOptions(options) {
-    const dropdown = document.getElementById("autocomplete-dropdown");
-    if (!dropdown) return;
-    if (!options.length) { dropdown.style.display = "none"; return; }
+  const dropdown = document.getElementById("autocomplete-dropdown");
+  if (!dropdown) return;
+  if (!options.length) { dropdown.style.display = "none"; return; }
 
-    dropdown.innerHTML = "";
-    options.forEach(s => {
-      const item = document.createElement("div");
-      item.className = "autocomplete-item";
-      const label = `${s.name} (${s.ticker})`;
-      item.textContent = label;
-      item.addEventListener("click", () => this.selectStock(s));
-      dropdown.appendChild(item);
+  dropdown.innerHTML = "";
+  options.forEach((s, index) => {
+    const item = document.createElement("div");
+    item.className = "autocomplete-item";
+    const label = `${s.name} (${s.ticker})`;
+    item.textContent = label;
+    item.addEventListener("click", () => this.selectStock(s));
+    
+    // Add mouse hover support
+    item.addEventListener("mouseenter", () => {
+      this.highlightDropdownItem(dropdown.querySelectorAll(".autocomplete-item"), index);
     });
-    dropdown.style.display = "block";
-  }
+    
+    dropdown.appendChild(item);
+  });
+  dropdown.style.display = "block";
+}
 
   selectStock(stock) {
     const input = document.getElementById("stock-search");
@@ -300,9 +315,53 @@ class FinansleGame {
   }
 
   handleSearchKeydown(e) {
-    const guessBtn = document.getElementById("guess-btn");
-    if (e.key === "Enter" && guessBtn && !guessBtn.disabled) this.handleGuess();
+  const guessBtn = document.getElementById("guess-btn");
+  const dropdown = document.getElementById("autocomplete-dropdown");
+  
+  if (e.key === "Enter" && guessBtn && !guessBtn.disabled) {
+    this.handleGuess();
+    return;
   }
+  
+  // Handle arrow key navigation
+  if (!dropdown || dropdown.style.display === "none") return;
+  
+  const items = dropdown.querySelectorAll(".autocomplete-item");
+  if (items.length === 0) return;
+  
+  let currentIndex = -1;
+  items.forEach((item, index) => {
+    if (item.classList.contains("highlighted")) {
+      currentIndex = index;
+    }
+  });
+  
+  if (e.key === "ArrowDown") {
+    e.preventDefault();
+    const nextIndex = currentIndex < items.length - 1 ? currentIndex + 1 : 0;
+    this.highlightDropdownItem(items, nextIndex);
+  } else if (e.key === "ArrowUp") {
+    e.preventDefault();
+    const prevIndex = currentIndex > 0 ? currentIndex - 1 : items.length - 1;
+    this.highlightDropdownItem(items, prevIndex);
+  } else if (e.key === "Enter" && currentIndex >= 0) {
+    e.preventDefault();
+    items[currentIndex].click();
+  } else if (e.key === "Escape") {
+    dropdown.style.display = "none";
+  }
+}
+
+highlightDropdownItem(items, index) {
+  // Remove existing highlights
+  items.forEach(item => item.classList.remove("highlighted"));
+  
+  // Add highlight to selected item
+  if (index >= 0 && index < items.length) {
+    items[index].classList.add("highlighted");
+    items[index].scrollIntoView({ block: "nearest" });
+  }
+}
 
   handleGuess() {
     if (this.gameEnded) return;
@@ -358,20 +417,25 @@ class FinansleGame {
 }
 
   processWrongGuess() {
-    this.updateAttemptDots();
-    this.currentAttempt++;
-    this.unlockClues();
+  this.updateAttemptDots();
+  this.currentAttempt++;
+  this.unlockClues();
 
-    const input = document.getElementById("stock-search");
-    const guessBtn = document.getElementById("guess-btn");
-    if (input) input.value = "";
-    if (guessBtn) guessBtn.disabled = true;
+  const input = document.getElementById("stock-search");
+  const guessBtn = document.getElementById("guess-btn");
+  if (input) input.value = "";
+  if (guessBtn) guessBtn.disabled = true;
 
-    const el = document.getElementById("current-attempt");
-    if (el) el.textContent = this.currentAttempt;
-
-    if (this.currentAttempt > 6) this.endGame(false, 6);
+  // Check for game end BEFORE updating the display
+  if (this.currentAttempt > 6) {
+    this.endGame(false, 6);
+    return; // Don't update display if game has ended
   }
+
+  // Only update display if game continues
+  const el = document.getElementById("current-attempt");
+  if (el) el.textContent = this.currentAttempt;
+}
 
   updateAttemptDots() {
     const dots = document.querySelectorAll(".attempt-dot");
@@ -464,22 +528,34 @@ showMainChart() {
   // Clear existing elements
   [...svg.querySelectorAll("polyline,polygon,circle,text,line")].forEach(n => n.remove());
 
-  const prices = data.map(d => d.price);
-  const minPrice = Math.min(...prices);
-  const maxPrice = Math.max(...prices);
+const prices = data.map(d => d.price);
+const minPrice = Math.min(...prices);
+const maxPrice = Math.max(...prices);
 
-  // Always start Y-axis at 0, round max to nearest 50 NOK intervals
-  const yAxisMin = 0;
-  const yAxisMax = Math.ceil(maxPrice / 50) * 50;
+// Calculate smart Y-axis range based on actual price data
+const priceRange = maxPrice - minPrice;
+const padding = priceRange * 0.1; // 10% padding above and below
 
-  // Ensure minimum range of 100 NOK for readability
-  const minRange = 100;
-  let yAxisMinFinal = yAxisMin;
-  let yAxisMaxFinal = Math.max(yAxisMax, minRange);
+// More spaced interval calculation - fewer grid lines
+let interval;
+if (priceRange <= 20) interval = 5;       // 5 NOK intervals for very small ranges
+else if (priceRange <= 50) interval = 10;  // 10 NOK intervals
+else if (priceRange <= 100) interval = 20; // 20 NOK intervals
+else if (priceRange <= 200) interval = 50; // 50 NOK intervals
+else if (priceRange <= 500) interval = 100; // 100 NOK intervals
+else interval = 200;                        // 200 NOK intervals for very large ranges
 
-  // Calculate grid steps (ensure we have proper 50 NOK intervals)
-  const priceRange = yAxisMaxFinal - yAxisMinFinal;
-  const numSteps = Math.round(priceRange / 50);
+// Calculate axis bounds with smart rounding
+const yAxisMin = Math.max(0, Math.floor((minPrice - padding) / interval) * interval);
+const yAxisMax = Math.ceil((maxPrice + padding) / interval) * interval;
+
+// Ensure minimum range for readability (but fewer lines)
+const minDisplayRange = interval * 3; // At least 3 intervals visible
+let yAxisMinFinal = yAxisMin;
+let yAxisMaxFinal = Math.max(yAxisMax, yAxisMin + minDisplayRange);
+
+// Calculate number of grid steps (should be around 4-6 lines max)
+const numSteps = Math.round((yAxisMaxFinal - yAxisMinFinal) / interval);
 
   // Coordinate functions
   const x = i => padX + (i / (data.length - 1)) * (width - 2 * padX);
@@ -489,34 +565,34 @@ showMainChart() {
   const pts = data.map((p, i) => `${x(i)},${y(p.price)}`).join(" ");
   const areaPts = `${x(0)},${height - padY} ${pts} ${x(data.length - 1)},${height - padY}`;
 
-  // Draw Y-axis grid lines and labels at exactly 50 NOK intervals
+  // Draw Y-axis grid lines and labels at calculated intervals
   for (let i = 0; i <= numSteps; i++) {
-    const priceLevel = yAxisMinFinal + (i * 50);
-    const yPos = y(priceLevel);
-    
-    // Price label
-    const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    label.setAttribute("x", padX - 8);
-    label.setAttribute("y", yPos + 4);
-    label.setAttribute("text-anchor", "end");
-    label.setAttribute("font-size", "11");
-    label.setAttribute("fill", "#94a3b8");
-    label.setAttribute("font-weight", "500");
-    label.textContent = priceLevel + " NOK";
-    
-    svg.appendChild(label);
-    
-    // Horizontal grid line - draw all lines for consistency
-    const gridLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
-    gridLine.setAttribute("x1", padX);
-    gridLine.setAttribute("y1", yPos);
-    gridLine.setAttribute("x2", width - padX);
-    gridLine.setAttribute("y2", yPos);
-    gridLine.setAttribute("stroke", "rgba(255,255,255,0.15)");
-    gridLine.setAttribute("stroke-width", "0.5");
-    
-    svg.appendChild(gridLine);
-  }
+  const priceLevel = yAxisMinFinal + (i * interval);
+  const yPos = y(priceLevel);
+  
+  // Price label
+  const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  label.setAttribute("x", padX - 8);
+  label.setAttribute("y", yPos + 4);
+  label.setAttribute("text-anchor", "end");
+  label.setAttribute("font-size", "11");
+  label.setAttribute("fill", "#94a3b8");
+  label.setAttribute("font-weight", "500");
+  label.textContent = priceLevel + " NOK";
+  
+  svg.appendChild(label);
+  
+  // Horizontal grid line
+  const gridLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+  gridLine.setAttribute("x1", padX);
+  gridLine.setAttribute("y1", yPos);
+  gridLine.setAttribute("x2", width - padX);
+  gridLine.setAttribute("y2", yPos);
+  gridLine.setAttribute("stroke", "rgba(255,255,255,0.15)");
+  gridLine.setAttribute("stroke-width", "0.5");
+  
+  svg.appendChild(gridLine);
+}
 
   // Draw X-axis labels (years)
   const now = new Date();
@@ -699,7 +775,7 @@ unlockClues() {
     }
   });
   
-  // ADD THIS LINE to update the hint bar when all clues are unlocked
+  // Force update hint bar to show all clues as unlocked
   this.updateHintBar();
 }
 
@@ -707,9 +783,18 @@ unlockClues() {
   endGame(won, attempts) {
     this.gameEnded = true;
     this.updateStats(won, attempts);
+    this.revealCompanyName(); // Add this line
     this.showEndGameModal(won, attempts);
     this.unlockAllClues();
   }
+
+  revealCompanyName() {
+  const subtitle = document.getElementById("main-subtitle");
+  if (subtitle && this.dailyStock) {
+    subtitle.textContent = this.dailyStock.company_name;
+    subtitle.classList.add("revealed");
+  }
+}
 
   showEndGameModal(won, attempts) {
     const title   = document.getElementById("modal-title");
