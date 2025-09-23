@@ -1043,8 +1043,9 @@ unlockClues() {
 }
 
 // Global feedback function - works even before game starts
+// Open feedback modal
 function openFeedback() {
-  // Get day number without relying on game instance
+  const modal = document.getElementById('feedback-modal');
   const getDayNumber = () => {
     const today = new Date();
     const start = new Date("2025-09-23T00:00:00");
@@ -1052,20 +1053,113 @@ function openFeedback() {
     return Math.floor((today - start) / 86400000) + 1;
   };
 
-  const day = getDayNumber();
-  const subject = `Finansle Tilbakemelding - Dag ${day}`;
-  const body = `Hei!
+  // Pre-fill hidden fields
+  document.getElementById('feedback-day').value = getDayNumber();
+  document.getElementById('feedback-url').value = window.location.href;
+  
+  modal.style.display = 'flex';
+}
 
-Her er min tilbakemelding om Finansle:
+// Close feedback modal
+function closeFeedbackModal() {
+  document.getElementById('feedback-modal').style.display = 'none';
+}
 
-[Skriv din tilbakemelding her]
+// Handle form submission feedback
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById('feedback-form');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      const submitBtn = form.querySelector('button[type="submit"]');
+      submitBtn.textContent = 'Sender...';
+      submitBtn.disabled = true;
+    });
+  }
+});
 
----
-Dag: ${day}
-URL: ${window.location.href}`;
+// ... your existing FinansleGame class code ...
 
-  const mailto = `mailto:kskjevrak@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  window.location.href = mailto;
+// ADD THIS AT THE BOTTOM OF finansle-backend.js:
+
+// Handle form submission with AJAX
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById('feedback-form');
+  if (form) {
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault(); // Prevent normal form submission
+      
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = 'Sender...';
+      submitBtn.disabled = true;
+      
+      try {
+        const formData = new FormData(form);
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+        
+        if (response.ok) {
+          // Success - just close modal and reset form
+          closeFeedbackModal();
+          form.reset();
+          // Removed the success message line
+        } else {
+          throw new Error('Network response was not ok');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        // Only show error messages
+        showErrorMessage('Noe gikk galt. Prøv igjen senere.');
+      } finally {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      }
+    });
+  }
+});
+
+function showErrorMessage(message) {
+  if (window.finansleGame && window.finansleGame.showError) {
+    window.finansleGame.showError(message);
+  } else {
+    alert(message);
+  }
+}
+
+function showSuccessMessage(message) {
+  // Use your existing error function for success message
+  if (window.finansleGame && window.finansleGame.showError) {
+    window.finansleGame.showError(message);
+  } else {
+    alert(message);
+  }
+}
+
+// Open feedback modal
+function openFeedback() {
+  const modal = document.getElementById('feedback-modal');
+  const getDayNumber = () => {
+    const today = new Date();
+    const start = new Date("2025-09-23T00:00:00");
+    start.setHours(0,0,0,0);
+    return Math.floor((today - start) / 86400000) + 1;
+  };
+
+  // Pre-fill hidden fields
+  document.getElementById('feedback-day').value = getDayNumber();
+  document.getElementById('feedback-url').value = window.location.href;
+  
+  modal.style.display = 'flex';
+}
+
+// Close feedback modal
+function closeFeedbackModal() {
+  document.getElementById('feedback-modal').style.display = 'none';
 }
 
 document.addEventListener("DOMContentLoaded", () => new FinansleGame());
