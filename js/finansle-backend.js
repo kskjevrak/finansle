@@ -32,6 +32,8 @@ class FinansleGame {
       this.updateDayNumber();
 
       console.log("✅ Game initialized");
+
+      this.updatePageTitle();
     } catch (err) {
       console.error("❌ init failed:", err);
       this.showError("Kunne ikke laste dagens data. Prøv å refresh siden.");
@@ -125,6 +127,45 @@ class FinansleGame {
   });
 
   hintBar.innerHTML = hintItems.join('');
+}
+
+setupAboutModal() {
+  const aboutBtn = document.getElementById('about-btn');
+  const aboutModal = document.getElementById('about-modal-overlay');
+  const aboutCloseBtn = document.getElementById('about-modal-close');
+
+  if (aboutBtn && aboutModal) {
+    aboutBtn.addEventListener('click', function() {
+      aboutModal.classList.add('show');
+    });
+  }
+
+  if (aboutCloseBtn && aboutModal) {
+    aboutCloseBtn.addEventListener('click', function() {
+      aboutModal.classList.remove('show');
+    });
+  }
+
+  // Close modal when clicking outside
+  if (aboutModal) {
+    aboutModal.addEventListener('click', function(e) {
+      if (e.target === aboutModal) {
+        aboutModal.classList.remove('show');
+      }
+    });
+  }
+
+  // Close modal on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && aboutModal && aboutModal.classList.contains('show')) {
+      aboutModal.classList.remove('show');
+    }
+  });
+}
+
+updatePageTitle() {
+  const dayNumber = Math.floor((new Date() - new Date("2025-09-23T00:00:00")) / 86400000) + 1;
+  document.title = `Finansle #${dayNumber} - Daglig Norsk Aksje Gjettelekspill | Oslo Børs Quiz`;
 }
 
   normalizeDailyJson(raw) {
@@ -225,6 +266,9 @@ class FinansleGame {
       input.addEventListener("keydown",(e) => this.handleSearchKeydown(e));
       guessBtn.addEventListener("click", () => this.handleGuess());
     }
+
+    this.setupAboutModal();
+
     shareBtn?.addEventListener("click", () => this.shareResults());
     overlay?.addEventListener("click", (e) => { if (e.target === overlay) overlay.style.display = "none"; });
 
@@ -509,6 +553,70 @@ showMainChart() {
     requestAnimationFrame(() => this.drawChartLine());
   }
 
+calculateOptimalYAxisTicks(maxPrice, targetTicks = 6) {
+  const scores = [];
+  const niceNumbers = [1, 2, 5, 10]; // Base nice numbers
+  
+  // Try different combinations of nice numbers and powers of 10
+  for (const base of niceNumbers) {
+    for (let power = -2; power <= 6; power++) {
+      const interval = base * Math.pow(10, power);
+      
+      // Skip intervals that are too small or too large
+      if (interval < 0.01 || interval > maxPrice * 2) continue;
+      
+      const yMax = Math.ceil(maxPrice / interval) * interval;
+      const actualTicks = Math.round(yMax / interval) + 1; // +1 for zero
+      
+      // Skip if we get too many ticks (would be crowded)
+      if (actualTicks > 15) continue;
+      
+      // Score this configuration using Wilkinson's criteria
+      const simplicityScore = 1 - (niceNumbers.indexOf(base) / niceNumbers.length);
+      const coverageScore = 1 - Math.abs(yMax - maxPrice) / Math.max(maxPrice, 1);
+      const densityScore = 1 - Math.abs(actualTicks - targetTicks) / targetTicks;
+      
+      // Prefer intervals that don't overshoot too much
+      const overshootPenalty = Math.max(0, (yMax - maxPrice) / maxPrice - 0.2);
+      
+      const totalScore = simplicityScore * 0.25 + 
+                        coverageScore * 0.25 + 
+                        densityScore * 0.45 + 
+                        (1 - overshootPenalty) * 0.05;
+      
+      scores.push({
+        interval,
+        yMax,
+        actualTicks,
+        score: totalScore,
+        base,
+        power
+      });
+    }
+  }
+  
+  // Return the best scoring configuration
+  scores.sort((a, b) => b.score - a.score);
+  
+  if (scores.length === 0) {
+    // Fallback if no good configuration found
+    return {
+      interval: Math.ceil(maxPrice / 5),
+      yAxisMinFinal: 0,
+      yAxisMaxFinal: Math.ceil(maxPrice / 5) * 5,
+      numSteps: 5
+    };
+  }
+  
+  const best = scores[0];
+  return {
+    interval: best.interval,
+    yAxisMinFinal: 0,
+    yAxisMaxFinal: best.yMax,
+    numSteps: best.actualTicks - 1
+  };
+}
+
   drawChartLine() {
   const svg = document.getElementById("main-stock-chart");
   const data = this.dailyStock?.chart_data || [];
@@ -523,39 +631,29 @@ showMainChart() {
     return;
   }
 
-  const padX = 55, padY = 35; // Increased padY for X-axis labels
+  const padX = 55, padY = 35;
 
   // Clear existing elements
   [...svg.querySelectorAll("polyline,polygon,circle,text,line")].forEach(n => n.remove());
 
-const prices = data.map(d => d.price);
-const minPrice = Math.min(...prices);
-const maxPrice = Math.max(...prices);
+  const prices = data.map(d => d.price);
+  const minPrice = Math.min(...prices);
+  const maxPrice = Math.max(...prices);
 
-// Calculate smart Y-axis range based on actual price data
-const priceRange = maxPrice - minPrice;
-const padding = priceRange * 0.1; // 10% padding above and below
-
-// More spaced interval calculation - fewer grid lines
-let interval;
-if (priceRange <= 20) interval = 5;       // 5 NOK intervals for very small ranges
-else if (priceRange <= 50) interval = 10;  // 10 NOK intervals
-else if (priceRange <= 100) interval = 20; // 20 NOK intervals
-else if (priceRange <= 200) interval = 50; // 50 NOK intervals
-else if (priceRange <= 500) interval = 100; // 100 NOK intervals
-else interval = 200;                        // 200 NOK intervals for very large ranges
-
-// Calculate axis bounds with smart rounding
-const yAxisMin = Math.max(0, Math.floor((minPrice - padding) / interval) * interval);
-const yAxisMax = Math.ceil((maxPrice + padding) / interval) * interval;
-
-// Ensure minimum range for readability (but fewer lines)
-const minDisplayRange = interval * 3; // At least 3 intervals visible
-let yAxisMinFinal = yAxisMin;
-let yAxisMaxFinal = Math.max(yAxisMax, yAxisMin + minDisplayRange);
-
-// Calculate number of grid steps (should be around 4-6 lines max)
-const numSteps = Math.round((yAxisMaxFinal - yAxisMinFinal) / interval);
+  // NEW: Use Wilkinson's algorithm for optimal Y-axis ticks
+  const padding = maxPrice * 0.05; // Small 5% padding above max
+  const adjustedMaxPrice = maxPrice + padding;
+  
+  // Calculate optimal ticks based on chart height
+  const availableHeight = height - (2 * padY);
+  const idealTickSpacing = 30; // Reduced from 40 to allow tighter spacing
+  const maxPossibleTicks = Math.floor(availableHeight / idealTickSpacing);
+  const targetTicks = Math.min(maxPossibleTicks, 10); // Increased from 8 to 10 max ticks
+  
+  const tickConfig = this.calculateOptimalYAxisTicks(adjustedMaxPrice, targetTicks);
+  const { interval, yAxisMinFinal, yAxisMaxFinal, numSteps } = tickConfig;
+  
+  console.log(`📊 Y-axis: 0 to ${yAxisMaxFinal} NOK, ${interval} NOK intervals, ${numSteps + 1} ticks`);
 
   // Coordinate functions
   const x = i => padX + (i / (data.length - 1)) * (width - 2 * padX);
@@ -567,55 +665,58 @@ const numSteps = Math.round((yAxisMaxFinal - yAxisMinFinal) / interval);
 
   // Draw Y-axis grid lines and labels at calculated intervals
   for (let i = 0; i <= numSteps; i++) {
-  const priceLevel = yAxisMinFinal + (i * interval);
-  const yPos = y(priceLevel);
-  
-  // Price label
-  const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
-  label.setAttribute("x", padX - 8);
-  label.setAttribute("y", yPos + 4);
-  label.setAttribute("text-anchor", "end");
-  label.setAttribute("font-size", "11");
-  label.setAttribute("fill", "#94a3b8");
-  label.setAttribute("font-weight", "500");
-  label.textContent = priceLevel + " NOK";
-  
-  svg.appendChild(label);
-  
-  // Horizontal grid line
-  const gridLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
-  gridLine.setAttribute("x1", padX);
-  gridLine.setAttribute("y1", yPos);
-  gridLine.setAttribute("x2", width - padX);
-  gridLine.setAttribute("y2", yPos);
-  gridLine.setAttribute("stroke", "rgba(255,255,255,0.15)");
-  gridLine.setAttribute("stroke-width", "0.5");
-  
-  svg.appendChild(gridLine);
-}
+    const priceLevel = yAxisMinFinal + (i * interval);
+    const yPos = y(priceLevel);
+    
+    // Price label
+    const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    label.setAttribute("x", padX - 8);
+    label.setAttribute("y", yPos + 4);
+    label.setAttribute("text-anchor", "end");
+    label.setAttribute("font-size", "11");
+    label.setAttribute("fill", "#94a3b8");
+    label.setAttribute("font-weight", "500");
+    
+    // Format the label nicely
+    if (interval >= 1) {
+      label.textContent = Math.round(priceLevel) + " NOK";
+    } else {
+      label.textContent = priceLevel.toFixed(2) + " NOK";
+    }
+    
+    svg.appendChild(label);
+    
+    // Horizontal grid line
+    const gridLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    gridLine.setAttribute("x1", padX);
+    gridLine.setAttribute("y1", yPos);
+    gridLine.setAttribute("x2", width - padX);
+    gridLine.setAttribute("y2", yPos);
+    gridLine.setAttribute("stroke", "rgba(255,255,255,0.15)");
+    gridLine.setAttribute("stroke-width", "0.5");
+    
+    svg.appendChild(gridLine);
+  }
 
-  // Draw X-axis labels (years)
+  // Draw X-axis labels (years) - keep your existing code here
   const now = new Date();
   const yearPositions = [];
   
-  // Calculate positions for 5 years ago, then each year up to "I dag"
   for (let i = 5; i >= 1; i--) {
     const yearDate = new Date(now);
     yearDate.setFullYear(now.getFullYear() - i);
-    const position = (5 - i) / 5; // Position from 0 to 0.8
+    const position = (5 - i) / 5;
     yearPositions.push({
       label: yearDate.getFullYear().toString(),
       x: padX + position * (width - 2 * padX)
     });
   }
   
-  // Add "I dag" at the end
   yearPositions.push({
     label: "I dag",
     x: width - padX
   });
 
-  // Draw the year labels
   yearPositions.forEach(pos => {
     const yearLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
     yearLabel.setAttribute("x", pos.x);
@@ -845,7 +946,7 @@ unlockClues() {
   }
   getDayNumber() {
     const today = new Date();
-    const start = new Date("2024-01-01T00:00:00");
+    const start = new Date("2025-09-23T00:00:00");
     start.setHours(0,0,0,0);
     return Math.floor((today - start) / 86400000) + 1;
   }

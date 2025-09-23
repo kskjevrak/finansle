@@ -3,67 +3,170 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Finansle - Gjett Oslo Børs aksjen</title>
+  
+  <!-- Enhanced Title with Keywords -->
+  <title>Finansle - Daglig Norsk Aksje Gjettelekspill | Oslo Børs Quiz</title>
+  
+  <!-- Enhanced Meta Description -->
+  <meta name="description" content="Spill Finansle - det daglige aksje-gjettelekspillet! Gjett dagens Oslo Børs aksje på 6 forsøk. Gratis norsk børsspill inspirert av Wordle. Test din kunnskap om norske selskaper og aktier.">
+  
+  <!-- Additional SEO Meta Tags -->
+  <meta name="keywords" content="finansle, aksje spill, oslo børs, norsk børs, gjettelekspill, aksjequiz, daglig spill, børs quiz, norske aksjer, finansspill">
+  <meta name="author" content="Finansle">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="Norwegian">
+  
+  <!-- Geographic SEO -->
+  <meta name="geo.region" content="NO">
+  <meta name="geo.country" content="Norway">
+  <meta name="geo.placename" content="Oslo">
+  
+  <!-- Enhanced Open Graph Tags -->
+  <meta property="og:title" content="Finansle - Daglig Norsk Aksje Gjettelekspill">
+  <meta property="og:description" content="Gjett dagens Oslo Børs aksje på 6 forsøk! Gratis daglig børsspill som tester din kunnskap om norske selskaper.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yourdomain.com/finansle">
+  <meta property="og:image" content="https://yourdomain.com/images/finansle-share.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="no_NO">
+  <meta property="og:site_name" content="Finansle">
+  
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Finansle - Daglig Norsk Aksje Gjettelekspill">
+  <meta name="twitter:description" content="Gjett dagens Oslo Børs aksje på 6 forsøk! Gratis daglig børsspill.">
+  <meta name="twitter:image" content="https://yourdomain.com/images/finansle-share.png">
+  <meta name="twitter:site" content="@finansle">
+  <meta name="twitter:creator" content="@finansle">
+  
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Finansle",
+    "description": "Daglig aksje-gjettelekspill for Oslo Børs. Gjett dagens norske aksje på 6 forsøk.",
+    "url": "https://yourdomain.com",
+    "applicationCategory": "GameApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "NOK"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "Finansle"
+    },
+    "inLanguage": "no",
+    "keywords": "aksje spill, oslo børs, norsk børs, gjettelekspill",
+    "audience": {
+      "@type": "Audience",
+      "geographicArea": {
+        "@type": "Country",
+        "name": "Norway"
+      }
+    }
+  }
+  </script>
+  
+  <!-- Enhanced Favicon Setup -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  
+  <!-- Theme and Browser Optimizations -->
+  <meta name="theme-color" content="#3B82F6">
+  <meta name="msapplication-TileColor" content="#3B82F6">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Finansle">
+  
+  <!-- Preconnect for Performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+  
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   
-  <!-- Link to external CSS file -->
+  <!-- CSS -->
   <link rel="stylesheet" href="styles.css">
-
-  <!-- SEO -->
-  <meta name="description" content="Finansle - Det daglige aksje-gjettelekspillet for Oslo Børs. Gjett dagens norske aksje på 6 forsøk!">
-  <meta property="og:title" content="Finansle - Norwegian Stock Guessing Game">
-  <meta property="og:description" content="Guess today's Oslo Børs stock in 6 attempts!">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://yourdomain.github.io/finansle">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://yourdomain.com/">
 </head>
+
 <body>
+  <!-- Skip to main content for accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  
   <div class="container">
-    <!-- Header -->
-    <header class="header">
+    <!-- Enhanced Header with better structure -->
+    <header class="header" role="banner">
       <h1 class="logo">Finansle</h1>
       <p class="subtitle" id="main-subtitle">Gjett dagens Oslo Børs aksje</p>
     </header>
 
-    <!-- Big 5-year chart (rendered by JS) -->
-    <div class="chart-container">
-      <div class="chart-placeholder">📈 5-års aksje-graf vises ved spillstart</div>
-    </div>
+    <!-- Main content area -->
+    <main id="main-content" role="main">
+      <!-- Game area -->
+      <section class="game-section" aria-label="Aksje gjettelekspill">
+        <!-- Chart container -->
+        <div class="chart-container">
+          <div class="chart-placeholder">📈 5-års aksje-graf vises ved spillstart</div>
+        </div>
 
-    <!-- Sticky Financhle-style hint bar (updates each guess) -->
-    <div id="hint-bar" class="hint-bar" aria-live="polite"></div>
+        <!-- Hint bar -->
+        <div id="hint-bar" class="hint-bar" aria-live="polite" aria-label="Spillehint"></div>
 
-    <!-- Detailed clues (mobile/fallback) -->
-    <div class="clues-section" id="clues-section"></div>
+        <!-- Detailed clues -->
+        <div class="clues-section" id="clues-section" aria-label="Detaljerte hint"></div>
 
-    <!-- Attempts -->
-    <div class="attempts-tracker">
-      <div class="attempts-text">Forsøk <span id="current-attempt">1</span> av 6</div>
-      <div class="attempts-dots">
-        <div class="attempt-dot current"></div>
-        <div class="attempt-dot"></div>
-        <div class="attempt-dot"></div>
-        <div class="attempt-dot"></div>
-        <div class="attempt-dot"></div>
-        <div class="attempt-dot"></div>
-      </div>
-    </div>
+        <!-- Attempts tracker -->
+        <div class="attempts-tracker" aria-label="Forsøk gjenstående">
+          <div class="attempts-text">Forsøk <span id="current-attempt">1</span> av 6</div>
+          <div class="attempts-dots" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="6">
+            <div class="attempt-dot current" aria-label="Nåværende forsøk"></div>
+            <div class="attempt-dot" aria-label="Ubrukt forsøk"></div>
+            <div class="attempt-dot" aria-label="Ubrukt forsøk"></div>
+            <div class="attempt-dot" aria-label="Ubrukt forsøk"></div>
+            <div class="attempt-dot" aria-label="Ubrukt forsøk"></div>
+            <div class="attempt-dot" aria-label="Ubrukt forsøk"></div>
+          </div>
+        </div>
 
-    <!-- Guess box -->
-    <div class="search-container">
-      <input id="stock-search" class="search-input" type="text" autocomplete="off"
-             placeholder="Søk etter aksje (f.eks. Equinor, Telenor...)">
-      <div class="autocomplete-dropdown" id="autocomplete-dropdown"></div>
-    </div>
+        <!-- Search and guess section -->
+        <section class="search-section" aria-label="Gjett aksje">
+          <div class="search-container">
+            <label for="stock-search" class="sr-only">Søk etter norsk aksje</label>
+            <input id="stock-search" class="search-input" type="text" autocomplete="off"
+                   placeholder="Søk etter aksje (f.eks. Equinor, Telenor...)"
+                   aria-describedby="search-instructions">
+            <div class="autocomplete-dropdown" id="autocomplete-dropdown" role="listbox"></div>
+          </div>
+          <div id="search-instructions" class="sr-only">
+            Skriv inn navnet på en norsk aksje for å gjette dagens selskap
+          </div>
 
-    <!-- Actions -->
-    <div class="action-buttons">
-      <button class="btn btn-primary" id="guess-btn" disabled>
-        <span id="guess-btn-text">Gjett</span>
-        <div class="loading" id="guess-loading" style="display:none"></div>
-      </button>
-      <button class="btn btn-secondary" id="hint-btn" type="button">💡 Tips</button>
-    </div>
+          <!-- Action buttons -->
+          <div class="action-buttons">
+            <button class="btn btn-primary" id="guess-btn" disabled aria-describedby="guess-button-help">
+              <span id="guess-btn-text">Gjett</span>
+              <div class="loading" id="guess-loading" style="display:none" aria-hidden="true"></div>
+            </button>
+            <button class="btn btn-secondary" id="about-btn" type="button" aria-describedby="about-button-help">
+              💡 Om Finansle
+            </button>
+          </div>
+          <div id="guess-button-help" class="sr-only">Trykk for å gjette den valgte aksjen</div>
+          <div id="about-button-help" class="sr-only">Åpne informasjon om Finansle spillet</div>
+        </section>
+      </section>
+    </main>
   </div>
 
   <!-- Game Over Modal -->
@@ -88,6 +191,35 @@
       </div>
 
       <button class="share-button" id="share-btn">📤 Del resultat</button>
+    </div>
+  </div>
+
+  <!-- About Finansle Modal -->
+  <div class="modal-overlay" id="about-modal-overlay">
+    <div class="modal about-modal">
+      <button class="modal-close" id="about-modal-close" aria-label="Lukk">✕</button>
+      <h2 class="modal-title">Om Finansle</h2>
+      
+      <div class="about-modal-content">
+        <div class="about-section">
+          <p class="about-description">
+            Finansle er det daglige aksje-gjettelekspillet for Oslo Børs. Hver dag får du en ny norsk aksje å gjette på, 
+            med hint som aksjegraf, sektor, og selskapsdetaljer. Perfekt for alle som vil teste sin kunnskap om det 
+            norske aksjemarkedet!
+          </p>
+        </div>
+
+        <div class="about-section">
+          <h3>Hvordan spille</h3>
+          <ol class="how-to-play">
+            <li>Se på 5-års aksjekursen for dagens mysterieaksje</li>
+            <li>Bruk hint som låses opp for hver feil gjetning</li>
+            <li>Du har 6 forsøk på å gjette riktig norsk aksje</li>
+            <li>Del resultatet ditt med venner!</li>
+          </ol>
+        </div>
+        
+      </div>
     </div>
   </div>
 
