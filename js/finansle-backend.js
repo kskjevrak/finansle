@@ -506,9 +506,9 @@ showMainChart() {
         </div>
       </div>
 
-      <div class="chart-stage" style="height:${chartHeight}px; position:relative; border-radius:12px; overflow:hidden;">
+      <div class="chart-stage" style="height:${chartHeight}px; position:relative; border-radius:12px; overflow:hidden; width:100%;">
         <svg id="main-stock-chart"
-             viewBox="0 0 1000 ${chartHeight}"
+             viewBox="0 0 800 ${chartHeight}"
              preserveAspectRatio="none"
              style="display:block; width:100%; height:100%;">
           <defs>
@@ -617,142 +617,169 @@ calculateOptimalYAxisTicks(maxPrice, targetTicks = 6) {
   };
 }
 
-  drawChartLine() {
-  const svg = document.getElementById("main-stock-chart");
-  const data = this.dailyStock?.chart_data || [];
-  if (!svg || data.length < 2) return;
+drawChartLine() {
 
-  const rect = svg.getBoundingClientRect();
-  const width  = Math.max(300, rect.width  || 0);
-  const height = Math.max(150, rect.height || 0);
+    const svg = document.getElementById("main-stock-chart");
+    const data = this.dailyStock?.chart_data || [];
+    if (!svg || data.length < 2) return;
 
-  if (!width || !height) {
-    requestAnimationFrame(() => this.drawChartLine());
-    return;
-  }
-
-  const padX = 55, padY = 35;
-
-  // Clear existing elements
-  [...svg.querySelectorAll("polyline,polygon,circle,text,line")].forEach(n => n.remove());
-
-  const prices = data.map(d => d.price);
-  const minPrice = Math.min(...prices);
-  const maxPrice = Math.max(...prices);
-
-  // NEW: Use Wilkinson's algorithm for optimal Y-axis ticks
-  const padding = maxPrice * 0.05; // Small 5% padding above max
-  const adjustedMaxPrice = maxPrice + padding;
-  
-  // Calculate optimal ticks based on chart height
-  const availableHeight = height - (2 * padY);
-  const idealTickSpacing = 30; // Reduced from 40 to allow tighter spacing
-  const maxPossibleTicks = Math.floor(availableHeight / idealTickSpacing);
-  const targetTicks = Math.min(maxPossibleTicks, 10); // Increased from 8 to 10 max ticks
-  
-  const tickConfig = this.calculateOptimalYAxisTicks(adjustedMaxPrice, targetTicks);
-  const { interval, yAxisMinFinal, yAxisMaxFinal, numSteps } = tickConfig;
-  
-  console.log(`📊 Y-axis: 0 to ${yAxisMaxFinal} NOK, ${interval} NOK intervals, ${numSteps + 1} ticks`);
-
-  // Coordinate functions
-  const x = i => padX + (i / (data.length - 1)) * (width - 2 * padX);
-  const y = p => height - padY - ((p - yAxisMinFinal) / (yAxisMaxFinal - yAxisMinFinal)) * (height - 2 * padY);
-
-  // Generate chart coordinates
-  const pts = data.map((p, i) => `${x(i)},${y(p.price)}`).join(" ");
-  const areaPts = `${x(0)},${height - padY} ${pts} ${x(data.length - 1)},${height - padY}`;
-
-  // Draw Y-axis grid lines and labels at calculated intervals
-  for (let i = 0; i <= numSteps; i++) {
-    const priceLevel = yAxisMinFinal + (i * interval);
-    const yPos = y(priceLevel);
+    // Get container dimensions instead of SVG dimensions
+    const container = svg.parentElement;
+    const containerRect = container.getBoundingClientRect();
     
-    // Price label
-    const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    label.setAttribute("x", padX - 8);
-    label.setAttribute("y", yPos + 4);
-    label.setAttribute("text-anchor", "end");
-    label.setAttribute("font-size", "11");
-    label.setAttribute("fill", "#94a3b8");
-    label.setAttribute("font-weight", "500");
+    // Use container width and ensure minimum dimensions
+    let width = Math.max(300, containerRect.width || 0);
+    let height = Math.max(150, containerRect.height || 0);
     
-    // Format the label nicely
-    if (interval >= 1) {
-      label.textContent = Math.round(priceLevel) + " NOK";
-    } else {
-      label.textContent = priceLevel.toFixed(2) + " NOK";
+    // If still no dimensions, try alternative methods
+    if (!width || !height) {
+      const computedStyle = getComputedStyle(container);
+      width = parseInt(computedStyle.width) || 300;
+      height = parseInt(computedStyle.height) || 200;
     }
-    
-    svg.appendChild(label);
-    
-    // Horizontal grid line
-    const gridLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
-    gridLine.setAttribute("x1", padX);
-    gridLine.setAttribute("y1", yPos);
-    gridLine.setAttribute("x2", width - padX);
-    gridLine.setAttribute("y2", yPos);
-    gridLine.setAttribute("stroke", "rgba(255,255,255,0.15)");
-    gridLine.setAttribute("stroke-width", "0.5");
-    
-    svg.appendChild(gridLine);
-  }
 
-  // Draw X-axis labels (years) - keep your existing code here
-  const now = new Date();
-  const yearPositions = [];
-  
-  for (let i = 5; i >= 1; i--) {
-    const yearDate = new Date(now);
-    yearDate.setFullYear(now.getFullYear() - i);
-    const position = (5 - i) / 5;
-    yearPositions.push({
-      label: yearDate.getFullYear().toString(),
-      x: padX + position * (width - 2 * padX)
+    if (!width || !height) {
+      requestAnimationFrame(() => this.drawChartLine());
+      return;
+    }
+
+    // Dynamic padding based on screen size
+    const isMobile = width < 640;
+    const padX = isMobile ? Math.max(40, width * 0.08) : 55; // 8% of width on mobile, min 40px
+    const padY = 35;
+
+    // Update SVG viewBox to match actual dimensions
+    svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+
+    // Clear existing elements
+    [...svg.querySelectorAll("polyline,polygon,circle,text,line")].forEach(n => n.remove());
+
+    const prices = data.map(d => d.price);
+    const minPrice = Math.min(...prices);
+    const maxPrice = Math.max(...prices);
+
+    // Use Wilkinson's algorithm for optimal Y-axis ticks
+    const padding = maxPrice * 0.05;
+    const adjustedMaxPrice = maxPrice + padding;
+    
+    const availableHeight = height - (2 * padY);
+    const idealTickSpacing = isMobile ? 25 : 30; // Tighter spacing on mobile
+    const maxPossibleTicks = Math.floor(availableHeight / idealTickSpacing);
+    const targetTicks = Math.min(maxPossibleTicks, isMobile ? 8 : 10);
+    
+    const tickConfig = this.calculateOptimalYAxisTicks(adjustedMaxPrice, targetTicks);
+    const { interval, yAxisMinFinal, yAxisMaxFinal, numSteps } = tickConfig;
+    
+    console.log(`📊 Chart: ${width}x${height}, padX: ${padX}, Y-axis: 0 to ${yAxisMaxFinal} NOK`);
+
+    // Coordinate functions
+    const x = i => padX + (i / (data.length - 1)) * (width - 2 * padX);
+    const y = p => height - padY - ((p - yAxisMinFinal) / (yAxisMaxFinal - yAxisMinFinal)) * (height - 2 * padY);
+
+    // Generate chart coordinates
+    const pts = data.map((p, i) => `${x(i)},${y(p.price)}`).join(" ");
+    const areaPts = `${x(0)},${height - padY} ${pts} ${x(data.length - 1)},${height - padY}`;
+
+    // Draw Y-axis grid lines and labels
+    for (let i = 0; i <= numSteps; i++) {
+      const priceLevel = yAxisMinFinal + (i * interval);
+      const yPos = y(priceLevel);
+      
+      // Price label with responsive font size
+      const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      label.setAttribute("x", padX - 8);
+      label.setAttribute("y", yPos + 4);
+      label.setAttribute("text-anchor", "end");
+      label.setAttribute("font-size", isMobile ? "10" : "11");
+      label.setAttribute("fill", "#94a3b8");
+      label.setAttribute("font-weight", "500");
+      
+      // Format the label
+      if (interval >= 1) {
+        label.textContent = Math.round(priceLevel) + (isMobile ? "" : " NOK");
+      } else {
+        label.textContent = priceLevel.toFixed(2) + (isMobile ? "" : " NOK");
+      }
+      
+      svg.appendChild(label);
+      
+      // Horizontal grid line
+      const gridLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      gridLine.setAttribute("x1", padX);
+      gridLine.setAttribute("y1", yPos);
+      gridLine.setAttribute("x2", width - padX);
+      gridLine.setAttribute("y2", yPos);
+      gridLine.setAttribute("stroke", "rgba(255,255,255,0.15)");
+      gridLine.setAttribute("stroke-width", "0.5");
+      
+      svg.appendChild(gridLine);
+    }
+
+    // Draw X-axis labels (years)
+    const now = new Date();
+    const yearPositions = [];
+    
+    // Fewer year labels on mobile
+    if (isMobile) {
+      // Show only 2020, 2022, I dag on mobile
+      yearPositions.push(
+        { label: "2020", x: padX + 0 * (width - 2 * padX) },
+        { label: "2022", x: padX + 0.5 * (width - 2 * padX) },
+        { label: "I dag", x: width - padX }
+      );
+    } else {
+      // Full year labels on desktop
+      for (let i = 5; i >= 1; i--) {
+        const yearDate = new Date(now);
+        yearDate.setFullYear(now.getFullYear() - i);
+        const position = (5 - i) / 5;
+        yearPositions.push({
+          label: yearDate.getFullYear().toString(),
+          x: padX + position * (width - 2 * padX)
+        });
+      }
+      yearPositions.push({
+        label: "I dag",
+        x: width - padX
+      });
+    }
+
+    yearPositions.forEach(pos => {
+      const yearLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      yearLabel.setAttribute("x", pos.x);
+      yearLabel.setAttribute("y", height - 8);
+      yearLabel.setAttribute("text-anchor", "middle");
+      yearLabel.setAttribute("font-size", isMobile ? "10" : "11");
+      yearLabel.setAttribute("fill", "#94a3b8");
+      yearLabel.setAttribute("font-weight", "500");
+      yearLabel.textContent = pos.label;
+      
+      svg.appendChild(yearLabel);
     });
-  }
-  
-  yearPositions.push({
-    label: "I dag",
-    x: width - padX
-  });
 
-  yearPositions.forEach(pos => {
-    const yearLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    yearLabel.setAttribute("x", pos.x);
-    yearLabel.setAttribute("y", height - 8);
-    yearLabel.setAttribute("text-anchor", "middle");
-    yearLabel.setAttribute("font-size", "11");
-    yearLabel.setAttribute("fill", "#94a3b8");
-    yearLabel.setAttribute("font-weight", "500");
-    yearLabel.textContent = pos.label;
-    
-    svg.appendChild(yearLabel);
-  });
+    // Draw chart area (gradient fill)
+    const area = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+    area.setAttribute("fill", "url(#chartGradient)");
+    area.setAttribute("points", areaPts);
+    svg.appendChild(area);
 
-  // Draw chart area (gradient fill)
-  const area = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
-  area.setAttribute("fill", "url(#chartGradient)");
-  area.setAttribute("points", areaPts);
-  svg.appendChild(area);
+    // Draw chart line
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+    line.setAttribute("fill", "none");
+    line.setAttribute("stroke", "#22c55e");
+    line.setAttribute("stroke-width", isMobile ? "2.2" : "2.6");
+    line.setAttribute("points", pts);
+    line.style.filter = "drop-shadow(0 0 2px rgba(34,197,94,0.28))";
+    svg.appendChild(line);
 
-  // Draw chart line
-  const line = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
-  line.setAttribute("fill", "none");
-  line.setAttribute("stroke", "#22c55e");
-  line.setAttribute("stroke-width", "2.6");
-  line.setAttribute("points", pts);
-  line.style.filter = "drop-shadow(0 0 2px rgba(34,197,94,0.28))";
-  svg.appendChild(line);
-
-  // Draw current price dot
-  const last = data[data.length - 1];
-  const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-  dot.setAttribute("cx", x(data.length - 1));
-  dot.setAttribute("cy", y(last.price));
-  dot.setAttribute("r", "4.2");
-  dot.setAttribute("fill", "#22c55e");
-  svg.appendChild(dot);
+    // Draw current price dot
+    const last = data[data.length - 1];
+    const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    dot.setAttribute("cx", x(data.length - 1));
+    dot.setAttribute("cy", y(last.price));
+    dot.setAttribute("r", isMobile ? "3.5" : "4.2");
+    dot.setAttribute("fill", "#22c55e");
+    svg.appendChild(dot);
 }
 
   buildYearAxisLabels() {
@@ -1013,6 +1040,32 @@ unlockClues() {
     } else { this.gameStats.streak = 0; }
     this.saveStats();
   }
+}
+
+// Global feedback function - works even before game starts
+function openFeedback() {
+  // Get day number without relying on game instance
+  const getDayNumber = () => {
+    const today = new Date();
+    const start = new Date("2025-09-23T00:00:00");
+    start.setHours(0,0,0,0);
+    return Math.floor((today - start) / 86400000) + 1;
+  };
+
+  const day = getDayNumber();
+  const subject = `Finansle Tilbakemelding - Dag ${day}`;
+  const body = `Hei!
+
+Her er min tilbakemelding om Finansle:
+
+[Skriv din tilbakemelding her]
+
+---
+Dag: ${day}
+URL: ${window.location.href}`;
+
+  const mailto = `mailto:kskjevrak@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.location.href = mailto;
 }
 
 document.addEventListener("DOMContentLoaded", () => new FinansleGame());
