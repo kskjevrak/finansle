@@ -99,7 +99,7 @@ class FinansleGame {
   const hintBar = document.getElementById("hint-bar");
   if (!hintBar || !this.clueTypes) return;
 
-  // Clear existing hints (keep only the "5 år siden i dag" header)
+  // Clear existing hints
   hintBar.innerHTML = '';
 
   // Build hint items for unlocked clues
@@ -112,15 +112,15 @@ class FinansleGame {
       const value = clue.getValue();
       hintItems.push(`
         <div class="hint-item">
-          <span class="hint-label">${clue.icon} ${clue.title}:</span>
+          <span class="hint-label">${clue.title}:</span>
           <span class="hint-value revealed">${value}</span>
         </div>
       `);
     } else {
       hintItems.push(`
         <div class="hint-item">
-          <span class="hint-label">${clue.icon} ${clue.title}:</span>
-          <span class="hint-value locked">🔒 Låst</span>
+          <span class="hint-label">${clue.title}:</span>
+          <span class="hint-value locked">Låst</span>
         </div>
       `);
     }
