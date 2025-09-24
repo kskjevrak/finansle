@@ -48,8 +48,42 @@ def format_market_cap_nok(val) -> str:
     if n >= 1e12:
         return f"{n/1e12:.1f} bill NOK"
     if n >= 1e9:
-        return f"{n/1e9:.0f} mrd NOK"
+        return f"{n/1e9:.1f} mrd NOK"
     return f"{n/1e6:.0f} mill NOK"
+
+def format_revenue_nok(val) -> str:
+    """Format revenue in NOK with appropriate units"""
+    try:
+        n = float(val or 0)
+    except Exception:
+        return "Ikke tilgjengelig"
+    if n == 0:  # Only filter out zero, not negative
+        return "Ikke tilgjengelig"
+    
+    abs_n = abs(n)  # Use absolute value for formatting
+    if abs_n >= 1e12:
+        formatted = f"{n/1e12:.1f} bill NOK"
+    elif abs_n >= 1e9:
+        formatted = f"{n/1e9:.0f} mrd NOK" 
+    elif abs_n >= 1e6:
+        formatted = f"{n/1e6:.0f} mill NOK"
+    else:
+        formatted = f"{n:,.0f} NOK"
+    
+    return formatted
+
+def format_financial_ratio(val, decimals=2, allow_negative=False) -> str:
+    """Format financial ratios with proper decimal places"""
+    try:
+        n = float(val or 0)
+        if n == 0:
+            return "Ikke tilgjengelig"
+        # For P/E ratios, show negative values; for others, don't
+        if n < 0 and not allow_negative:
+            return "Ikke tilgjengelig"
+        return f"{n:.{decimals}f}"
+    except Exception:
+        return "Ikke tilgjengelig"
 
 def retry(fn, attempts=3, delay=1.0, factor=1.6, what="operation"):
     d = delay
@@ -66,7 +100,7 @@ def retry(fn, attempts=3, delay=1.0, factor=1.6, what="operation"):
 
 # ---------- pulls ----------
 def get_historical_chart_data(ticker: str, period="5y") -> List[Dict]:
-    """Return list of {date, price, high, low, volume} for 5y daily."""
+    """Return list of {date, price, high, low, volume} for 5y daily, with anomaly smoothing."""
     t = normalize_ticker(ticker)
 
     def _pull():
@@ -100,6 +134,7 @@ def get_historical_chart_data(ticker: str, period="5y") -> List[Dict]:
             continue
 
     out.sort(key=lambda x: x["date"])
+    
     if len(out) > 800:  # light downsample
         out = out[::2]
     return out
@@ -150,15 +185,15 @@ def calculate_performance_metrics(chart: List[Dict]) -> Dict[str, float]:
 
 def fetch_enhanced_stock_data(ticker: str) -> Optional[Dict]:
     """Fetch profile + 5y chart, derive metrics from chart."""
-    t = normalize_ticker(ticker)
-    log.info(f"Fetching data for {t}")
+    ticker_norm = normalize_ticker(ticker)
+    log.info(f"Fetching data for {ticker_norm}")
 
     def _info():
-        st = yf.Ticker(t)
+        st = yf.Ticker(ticker_norm)
         return st, st.info
 
     try:
-        stock, info = retry(_info, attempts=3, delay=1.0, factor=1.5, what=f"info({t})")
+        stock, info = retry(_info, attempts=3, delay=1.0, factor=1.5, what=f"info({ticker_norm})")
     except Exception:
         return None
 
@@ -175,18 +210,30 @@ def fetch_enhanced_stock_data(ticker: str) -> Optional[Dict]:
         def _last5d():
             return stock.history(period="5d", interval="1d", auto_adjust=False)
         try:
-            h: pd.DataFrame = retry(_last5d, attempts=3, delay=1.0, factor=1.5, what=f"current history({t})")
+            h: pd.DataFrame = retry(_last5d, attempts=3, delay=1.0, factor=1.5, what=f"current history({ticker_norm})")
             if h is not None and not h.empty:
                 price = float(h["Close"].iloc[-1])
         except Exception:
             price = None
     if price is None:
         price = float(info.get("currentPrice") or info.get("regularMarketPrice") or 0.0)
+    current_price = price
 
-    chart = get_historical_chart_data(t, period="5y")
+    chart = get_historical_chart_data(ticker_norm, period="5y")
     perf = calculate_performance_metrics(chart) if chart else {
         "performance_5y": 0.0, "performance_2y": 0.0, "performance_1y": 0.0, "volatility": 0.0
     }
+
+    # Extract new financial metrics
+    revenue_2024 = info.get("totalRevenue", 0)
+    ebitda_2024 = info.get("ebitda", 0)
+    net_earnings_2024 = info.get("netIncomeToCommon", 0)
+    pe_ratio = info.get("trailingPE", 0)
+    ps_ratio = info.get("priceToSalesTrailing12Months", 0)
+    ev_ebitda = info.get("enterpriseToEbitda", 0)
+    
+    log.info(f"Financial metrics - Revenue: {format_revenue_nok(revenue_2024)}, "
+             f"PE: {format_financial_ratio(pe_ratio)}, PS: {format_financial_ratio(ps_ratio)}")
 
     # 52w range: prefer info; else derive from last year of chart
     hi = info.get("fiftyTwoWeekHigh")
@@ -201,12 +248,11 @@ def fetch_enhanced_stock_data(ticker: str) -> Optional[Dict]:
 
     mcap_raw = float(info.get("marketCap") or 0)
     data = {
-        "game_date": datetime.now().strftime("%Y-%m-%d"),
-        "ticker": t,
-        "company_name": info.get("longName") or info.get("shortName") or t.replace(".OL", ""),
-        "current_price": round(float(price or 0), 2),
-        "market_cap": format_market_cap_nok(mcap_raw),
-        "market_cap_raw": mcap_raw,
+        "company_name": info.get("longName") or info.get("shortName") or ticker_norm,
+        "ticker": ticker_norm,
+        "current_price": round(float(current_price or 0), 2),
+        "market_cap": format_market_cap_nok(info.get("marketCap")),
+        "market_cap_raw": int(info.get("marketCap") or 0),
         "sector": info.get("sector") or "Ukjent",
         "industry": info.get("industry") or "Ukjent",
         "employees": int(info.get("fullTimeEmployees") or 0),
@@ -218,6 +264,19 @@ def fetch_enhanced_stock_data(ticker: str) -> Optional[Dict]:
         "performance_2y": perf["performance_2y"],
         "performance_1y": perf["performance_1y"],
         "volatility": perf["volatility"],
+        # NEW FINANCIAL METRICS
+        "revenue_2024": int(revenue_2024) if revenue_2024 else 0,
+        "revenue_2024_formatted": format_revenue_nok(revenue_2024),
+        "ebitda_2024": int(ebitda_2024) if ebitda_2024 else 0,
+        "ebitda_2024_formatted": format_revenue_nok(ebitda_2024),
+        "net_earnings_2024": int(net_earnings_2024) if net_earnings_2024 else 0,
+        "net_earnings_2024_formatted": format_revenue_nok(net_earnings_2024),
+        "pe_ratio": float(pe_ratio) if pe_ratio else 0,
+        "pe_ratio_formatted": format_financial_ratio(pe_ratio),
+        "ps_ratio": float(ps_ratio) if ps_ratio else 0,
+        "ps_ratio_formatted": format_financial_ratio(ps_ratio),
+        "ev_ebitda": float(ev_ebitda) if ev_ebitda else 0,
+        "ev_ebitda_formatted": format_financial_ratio(ev_ebitda),
         "chart_data": chart,
         "last_updated": datetime.now().isoformat(timespec="seconds"),
     }
@@ -255,11 +314,18 @@ def load_obx_list() -> List[Dict]:
     return out
 
 def select_daily_stock() -> Dict:
-    """Deterministic pick from obx list using date seed."""
+    """Deterministic but random pick from obx list using date seed."""
     stocks = load_obx_list()
     today = datetime.now()
+    
+    # Use date as seed for deterministic randomness
     random.seed(int(today.strftime("%Y%m%d")))
-    choice = random.choice(stocks)
+    
+    # Shuffle the entire list deterministically, then pick first one
+    shuffled_stocks = stocks.copy()
+    random.shuffle(shuffled_stocks)
+    choice = shuffled_stocks[0]
+    
     log.info(f"📅 Selected {choice['name']} ({choice['ticker']}) for {today.strftime('%Y-%m-%d')} from {OBX_PATH} (n={len(stocks)})")
     return choice
 
@@ -303,6 +369,60 @@ def print_summary(stock: Dict):
     print(f"Chart Pts:   {len(stock['chart_data'])}")
     print(f"Difficulty:  {stock['difficulty_rating']}/5 ⭐")
     print("=" * 60)
+
+def smooth_price_anomalies(chart_data: List[Dict], threshold_multiplier: float = 20.0) -> List[Dict]:
+    """
+    Detect and smooth out obvious price anomalies/spikes in chart data.
+    """
+    if len(chart_data) < 10:
+        return chart_data
+    
+    # Create a working copy
+    smoothed_data = [pt.copy() for pt in chart_data]
+    
+    # Calculate rolling median with window size of 10 days
+    window_size = min(10, len(chart_data) // 4)
+    
+    for i in range(len(smoothed_data)):
+        # Get window around current point
+        start_idx = max(0, i - window_size // 2)
+        end_idx = min(len(smoothed_data), i + window_size // 2 + 1)
+        
+        window_prices = [smoothed_data[j]["price"] for j in range(start_idx, end_idx)]
+        window_prices.sort()
+        
+        # Calculate median
+        n = len(window_prices)
+        median = window_prices[n // 2] if n % 2 == 1 else (window_prices[n // 2 - 1] + window_prices[n // 2]) / 2
+        
+        current_price = smoothed_data[i]["price"]
+        
+        # If current price is more than threshold_multiplier times the median, it's likely an anomaly
+        if current_price > median * threshold_multiplier or current_price < median / threshold_multiplier:
+            log.warning(f"Detected price anomaly at {smoothed_data[i]['date']}: {current_price} NOK (median: {median:.2f} NOK)")
+            
+            # Replace with interpolated value
+            if i == 0:
+                # First point - use median of next few points
+                smoothed_data[i]["price"] = round(median, 2)
+            elif i == len(smoothed_data) - 1:
+                # Last point - use median of previous few points
+                smoothed_data[i]["price"] = round(median, 2)
+            else:
+                # Middle point - interpolate between previous and next valid points
+                prev_price = smoothed_data[i-1]["price"]
+                next_price = smoothed_data[i+1]["price"]
+                interpolated = (prev_price + next_price) / 2
+                smoothed_data[i]["price"] = round(interpolated, 2)
+            
+            # Also adjust high and low to be consistent
+            new_price = smoothed_data[i]["price"]
+            smoothed_data[i]["high"] = round(max(new_price * 1.02, smoothed_data[i].get("high", new_price)), 2)
+            smoothed_data[i]["low"] = round(min(new_price * 0.98, smoothed_data[i].get("low", new_price)), 2)
+            
+            log.info(f"Smoothed anomaly: {current_price} → {new_price} NOK")
+    
+    return smoothed_data
 
 # ---------- main ----------
 def main():

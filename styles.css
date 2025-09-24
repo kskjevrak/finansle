@@ -1,34 +1,36 @@
 /* ============================================================================
-   FINANSLE - Professional Blue Palette (Clean Version)
+   FINANSLE - Professional Blue Palette (Darker Version)
    ============================================================================ */
 
-/* CENTRALIZED COLOR SYSTEM - Reordered Blue Palette */
+/* CENTRALIZED COLOR SYSTEM - Darker Blue Palette */
 :root {
-  /* Main Colors - Blue Palette */
-  --darkest-blue: #27374D;      /* Background */
-  --dark-blue: #526D82;         /* Primary boxes */  
-  --light-blue: #9DB2BF;        /* Secondary elements */
-  --lightest-blue: #DDE6ED;     /* All text */
+  /* Main Colors - Darker Blue Palette */
+  --darkest-blue: #1A2332;      /* Even darker background (was #27374D) */
+  --dark-blue: #3A4F63;         /* Darker primary boxes (was #526D82) */  
+  --light-blue: #6B7A8A;        /* Muted secondary elements (was #9DB2BF) */
+  --lightest-blue: #B0BCC8;     /* Dimmed text (was #DDE6ED) */
   
   /* Background Colors */
-  --bg-primary: #27374D;        /* Main background (darkest) */
-  --bg-secondary: #526D82;      /* Primary boxes (second darkest) */
-  --bg-tertiary: #9DB2BF;       /* Secondary boxes (third) */
-  --bg-modal: #526D82;          /* Modal backgrounds */
+  --bg-primary: #1A2332;        /* Main background (darkest) */
+  --bg-secondary: #3A4F63;      /* Primary boxes (second darkest) */
+  --bg-tertiary: #6B7A8A;       /* Secondary boxes (third) */
+  --bg-modal: #3A4F63;          /* Modal backgrounds */
   
   /* Text Colors */
-  --text-primary: #DDE6ED;      /* All text (brightest) */
-  --text-secondary: #DDE6ED;    /* All text (brightest) */
-  --text-muted: #DDE6ED;        /* All text (brightest) */
+  --text-primary: #B0BCC8;      /* All text (dimmed) */
+  --text-secondary: #B0BCC8;    /* All text (dimmed) */
+  --text-muted: #B0BCC8;        /* All text (dimmed) */
   
   /* UI Colors */
-  --border-color: #526D82;
-  --error-color: #ef4444;
-  --success-color: #9DB2BF;
-  --warning-color: #9DB2BF;
+  --border-color: #3A4F63;
+  --error-color: #d93939;       /* Slightly darker error */
+  --success-color: #6B7A8A;
+  --warning-color: #6B7A8A;
   
-  /* Chart height */
-  --chart-height: 280px;
+  /* Narrower Layout Dimensions - Leave space for ads */
+  --game-width: 900px;          /* Narrower game width on desktop */
+  --chart-width: 860px;         /* Chart area width (game-width minus padding) */
+  --chart-height: 280px;        /* Chart height */
 }
 
 /* Reset and Base Styles */
@@ -47,20 +49,21 @@ body {
   flex-direction: column;
 }
 
-/* Layout Container */
+/* Layout Container - Narrower Fixed Width Game Area */
 .container {
-  max-width: 1180px;
+  max-width: var(--game-width);
   margin: 0 auto;
-  padding: 24px;
+  padding: 20px;
   flex: 1;
   background: var(--bg-primary);
+  width: 100%;
 }
 
 /* Header */
 .header {
   text-align: center;
-  margin-bottom: 8px;
-  padding: 8px 0;
+  margin-bottom: 4px;
+  padding: 4px 0;
 }
 
 .logo {
@@ -86,45 +89,60 @@ body {
   transition: all 0.3s ease;
 }
 
-/* Chart Container */
+/* Chart Container - Fixed Width */
 .chart-container {
   border-radius: 4px;
   padding: 20px;
-  margin: 8px auto 16px;
-  max-height: calc(var(--chart-height) + 60px);
-  overflow: hidden;
-  min-height: 200px;
+  margin: 0px auto 16px;
   background: var(--bg-primary);
+  width: 100%;
+  max-width: var(--chart-width);
+  min-height: calc(var(--chart-height) + 60px);
+  overflow: visible;
+}
+
+.chart-stage {
+  width: 100%;
+  height: var(--chart-height);
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .chart-placeholder {
   color: var(--text-primary);
   font-style: italic;
   text-align: center;
+  padding: 40px 0;
 }
 
-/* Hint Bar - No boxes around individual hints */
+/* Hint Bar - Fixed Width with Tight Vertical Expansion */
 .hint-bar {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px 30px;
-  align-items: center;
+  gap: 12px 18px;               /* Tighter gaps */
+  align-items: flex-start;
   justify-content: center;
-  padding: 12px 14px;
-  margin: 0 0 18px 0;
+  padding: 12px 16px;           /* Tighter padding */
+  margin: 0 auto 18px;
   background: var(--bg-secondary);
   border-radius: 4px;
   position: relative;
+  width: 100%;
+  max-width: var(--chart-width);
+  min-height: 44px;             /* Smaller minimum height */
+  box-sizing: border-box;
 }
 
-/* Individual hint items - No boxes */
+/* Individual hint items - Tighter and more compact */
 .hint-item {
   display: inline-flex;
   align-items: baseline;
-  gap: 6px;
+  gap: 5px;                     /* Smaller gap */
   white-space: nowrap;
-  font-size: 0.9rem;
-  /* Removed background and border */
+  font-size: 0.85rem;           /* Slightly smaller font */
+  flex: 0 0 auto;
+  line-height: 1.3;             /* Tighter line height */
 }
 
 .hint-label {
@@ -148,10 +166,12 @@ body {
   font-style: italic;
 }
 
-/* Search Container */
+/* Search Container - Fixed Width */
 .search-container {
   position: relative;
-  margin-bottom: 12px;
+  margin: 0 auto 12px;
+  max-width: var(--chart-width);
+  width: 100%;
 }
 
 .search-input {
@@ -164,11 +184,12 @@ body {
   color: var(--text-primary);
   transition: 0.2s;
   outline: none;
+  box-sizing: border-box;
 }
 
 .search-input:focus {
   border-color: var(--light-blue);
-  box-shadow: 0 0 0 3px rgba(157,178,191,.1);
+  box-shadow: 0 0 0 3px rgba(107,122,138,.1);
 }
 
 .search-input::placeholder {
@@ -209,11 +230,13 @@ body {
   color: var(--text-primary);
 }
 
-/* Action Buttons */
+/* Action Buttons - Fixed Width */
 .action-buttons {
   display: flex;
   gap: 12px;
-  margin-top: 8px;
+  margin: 8px auto 0;
+  max-width: var(--chart-width);
+  width: 100%;
 }
 
 .btn {
@@ -225,6 +248,7 @@ body {
   font-weight: 600;
   cursor: pointer;
   transition: 0.2s;
+  box-sizing: border-box;
 }
 
 .btn-primary {
@@ -258,7 +282,7 @@ body {
   display: inline-block;
   width: 20px;
   height: 20px;
-  border: 3px solid rgba(221,230,237,.3);
+  border: 3px solid rgba(176,188,200,.3);
   border-radius: 50%;
   border-top-color: var(--light-blue);
   animation: spin 1s linear infinite;
@@ -268,10 +292,12 @@ body {
   to { transform: rotate(360deg); }
 }
 
-/* Attempts Tracker */
+/* Attempts Tracker - Fixed Width */
 .attempts-tracker {
   text-align: center;
-  margin: 12px 0 8px;
+  margin: 12px auto 8px;
+  max-width: var(--chart-width);
+  width: 100%;
 }
 
 .attempts-text {
@@ -310,6 +336,9 @@ body {
 /* Detailed Clue Cards */
 .clues-section {
   margin-bottom: 20px;
+  max-width: var(--chart-width);
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .clue-card {
@@ -371,7 +400,7 @@ body {
 }
 
 /* ============================================================================
-   MODAL STYLES
+   MODAL STYLES - EVEN DARKER
    ============================================================================ */
 
 /* Modal overlay */
@@ -389,15 +418,15 @@ body {
   padding: 20px;
 }
 
-/* Modal content box */
+/* Modal content box - Now using even darker blue */
 .modal {
-  background: var(--bg-modal);
+  background: #14202B;              /* Even darker than --darkest-blue */
   border-radius: 4px;
   padding: 25px;
   max-width: 450px;
   width: 100%;
   text-align: center;
-  border: 1px solid var(--border-color);
+  border: 1px solid #2A3F54;       /* Darker border */
   max-height: 85vh;
   overflow: hidden;
   position: relative;
@@ -451,14 +480,14 @@ body {
   font-size: 1.05rem;
 }
 
-/* Company info section */
+/* Company info section - Using darker colors */
 .company-info {
-  background: var(--bg-secondary);
+  background: #2A3F54;             /* Darker than --dark-blue */
   border-radius: 4px;
   padding: 15px;
   margin: 15px 0;
   text-align: left;
-  border: 1px solid var(--border-color);
+  border: 1px solid #4A5F73;      /* Darker border */
 }
 
 /* Company name */
@@ -484,7 +513,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 6px 0;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid #2A3F54;
 }
 
 .detail-item:last-child {
@@ -501,13 +530,13 @@ body {
   font-weight: 600;
 }
 
-/* Stats section */
+/* Stats section - Using darker colors */
 .stats-section {
   margin-top: 15px;
-  background: var(--bg-secondary);
+  background: #2A3F54;             /* Darker than --dark-blue */
   border-radius: 4px;
   padding: 15px;
-  border: 1px solid var(--border-color);
+  border: 1px solid #4A5F73;      /* Darker border */
 }
 
 .stats-title {
@@ -526,11 +555,12 @@ body {
   text-align: center;
 }
 
+/* Stats grid items - Using darker colors */
 .stat-item {
   padding: 10px 6px;
-  background: var(--bg-tertiary);
+  background: #4A5F73;            /* Darker than --light-blue */
   border-radius: 4px;
-  border: 1px solid var(--border-color);
+  border: 1px solid #6B7A8A;     /* Darker border */
 }
 
 .stat-value {
@@ -547,9 +577,9 @@ body {
   font-weight: 500;
 }
 
-/* Share button */
+/* Share button - Using darker colors */
 .share-button {
-  background: var(--bg-secondary);
+  background: #2A3F54;            /* Darker than --dark-blue */
   color: var(--text-primary);
   border: none;
   padding: 12px 24px;
@@ -563,30 +593,102 @@ body {
 }
 
 .share-button:hover {
-  background: var(--bg-tertiary);
+  background: #4A5F73;            /* Darker hover */
   color: var(--text-primary);
   transform: translateY(-1px);
 }
 
 /* ============================================================================
-   RESPONSIVE STYLES
+   RESPONSIVE STYLES - PROPORTIONAL SCALING
    ============================================================================ */
 
-/* Tablet */
-@media (max-width: 900px) { 
-  :root { 
-    --chart-height: 260px;
-  } 
+/* Large Desktop (1400px+) - Standard narrow layout */
+@media (min-width: 1400px) {
+  :root {
+    --game-width: 900px;
+    --chart-width: 860px;
+    --chart-height: 280px;
+  }
 }
 
-/* Mobile */
-@media (max-width: 640px) {
-  :root { 
-    --chart-height: 200px;
+/* Medium Desktop (1200px - 1399px) - Slightly smaller */
+@media (min-width: 1200px) and (max-width: 1399px) {
+  :root {
+    --game-width: 850px;
+    --chart-width: 810px;
+    --chart-height: 270px;
+  }
+}
+
+/* Tablet Landscape (900px - 1199px) */
+@media (min-width: 900px) and (max-width: 1199px) {
+  :root {
+    --game-width: 800px;
+    --chart-width: 760px;
+    --chart-height: 260px;
+  }
+  
+  .container {
+    padding: 18px;
+  }
+  
+  .hint-bar {
+    gap: 10px 16px;
+    padding: 10px 14px;
+  }
+  
+  .hint-item {
+    font-size: 0.82rem;
+  }
+}
+
+/* Tablet Portrait (640px - 899px) */
+@media (min-width: 640px) and (max-width: 899px) {
+  :root {
+    --game-width: 100%;
+    --chart-width: calc(100% - 32px);
+    --chart-height: 240px;
   }
   
   .container {
     padding: 16px;
+  }
+  
+  .logo {
+    font-size: 2.2rem;
+  }
+  
+  .hint-bar {
+    gap: 10px 15px;
+    padding: 10px 14px;
+    min-height: 40px;
+  }
+  
+  .hint-item {
+    font-size: 0.8rem;
+    gap: 4px;
+  }
+  
+  .search-input {
+    padding: 14px 18px;
+    font-size: 1.05rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile (639px and below) */
+@media (max-width: 639px) {
+  :root {
+    --game-width: 100%;
+    --chart-width: calc(100% - 24px);
+    --chart-height: 200px;
+  }
+  
+  .container {
+    padding: 12px;
   }
   
   .logo {
@@ -611,28 +713,22 @@ body {
   }
   
   .chart-container {
-    padding: 15px;
-    margin: 8px 0 16px 0;
-  }
-  
-  .chart-stage {
-    width: 100% !important;
-  }
-  
-  #main-stock-chart {
-    width: 100% !important;
-    height: 100% !important;
+    padding: 12px;
+    margin: 6px auto 12px;
+    min-height: calc(var(--chart-height) + 40px);
   }
   
   .hint-bar {
-    gap: 15px 20px;
-    padding: 10px 12px;
-    font-size: 0.85rem;
-    margin: 0 0 16px 0;
+    gap: 8px 12px;
+    padding: 8px 10px;
+    font-size: 0.8rem;
+    margin: 0 auto 12px;
+    min-height: 36px;
   }
   
   .hint-item {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
+    gap: 3px;
   }
   
   .modal {
@@ -647,11 +743,6 @@ body {
   
   .company-name {
     font-size: 1.1rem;
-  }
-  
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
   }
   
   .stat-value {
@@ -932,7 +1023,7 @@ body {
 .form-group textarea:focus {
   outline: none;
   border-color: var(--light-blue);
-  box-shadow: 0 0 0 2px rgba(157,178,191,0.2);
+  box-shadow: 0 0 0 2px rgba(107,122,138,0.2);
 }
 
 .modal-buttons {

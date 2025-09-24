@@ -174,7 +174,7 @@ updatePageTitle() {
     if (isFlat) {
       const s = {
         company_name: raw.company_name,
-        ticker: (raw.ticker || "").toUpperCase(), // may include .OL
+        ticker: (raw.ticker || "").toUpperCase(),
         current_price: Number(raw.current_price ?? 0),
         market_cap: raw.market_cap || this.formatMarketCap(raw.market_cap_raw),
         sector: raw.sector || "Ukjent",
@@ -187,6 +187,13 @@ updatePageTitle() {
         performance_5y: Number(raw.performance_5y ?? 0),
         performance_2y: Number(raw.performance_2y ?? 0),
         performance_1y: Number(raw.performance_1y ?? 0),
+        // ADD THESE NEW FIELDS:
+        revenue_2024_formatted: raw.revenue_2024_formatted || "Ikke tilgjengelig",
+        ebitda_2024_formatted: raw.ebitda_2024_formatted || "Ikke tilgjengelig",
+        net_earnings_2024_formatted: raw.net_earnings_2024_formatted || "Ikke tilgjengelig",
+        pe_ratio_formatted: raw.pe_ratio_formatted || "Ikke tilgjengelig",
+        ps_ratio_formatted: raw.ps_ratio_formatted || "Ikke tilgjengelig",
+        ev_ebitda_formatted: raw.ev_ebitda_formatted || "Ikke tilgjengelig",
         chart_data: raw.chart_data || [],
       };
       return { stock: s };
@@ -218,40 +225,88 @@ updatePageTitle() {
     const v = Number(n || 0);
     if (!v || !isFinite(v)) return "Ikke tilgjengelig";
     if (v >= 1e12) return `${(v / 1e12).toFixed(1)} bill NOK`;
-    if (v >= 1e9)  return `${Math.round(v / 1e9)} mrd NOK`;
-    return `${Math.round(v / 1e6)} mill NOK`;
+    if (v >= 1e9)  return `${(v / 1e9).toFixed(1)} mrd NOK`;
+    return `${(v / 1e6).toFixed(1)} mill NOK`;
   }
 
   applyDerivedMetrics(s) {
-    const data = s.chart_data;
-    const first = data[0].price;
-    const last  = data[data.length - 1].price;
-    const pct = (a, b) => (a > 0 ? ((b - a) / a) * 100 : 0);
+  const data = s.chart_data;
+  
+  const smoothedData = s.chart_data;
+  
+  const first = smoothedData[0].price;
+  const last  = smoothedData[smoothedData.length - 1].price;
+  const pct = (a, b) => (a > 0 ? ((b - a) / a) * 100 : 0);
 
-    s.performance_5y = +pct(first, last).toFixed(2);
+  s.performance_5y = +pct(first, last).toFixed(2);
 
-    const byYearsBack = (k) => {
-      const d = new Date(data[data.length - 1].date);
-      d.setFullYear(d.getFullYear() - k);
-      for (let i = 0; i < data.length; i++) {
-        if (new Date(data[i].date) >= d) return data[i].price;
-      }
-      return data[0].price;
-    };
-    const p2 = byYearsBack(2);
-    const p1 = byYearsBack(1);
-    s.performance_2y = +pct(p2, last).toFixed(2);
-    s.performance_1y = +pct(p1, last).toFixed(2);
-
-    const oneYearAgo = new Date(data[data.length - 1].date);
-    oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
-    const lastYear = data.filter((pt) => new Date(pt.date) >= oneYearAgo).map((pt) => pt.price);
-    if (lastYear.length) {
-      s.price_52w_high = +Math.max(...lastYear).toFixed(2);
-      s.price_52w_low  = +Math.min(...lastYear).toFixed(2);
+  const byYearsBack = (k) => {
+    const d = new Date(smoothedData[smoothedData.length - 1].date);
+    d.setFullYear(d.getFullYear() - k);
+    for (let i = 0; i < smoothedData.length; i++) {
+      if (new Date(smoothedData[i].date) >= d) return smoothedData[i].price;
     }
-    s.current_price = +last.toFixed(2);
+    return smoothedData[0].price;
+  };
+  
+  const p2 = byYearsBack(2);
+  const p1 = byYearsBack(1);
+  s.performance_2y = +pct(p2, last).toFixed(2);
+  s.performance_1y = +pct(p1, last).toFixed(2);
+
+  const oneYearAgo = new Date(smoothedData[smoothedData.length - 1].date);
+  oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+  const lastYear = smoothedData.filter((pt) => new Date(pt.date) >= oneYearAgo).map((pt) => pt.price);
+  if (lastYear.length) {
+    s.price_52w_high = +Math.max(...lastYear).toFixed(2);
+    s.price_52w_low  = +Math.min(...lastYear).toFixed(2);
   }
+  s.current_price = +last.toFixed(2);
+}
+
+  // Add this method after the applyDerivedMetrics method
+smoothChartData(chartData) {
+  if (!chartData || chartData.length < 5) return chartData;
+  
+  const smoothed = [...chartData];
+  const windowSize = Math.min(10, Math.floor(chartData.length / 4));
+  
+  for (let i = 0; i < smoothed.length; i++) {
+    const start = Math.max(0, i - Math.floor(windowSize / 2));
+    const end = Math.min(smoothed.length, i + Math.floor(windowSize / 2) + 1);
+    
+    const windowPrices = smoothed.slice(start, end).map(d => d.price).sort((a, b) => a - b);
+    const median = windowPrices.length % 2 === 1 
+      ? windowPrices[Math.floor(windowPrices.length / 2)]
+      : (windowPrices[Math.floor(windowPrices.length / 2) - 1] + windowPrices[Math.floor(windowPrices.length / 2)]) / 2;
+    
+    const currentPrice = smoothed[i].price;
+    const threshold = 15; // 15x multiplier for anomaly detection
+    
+    // Detect anomalies
+    if (currentPrice > median * threshold || currentPrice < median / threshold) {
+      console.warn(`Detected price anomaly at ${smoothed[i].date}: ${currentPrice} NOK (median: ${median.toFixed(2)} NOK)`);
+      
+      // Smooth the anomaly
+      let newPrice;
+      if (i === 0 || i === smoothed.length - 1) {
+        newPrice = median;
+      } else {
+        const prevPrice = smoothed[i-1].price;
+        const nextPrice = smoothed[i+1].price;
+        newPrice = (prevPrice + nextPrice) / 2;
+      }
+      
+      smoothed[i].price = Math.round(newPrice * 100) / 100;
+      smoothed[i].high = Math.max(smoothed[i].price * 1.02, smoothed[i].high || smoothed[i].price);
+      smoothed[i].low = Math.min(smoothed[i].price * 0.98, smoothed[i].low || smoothed[i].price);
+      
+      console.log(`Smoothed anomaly: ${currentPrice} → ${smoothed[i].price} NOK`);
+    }
+  }
+  
+  return smoothed;
+}
 
   // ------------------ UI wiring ------------------
   setupEventListeners() {
@@ -500,46 +555,46 @@ showMainChart() {
 
   wrap.innerHTML = `
     <div style="width:100%;">
-      <div style="text-align:center; margin-bottom:10px;">
-        <div style="color:#DDE6ED; font-weight:600; font-size:1.05rem;">
-          ${perfText} <em style="color:var(--text-gray); font-weight:normal;">Siste 5 år</em>
+        <div class="chart-stage">
+            <svg id="main-stock-chart"
+                 viewBox="0 0 860 280"
+                 preserveAspectRatio="none"
+                 style="display:block; width:100%; height:100%;">
+                <defs>
+                    <linearGradient id="chartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#DDE6ED;stop-opacity:0.3"/>
+                        <stop offset="100%" style="stop-color:#DDE6ED;stop-opacity:0.5"/>
+                    </linearGradient>
+                </defs>
+            </svg>
         </div>
-      </div>
-
-      <div class="chart-stage" style="height:${chartHeight}px; position:relative; border-radius:12px; overflow:hidden; width:100%;">
-        <svg id="main-stock-chart"
-             viewBox="0 0 800 ${chartHeight}"
-             preserveAspectRatio="none"
-             style="display:block; width:100%; height:100%;">
-          <defs>
-            <linearGradient id="chartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" style="stop-color:#DDE6ED;stop-opacity:0.3"/>
-              <stop offset="100%" style="stop-color:#DDE6ED;stop-opacity:0.5"/>
-            </linearGradient>
-          </defs>
-        </svg>
-
-        <div style="position:absolute; right:12px; top:10px; font-size:12px; color:#DDE6ED;
-            font-weight:600; background:rgba(221,230,237,0.15); padding:3px 6px; border-radius:4px;">
-          ${this.dailyStock.current_price} NOK
-        </div>
-      </div>
 
       <div class="chart-meta" style="display:flex; justify-content:center; flex-wrap:wrap; gap:32px; margin-top:12px; padding-top:12px; border-top:1px solid var(--border-color);">
+        <div style="text-align:center;">
+          <div style="font-size:12px; color:var(--text-gray);">Siste</div>
+          <div style="font-size:15px; color:var(--primary-green); font-weight:600;">${this.dailyStock.current_price} NOK</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:12px; color:var(--text-gray);">Siste 5 år</div>
+          <div style="font-size:15px; color:var(--primary-green); font-weight:600;">${perfText}</div>
+        </div>
         <div style="text-align:center;">
           <div style="font-size:12px; color:var(--text-gray);">Markedsverdi</div>
           <div style="font-size:15px; color:var(--primary-green); font-weight:600;">${this.dailyStock.market_cap}</div>
         </div>
         <div style="text-align:center;">
-          <div style="font-size:12px; color:var(--text-gray);">Ansatte</div>
-          <div style="font-size:15px; color:var(--primary-green); font-weight:600;">${(this.dailyStock.employees||0).toLocaleString("no-NO")}</div>
+          <div style="font-size:12px; color:var(--text-gray);">P/E</div>
+          <div style="font-size:15px; color:var(--primary-green); font-weight:600;">${this.dailyStock.pe_ratio_formatted || "N/A"}</div>
         </div>
         <div style="text-align:center;">
-          <div style="font-size:12px; color:var(--text-gray);">52-ukers område</div>
-          <div style="font-size:15px; color:var(--primary-green); font-weight:600;">${this.dailyStock.price_52w_low}–${this.dailyStock.price_52w_high} NOK</div>
+          <div style="font-size:12px; color:var(--text-gray);">EV/EBITDA</div>
+          <div style="font-size:15px; color:var(--primary-green); font-weight:600;">${this.dailyStock.ev_ebitda_formatted || "N/A"}</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:12px; color:var(--text-gray);">P/S</div>
+          <div style="font-size:15px; color:var(--primary-green); font-weight:600;">${this.dailyStock.ps_ratio_formatted || "N/A"}</div>
         </div>
       </div>
-    </div>
   `;
 
   requestAnimationFrame(() => this.drawChartLine());
@@ -618,19 +673,19 @@ calculateOptimalYAxisTicks(maxPrice, targetTicks = 6) {
 }
 
 drawChartLine() {
-
     const svg = document.getElementById("main-stock-chart");
     const data = this.dailyStock?.chart_data || [];
     if (!svg || data.length < 2) return;
 
-    // Get container dimensions instead of SVG dimensions
-    const container = svg.parentElement;
-    const containerRect = container.getBoundingClientRect();
+    // Get fixed dimensions from CSS custom properties
+    const rootStyles = getComputedStyle(document.documentElement);
+    const cssWidth = rootStyles.getPropertyValue('--chart-width').trim();
+    const cssHeight = rootStyles.getPropertyValue('--chart-height').trim();
     
-    // Use container width and ensure minimum dimensions
-    let width = Math.max(300, containerRect.width || 0);
-    let height = Math.max(150, containerRect.height || 0);
-    
+    // Parse the CSS values and set fixed dimensions
+    let width = parseInt(cssWidth) || 860;  // fallback to 860px
+    let height = parseInt(cssHeight) || 280; // fallback to 280px
+
     // If still no dimensions, try alternative methods
     if (!width || !height) {
       const computedStyle = getComputedStyle(container);
@@ -645,7 +700,7 @@ drawChartLine() {
 
     // Dynamic padding based on screen size
     const isMobile = width < 640;
-    const padX = isMobile ? Math.max(40, width * 0.08) : 55; // 8% of width on mobile, min 40px
+    const padX = isMobile ? Math.max(50, width * 0.08) : 70; // Increased left padding for wider labels
     const padY = 35;
 
     // Update SVG viewBox to match actual dimensions
@@ -797,12 +852,12 @@ drawChartLine() {
   generateClueCards() {
     const s = this.dailyStock;
     this.clueTypes = [
-      { id: "sector",      title: "Sektor",              unlock: 1, getValue: () => s?.sector || "Ikke tilgjengelig" },
-      { id: "employees",   title: "Ansatte",             unlock: 2, getValue: () => (s?.employees ? `${s.employees.toLocaleString("no-NO")} ansatte` : "Ikke tilgjengelig") },
-      { id: "price-range", title: "52-ukers prisområde", unlock: 3, getValue: () => (s?.price_52w_low != null && s?.price_52w_high != null ? `${s.price_52w_low} - ${s.price_52w_high} NOK` : "Ikke tilgjengelig") },
-      { id: "location",    title: "Hovedkontor",         unlock: 4, getValue: () => s?.headquarters || "Norge" },
-      { id: "industry",    title: "Bransje",             unlock: 5, getValue: () => s?.industry || "Ikke tilgjengelig" },
-      { id: "description", title: "Hovedvirksomhet", unlock: 6, getValue: () => this.getShortDescription(s?.ticker, s?.description) }
+      { id: "sector",        title: "Sektor",           unlock: 1, getValue: () => s?.sector || "Ikke tilgjengelig" },
+      { id: "employees",     title: "Ansatte",             unlock: 2, getValue: () => (s?.employees ? `${s.employees.toLocaleString("no-NO")} ansatte` : "Ikke tilgjengelig") },
+      { id: "revenue",       title: "FY24 Omsetning",  unlock: 3, getValue: () => s?.revenue_2024_formatted || "Ikke tilgjengelig" },
+      { id: "ebitda",        title: "FY24 EBITDA",           unlock: 4, getValue: () => s?.ebitda_2024_formatted || "Ikke tilgjengelig" },
+      { id: "net-earnings",  title: "FY24 Resultat",    unlock: 5, getValue: () => s?.net_earnings_2024_formatted || "Ikke tilgjengelig" },
+      { id: "description",   title: "Hovedvirksomhet",  unlock: 6, getValue: () => this.getShortDescription(s?.ticker, s?.description) }
     ];
 
     const host = document.getElementById("clues-section");
@@ -930,7 +985,7 @@ unlockClues() {
     const name    = document.getElementById("company-name");
     const overlay = document.getElementById("modal-overlay");
 
-    if (title)   title.textContent = won ? "Gratulerer! 🎉" : "Bra forsøk! 😊";
+    if (title)   title.textContent = won ? "Gratulerer!" : "Bra forsøk!";
     if (content) content.textContent = won
       ? (attempts === 1 ? "Fantastisk! Du gjettet riktig på første forsøk!" : `Flott! Du gjettet riktig på ${attempts} forsøk!`)
       : `Det var ${this.dailyStock.company_name}. Prøv igjen i morgen!`;
@@ -942,15 +997,17 @@ unlockClues() {
   }
 
   updateCompanyDetails() {
-    const box = document.querySelector(".company-details");
-    if (!box) return;
-    box.innerHTML = `
-      <div class="detail-item"><span class="detail-label">Ticker:</span><span class="detail-value">${this.dailyStock.ticker}</span></div>
-      <div class="detail-item"><span class="detail-label">Sektor:</span><span class="detail-value">${this.dailyStock.sector || "N/A"}</span></div>
-      <div class="detail-item"><span class="detail-label">Markedsverdi:</span><span class="detail-value">${this.dailyStock.market_cap || "N/A"}</span></div>
-      <div class="detail-item"><span class="detail-label">Ansatte:</span><span class="detail-value">${(this.dailyStock.employees || 0).toLocaleString("no-NO")}</span></div>
-    `;
-  }
+  const box = document.querySelector(".company-details");
+  if (!box) return;
+  box.innerHTML = `
+    <div class="detail-item"><span class="detail-label">Ticker:</span><span class="detail-value">${this.dailyStock.ticker}</span></div>
+    <div class="detail-item"><span class="detail-label">Sektor:</span><span class="detail-value">${this.dailyStock.sector || "N/A"}</span></div>
+    <div class="detail-item"><span class="detail-label">Markedsverdi:</span><span class="detail-value">${this.dailyStock.market_cap || "N/A"}</span></div>
+    <div class="detail-item"><span class="detail-label">P/E:</span><span class="detail-value">${this.dailyStock.pe_ratio_formatted || "N/A"}</span></div>
+    <div class="detail-item"><span class="detail-label">EV/EBITDA:</span><span class="detail-value">${this.dailyStock.ev_ebitda_formatted || "N/A"}</span></div>
+    <div class="detail-item"><span class="detail-label">P/S:</span><span class="detail-value">${this.dailyStock.ps_ratio_formatted || "N/A"}</span></div>
+  `;
+}
 
   updateStatsDisplay() {
     const winPct = this.gameStats.played ? Math.round((this.gameStats.won / this.gameStats.played) * 100) : 0;
