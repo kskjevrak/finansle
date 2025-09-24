@@ -797,12 +797,12 @@ drawChartLine() {
   generateClueCards() {
     const s = this.dailyStock;
     this.clueTypes = [
-      { id: "sector",      icon: "🏭", title: "Sektor",              unlock: 1, getValue: () => s?.sector || "Ikke tilgjengelig" },
-      { id: "employees",   icon: "👥", title: "Ansatte",             unlock: 2, getValue: () => (s?.employees ? `${s.employees.toLocaleString("no-NO")} ansatte` : "Ikke tilgjengelig") },
-      { id: "price-range", icon: "💵", title: "52-ukers prisområde", unlock: 3, getValue: () => (s?.price_52w_low != null && s?.price_52w_high != null ? `${s.price_52w_low} - ${s.price_52w_high} NOK` : "Ikke tilgjengelig") },
-      { id: "location",    icon: "📍", title: "Hovedkontor",         unlock: 4, getValue: () => s?.headquarters || "Norge" },
-      { id: "industry",    icon: "⚙️", title: "Bransje",             unlock: 5, getValue: () => s?.industry || "Ikke tilgjengelig" },
-      { id: "description", icon: "📝", title: "Virksomhet", unlock: 6, getValue: () => this.getShortDescription(s?.ticker, s?.description) }
+      { id: "sector",      title: "Sektor",              unlock: 1, getValue: () => s?.sector || "Ikke tilgjengelig" },
+      { id: "employees",   title: "Ansatte",             unlock: 2, getValue: () => (s?.employees ? `${s.employees.toLocaleString("no-NO")} ansatte` : "Ikke tilgjengelig") },
+      { id: "price-range", title: "52-ukers prisområde", unlock: 3, getValue: () => (s?.price_52w_low != null && s?.price_52w_high != null ? `${s.price_52w_low} - ${s.price_52w_high} NOK` : "Ikke tilgjengelig") },
+      { id: "location",    title: "Hovedkontor",         unlock: 4, getValue: () => s?.headquarters || "Norge" },
+      { id: "industry",    title: "Bransje",             unlock: 5, getValue: () => s?.industry || "Ikke tilgjengelig" },
+      { id: "description", title: "Hovedvirksomhet", unlock: 6, getValue: () => this.getShortDescription(s?.ticker, s?.description) }
     ];
 
     const host = document.getElementById("clues-section");
