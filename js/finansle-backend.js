@@ -501,7 +501,7 @@ showMainChart() {
   wrap.innerHTML = `
     <div style="width:100%;">
       <div style="text-align:center; margin-bottom:10px;">
-        <div style="color:var(--primary-green); font-weight:600; font-size:1.05rem;">
+        <div style="color:#DDE6ED; font-weight:600; font-size:1.05rem;">
           ${perfText} <em style="color:var(--text-gray); font-weight:normal;">Siste 5 år</em>
         </div>
       </div>
@@ -513,14 +513,14 @@ showMainChart() {
              style="display:block; width:100%; height:100%;">
           <defs>
             <linearGradient id="chartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" style="stop-color:#22c55e;stop-opacity:0.3"/>
-              <stop offset="100%" style="stop-color:#22c55e;stop-opacity:0.5"/>
+              <stop offset="0%" style="stop-color:#DDE6ED;stop-opacity:0.3"/>
+              <stop offset="100%" style="stop-color:#DDE6ED;stop-opacity:0.5"/>
             </linearGradient>
           </defs>
         </svg>
 
-        <div style="position:absolute; right:12px; top:10px; font-size:12px; color:var(--primary-green);
-                    font-weight:600; background:rgba(34,197,94,0.08); padding:3px 6px; border-radius:4px;">
+        <div style="position:absolute; right:12px; top:10px; font-size:12px; color:#DDE6ED;
+            font-weight:600; background:rgba(221,230,237,0.15); padding:3px 6px; border-radius:4px;">
           ${this.dailyStock.current_price} NOK
         </div>
       </div>
@@ -766,7 +766,7 @@ drawChartLine() {
     // Draw chart line
     const line = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
     line.setAttribute("fill", "none");
-    line.setAttribute("stroke", "#22c55e");
+    line.setAttribute("stroke", "#DDE6ED");
     line.setAttribute("stroke-width", isMobile ? "2.2" : "2.6");
     line.setAttribute("points", pts);
     line.style.filter = "drop-shadow(0 0 2px rgba(34,197,94,0.28))";
@@ -778,7 +778,7 @@ drawChartLine() {
     dot.setAttribute("cx", x(data.length - 1));
     dot.setAttribute("cy", y(last.price));
     dot.setAttribute("r", isMobile ? "3.5" : "4.2");
-    dot.setAttribute("fill", "#22c55e");
+    dot.setAttribute("fill", "#DDE6ED");
     svg.appendChild(dot);
 }
 
