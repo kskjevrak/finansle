@@ -770,35 +770,74 @@ drawChartLine() {
       svg.appendChild(gridLine);
     }
 
-    // Draw X-axis labels (years)
-    const now = new Date();
-    const yearPositions = [];
+// Draw X-axis labels (years) - POSITIONED AT ACTUAL JANUARY 1ST DATES
+const yearPositions = [];
+
+// Get data date range
+const firstDate = new Date(data[0].date);
+const lastDate = new Date(data[data.length - 1].date);
+const uniqueYears = [...new Set(data.map(d => new Date(d.date).getFullYear()))].sort();
+const currentYear = new Date().getFullYear();
+const dataSpanYears = currentYear - uniqueYears[0];
+
+// Determine if we should show "IPO" instead of first year
+const shouldShowIPO = dataSpanYears < 5;
+
+// Calculate total data span in days for positioning
+const totalDays = (lastDate - firstDate) / (1000 * 60 * 60 * 24);
+const chartWidth = width - 2 * padX;
+
+if (isMobile) {
+  // Mobile: Show IPO/first year, one middle year, "I dag"
+  if (uniqueYears.length >= 3) {
+    const midYear = uniqueYears[Math.floor(uniqueYears.length / 2)];
+    const midYearDate = new Date(midYear, 0, 1);
+    const midPosition = (midYearDate - firstDate) / (1000 * 60 * 60 * 24) / totalDays;
     
-    // Fewer year labels on mobile
-    if (isMobile) {
-      // Show only 2020, 2022, I dag on mobile
-      yearPositions.push(
-        { label: "2020", x: padX + 0 * (width - 2 * padX) },
-        { label: "2022", x: padX + 0.5 * (width - 2 * padX) },
-        { label: "I dag", x: width - padX }
-      );
-    } else {
-      // Full year labels on desktop
-      for (let i = 5; i >= 1; i--) {
-        const yearDate = new Date(now);
-        yearDate.setFullYear(now.getFullYear() - i);
-        const position = (5 - i) / 5;
-        yearPositions.push({
-          label: yearDate.getFullYear().toString(),
-          x: padX + position * (width - 2 * padX)
-        });
-      }
+    yearPositions.push(
+      { label: shouldShowIPO ? "IPO" : uniqueYears[0].toString(), x: padX },
+      { label: midYear.toString(), x: padX + midPosition * chartWidth },
+      { label: "I dag", x: width - padX }
+    );
+  } else {
+    yearPositions.push(
+      { label: shouldShowIPO ? "IPO" : uniqueYears[0].toString(), x: padX },
+      { label: "I dag", x: width - padX }
+    );
+  }
+} else {
+  // Desktop: Position IPO at start, then years at January 1st positions
+  
+  // Add IPO label at the actual start
+  yearPositions.push({
+    label: shouldShowIPO ? "IPO" : uniqueYears[0].toString(),
+    x: padX
+  });
+  
+  // Add year labels at January 1st positions (skip first year if showing IPO)
+  const yearsToShow = shouldShowIPO ? uniqueYears.slice(1) : uniqueYears.slice(1);
+  
+  yearsToShow.forEach(year => {
+    const jan1 = new Date(year, 0, 1);
+    
+    // Only show if January 1st falls within our data range
+    if (jan1 >= firstDate && jan1 <= lastDate) {
+      const daysDiff = (jan1 - firstDate) / (1000 * 60 * 60 * 24);
+      const position = daysDiff / totalDays;
+      
       yearPositions.push({
-        label: "I dag",
-        x: width - padX
+        label: year.toString(),
+        x: padX + position * chartWidth
       });
     }
-
+  });
+  
+  // Always add "I dag" at the end
+  yearPositions.push({
+    label: "I dag",
+    x: width - padX
+  });
+}
     yearPositions.forEach(pos => {
       const yearLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
       yearLabel.setAttribute("x", pos.x);
