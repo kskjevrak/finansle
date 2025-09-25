@@ -165,7 +165,7 @@ setupAboutModal() {
 
 updatePageTitle() {
   const dayNumber = Math.floor((new Date() - new Date("2025-09-23T00:00:00")) / 86400000) + 1;
-  document.title = `Finansle #${dayNumber} - Daglig Norsk Aksje Gjettelekspill | Oslo Børs Quiz`;
+  document.title = `Finansle #${dayNumber}`;
 }
 
   normalizeDailyJson(raw) {
