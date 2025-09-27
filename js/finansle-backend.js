@@ -22,7 +22,9 @@ class FinansleGame {
 
       await this.loadDailyJson();
       await this.loadStocksList();
-      await this.loadShortDescriptions();  
+      await this.loadShortDescriptions();
+      await this.loadSectorData();
+
 
       this.setupEventListeners();
 
@@ -176,7 +178,7 @@ updatePageTitle() {
         company_name: raw.company_name,
         ticker: (raw.ticker || "").toUpperCase(),
         current_price: Number(raw.current_price ?? 0),
-        market_cap: raw.market_cap || this.formatMarketCap(raw.market_cap_raw),
+        market_cap: raw.market_cap_formatted || raw.market_cap || this.formatMarketCap(raw.market_cap_raw), // Use formatted first
         sector: raw.sector || "Ukjent",
         industry: raw.industry || "Ukjent",
         employees: Number(raw.employees || 0),
@@ -195,6 +197,10 @@ updatePageTitle() {
         ps_ratio_formatted: raw.ps_ratio_formatted || "Ikke tilgjengelig",
         ev_ebitda_formatted: raw.ev_ebitda_formatted || "Ikke tilgjengelig",
         chart_data: raw.chart_data || [],
+        market_cap_formatted: raw.market_cap_formatted,
+        trailing_pe_formatted: raw.trailing_pe_formatted,
+        price_to_sales_formatted: raw.price_to_sales_formatted,
+        ev_ebitda_formatted: raw.ev_ebitda_formatted,
       };
       return { stock: s };
     }
@@ -381,28 +387,38 @@ smoothChartData(chartData) {
     if (guessBtn) guessBtn.disabled = !exact;
   }
 
+  
   showAutocompleteOptions(options) {
-  const dropdown = document.getElementById("autocomplete-dropdown");
-  if (!dropdown) return;
-  if (!options.length) { dropdown.style.display = "none"; return; }
+    const dropdown = document.getElementById("autocomplete-dropdown");
+    if (!dropdown) return;
+    if (!options.length) { dropdown.style.display = "none"; return; }
 
-  dropdown.innerHTML = "";
-  options.forEach((s, index) => {
-    const item = document.createElement("div");
-    item.className = "autocomplete-item";
-    const label = `${s.name} (${s.ticker})`;
-    item.textContent = label;
-    item.addEventListener("click", () => this.selectStock(s));
-    
-    // Add mouse hover support
-    item.addEventListener("mouseenter", () => {
-      this.highlightDropdownItem(dropdown.querySelectorAll(".autocomplete-item"), index);
+    dropdown.innerHTML = "";
+    options.forEach((s, index) => {
+      const item = document.createElement("div");
+      item.className = "autocomplete-item";
+      
+      // Create the label with sector in brackets
+      let label = `${s.name} (${s.ticker})`;
+      
+      // Get sector from oslo_companies_short.json
+      const sector = this.getSector(s.ticker);
+      if (sector && sector.trim()) {
+        label += ` [${sector}]`;
+      }
+      
+      item.textContent = label;
+      item.addEventListener("click", () => this.selectStock(s));
+      
+      // Add mouse hover support
+      item.addEventListener("mouseenter", () => {
+        this.highlightDropdownItem(dropdown.querySelectorAll(".autocomplete-item"), index);
+      });
+      
+      dropdown.appendChild(item);
     });
-    
-    dropdown.appendChild(item);
-  });
-  dropdown.style.display = "block";
-}
+    dropdown.style.display = "block";
+  }
 
   selectStock(stock) {
     const input = document.getElementById("stock-search");
@@ -411,6 +427,29 @@ smoothChartData(chartData) {
     if (input) input.value = stock.name;
     if (dropdown) dropdown.style.display = "none";
     if (guessBtn) guessBtn.disabled = false;
+  }
+
+  // Get sector with fallback
+  getSector(ticker) {
+    if (!this.sectorLookup) return null;
+    
+    // Try exact match first
+    if (this.sectorLookup[ticker]) {
+      return this.sectorLookup[ticker];
+    }
+    
+    // Try without .OL suffix
+    const baseTicker = ticker.replace('.OL', '');
+    if (this.sectorLookup[baseTicker]) {
+      return this.sectorLookup[baseTicker];
+    }
+    
+    // Try with .OL suffix if not present
+    if (!ticker.includes('.OL') && this.sectorLookup[ticker + '.OL']) {
+      return this.sectorLookup[ticker + '.OL'];
+    }
+    
+    return null;
   }
 
   handleSearchKeydown(e) {
@@ -580,11 +619,11 @@ showMainChart() {
         </div>
         <div style="text-align:center;">
           <div style="font-size:12px; color:var(--text-gray);">Markedsverdi</div>
-          <div style="font-size:15px; color:var(--primary-green); font-weight:600;">${this.dailyStock.market_cap}</div>
+          <div style="font-size:15px; color:var(--primary-green); font-weight:600;">${this.dailyStock.market_cap_formatted || this.dailyStock.market_cap}</div>
         </div>
         <div style="text-align:center;">
           <div style="font-size:12px; color:var(--text-gray);">P/E</div>
-          <div style="font-size:15px; color:var(--primary-green); font-weight:600;">${this.dailyStock.pe_ratio_formatted || "N/A"}</div>
+          <div style="font-size:15px; color:var(--primary-green); font-weight:600;">${this.dailyStock.trailing_pe_formatted || "N/A"}</div>
         </div>
         <div style="text-align:center;">
           <div style="font-size:12px; color:var(--text-gray);">EV/EBITDA</div>
@@ -592,7 +631,7 @@ showMainChart() {
         </div>
         <div style="text-align:center;">
           <div style="font-size:12px; color:var(--text-gray);">P/S</div>
-          <div style="font-size:15px; color:var(--primary-green); font-weight:600;">${this.dailyStock.ps_ratio_formatted || "N/A"}</div>
+          <div style="font-size:15px; color:var(--primary-green); font-weight:600;">${this.dailyStock.price_to_sales_formatted || "N/A"}</div>
         </div>
       </div>
   `;
@@ -892,7 +931,7 @@ if (isMobile) {
     const s = this.dailyStock;
     this.clueTypes = [
       { id: "sector",        title: "Sektor",           unlock: 1, getValue: () => s?.sector || "Ikke tilgjengelig" },
-      { id: "employees",     title: "Ansatte",             unlock: 2, getValue: () => (s?.employees ? `${s.employees.toLocaleString("no-NO")} ansatte` : "Ikke tilgjengelig") },
+      { id: "industry",     title: "Industri",             unlock: 2, getValue: () => (s?.industry ? s.industry : "Ikke tilgjengelig") },
       { id: "revenue",       title: "FY24 Omsetning",  unlock: 3, getValue: () => s?.revenue_2024_formatted || "Ikke tilgjengelig" },
       { id: "ebitda",        title: "FY24 EBITDA",           unlock: 4, getValue: () => s?.ebitda_2024_formatted || "Ikke tilgjengelig" },
       { id: "net-earnings",  title: "FY24 Resultat",    unlock: 5, getValue: () => s?.net_earnings_2024_formatted || "Ikke tilgjengelig" },
@@ -921,6 +960,30 @@ if (isMobile) {
     });
     this.updateHintBar();
   }
+  
+async loadSectorData() {
+  try {
+    const res = await fetch(`data/oslo_companies_short.json?ts=${Date.now()}`, { cache: "no-store" });
+    if (!res.ok) throw new Error(`HTTP ${res.status} loading oslo_companies_short.json`);
+    const data = await res.json();
+    
+    // Create lookup map by ticker for sector information
+    this.sectorLookup = {};
+    data.forEach(company => {
+      if (company.ticker && company.sector) {
+        // Store both with and without .OL suffix for flexibility
+        const baseTicker = company.ticker.replace('.OL', '');
+        this.sectorLookup[company.ticker] = company.sector;
+        this.sectorLookup[baseTicker] = company.sector;
+      }
+    });
+    
+    console.log(`📊 Loaded ${Object.keys(this.sectorLookup).length / 2} sector mappings`);
+  } catch (e) {
+    console.warn("⚠️ Could not load sector data:", e);
+    this.sectorLookup = {};
+  }
+}
 
 async loadShortDescriptions() {
   try {
