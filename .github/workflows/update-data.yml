@@ -2,8 +2,8 @@ name: Update Daily Stock Data
 
 on:
   schedule:
-    # Run every day at 4 AM UTC (6 AM CET, before Oslo market opens at 9 AM)
-    - cron: '0 4 * * *'
+    # Run every day at 0 AM UTC (2 AM CET, before Oslo market opens at 9 AM)
+    - cron: '0 0 * * *'
   workflow_dispatch: # Allow manual trigger for testing
 
 jobs:
