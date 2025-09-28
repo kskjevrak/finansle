@@ -696,7 +696,7 @@ class ValuationExtractor:
         elif value >= 1e9:
             return f"{value/1e9:.1f} mrd NOK"
         else:
-            return f"{value/1e6:.0f} mill NOK"
+            return f"{value/1e6:.1f} mill NOK"
     
     def _format_revenue(self, value: Optional[float]) -> str:
         """Format revenue in NOK with appropriate units"""
@@ -709,9 +709,9 @@ class ValuationExtractor:
         if abs_val >= 1e12:
             return f"{value/1e12:.1f} bill NOK"
         elif abs_val >= 1e9:
-            return f"{value/1e9:.0f} mrd NOK"
+            return f"{value/1e9:.1f} mrd NOK"
         elif abs_val >= 1e6:
-            return f"{value/1e6:.0f} mill NOK"
+            return f"{value/1e6:.1f} mill NOK"
         else:
             return f"{value:,.0f} NOK"
     

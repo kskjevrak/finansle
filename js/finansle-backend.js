@@ -171,40 +171,41 @@ updatePageTitle() {
 }
 
   normalizeDailyJson(raw) {
-    const isFlat = !!raw.chart_data || !!raw.company_name || !!raw.ticker;
+  const isFlat = !!raw.chart_data || !!raw.company_name || !!raw.ticker;
 
-    if (isFlat) {
-      const s = {
-        company_name: raw.company_name,
-        ticker: (raw.ticker || "").toUpperCase(),
-        current_price: Number(raw.current_price ?? 0),
-        market_cap: raw.market_cap_formatted || raw.market_cap || this.formatMarketCap(raw.market_cap_raw), // Use formatted first
-        sector: raw.sector || "Ukjent",
-        industry: raw.industry || "Ukjent",
-        employees: Number(raw.employees || 0),
-        headquarters: raw.headquarters || "Norge",
-        description: raw.description || "Norsk børsnotert selskap",
-        price_52w_high: Number(raw.price_52w_high ?? 0),
-        price_52w_low: Number(raw.price_52w_low ?? 0),
-        performance_5y: Number(raw.performance_5y ?? 0),
-        performance_2y: Number(raw.performance_2y ?? 0),
-        performance_1y: Number(raw.performance_1y ?? 0),
-        // ADD THESE NEW FIELDS:
-        revenue_2024_formatted: raw.revenue_2024_formatted || "Ikke tilgjengelig",
-        ebitda_2024_formatted: raw.ebitda_2024_formatted || "Ikke tilgjengelig",
-        net_earnings_2024_formatted: raw.net_earnings_2024_formatted || "Ikke tilgjengelig",
-        pe_ratio_formatted: raw.pe_ratio_formatted || "Ikke tilgjengelig",
-        ps_ratio_formatted: raw.ps_ratio_formatted || "Ikke tilgjengelig",
-        ev_ebitda_formatted: raw.ev_ebitda_formatted || "Ikke tilgjengelig",
-        chart_data: raw.chart_data || [],
-        market_cap_formatted: raw.market_cap_formatted,
-        trailing_pe_formatted: raw.trailing_pe_formatted,
-        price_to_sales_formatted: raw.price_to_sales_formatted,
-        ev_ebitda_formatted: raw.ev_ebitda_formatted,
-      };
-      return { stock: s };
-    }
-
+  if (isFlat) {
+    const s = {
+      company_name: raw.company_name,
+      ticker: (raw.ticker || "").toUpperCase(),
+      current_price: Number(raw.current_price ?? 0),
+      market_cap: raw.market_cap_formatted || raw.market_cap || this.formatMarketCap(raw.market_cap_raw),
+      sector: raw.sector || "Ukjent",
+      industry: raw.industry || "Ukjent",
+      employees: Number(raw.employees || 0),
+      headquarters: raw.headquarters || "Norge",
+      description: raw.description || "Norsk børsnotert selskap",
+      price_52w_high: Number(raw.price_52w_high ?? 0),
+      price_52w_low: Number(raw.price_52w_low ?? 0),
+      performance_5y: Number(raw.performance_5y ?? 0),
+      performance_2y: Number(raw.performance_2y ?? 0),
+      performance_1y: Number(raw.performance_1y ?? 0),
+      
+      // OPPDATERTE LINJER - legg til flere fallback alternativer:
+      revenue_2024_formatted: raw.revenue_2024_formatted || raw.revenue_formatted || raw.revenue_2024 || raw.total_revenue || "Ikke tilgjengelig",
+      ebitda_2024_formatted: raw.ebitda_2024_formatted || raw.ebitda_formatted || raw.ebitda_2024 || raw.ebitda || "Ikke tilgjengelig",
+      net_earnings_2024_formatted: raw.net_earnings_2024_formatted || raw.earnings_formatted || raw.net_earnings_2024 || raw.net_income_formatted || raw.net_income || raw.earnings || "Ikke tilgjengelig",
+      pe_ratio_formatted: raw.pe_ratio_formatted || raw.trailing_pe_formatted || raw.pe_ratio || raw.trailing_pe || "Ikke tilgjengelig",
+      ps_ratio_formatted: raw.ps_ratio_formatted || raw.price_to_sales_formatted || raw.ps_ratio || raw.price_to_sales || "Ikke tilgjengelig",
+      ev_ebitda_formatted: raw.ev_ebitda_formatted || raw.ev_ebitda || "Ikke tilgjengelig",
+      
+      chart_data: raw.chart_data || [],
+      market_cap_formatted: raw.market_cap_formatted,
+      trailing_pe_formatted: raw.trailing_pe_formatted,
+      price_to_sales_formatted: raw.price_to_sales_formatted,
+    };
+    return { stock: s };
+  }
+  
     // Nested shape fallback
     const info = raw.stock?.info || {};
     const s = {
@@ -1105,9 +1106,9 @@ unlockClues() {
     <div class="detail-item"><span class="detail-label">Ticker:</span><span class="detail-value">${this.dailyStock.ticker}</span></div>
     <div class="detail-item"><span class="detail-label">Sektor:</span><span class="detail-value">${this.dailyStock.sector || "N/A"}</span></div>
     <div class="detail-item"><span class="detail-label">Markedsverdi:</span><span class="detail-value">${this.dailyStock.market_cap || "N/A"}</span></div>
-    <div class="detail-item"><span class="detail-label">P/E:</span><span class="detail-value">${this.dailyStock.pe_ratio_formatted || "N/A"}</span></div>
-    <div class="detail-item"><span class="detail-label">EV/EBITDA:</span><span class="detail-value">${this.dailyStock.ev_ebitda_formatted || "N/A"}</span></div>
-    <div class="detail-item"><span class="detail-label">P/S:</span><span class="detail-value">${this.dailyStock.ps_ratio_formatted || "N/A"}</span></div>
+    <div class="detail-item"><span class="detail-label">P/E:</span><span class="detail-value">${this.dailyStock.trailing_pe_formatted || this.dailyStock.pe_ratio_formatted || "Ikke tilgjengelig"}</span></div>
+    <div class="detail-item"><span class="detail-label">EV/EBITDA:</span><span class="detail-value">${this.dailyStock.ev_ebitda_formatted || "Ikke tilgjengelig"}</span></div>
+    <div class="detail-item"><span class="detail-label">P/S:</span><span class="detail-value">${this.dailyStock.price_to_sales_formatted || this.dailyStock.ps_ratio_formatted || "Ikke tilgjengelig"}</span></div>
   `;
 }
 
