@@ -900,7 +900,7 @@ if (isMobile) {
     // Draw chart line
     const line = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
     line.setAttribute("fill", "none");
-    line.setAttribute("stroke", "#DDE6ED");
+    line.setAttribute("stroke", "#33b400ff");
     line.setAttribute("stroke-width", isMobile ? "2.2" : "2.6");
     line.setAttribute("points", pts);
     line.style.filter = "drop-shadow(0 0 2px rgba(34,197,94,0.28))";
@@ -912,7 +912,7 @@ if (isMobile) {
     dot.setAttribute("cx", x(data.length - 1));
     dot.setAttribute("cy", y(last.price));
     dot.setAttribute("r", isMobile ? "3.5" : "4.2");
-    dot.setAttribute("fill", "#DDE6ED");
+    dot.setAttribute("fill", "#33b400ff");
     svg.appendChild(dot);
 }
 
