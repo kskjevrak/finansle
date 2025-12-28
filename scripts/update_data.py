@@ -470,7 +470,7 @@ class ValuationExtractor:
             return None
     
     def _get_trailing_pe(self) -> Optional[float]:
-        """Get trailing P/E with fallback calculation"""
+        """Get trailing P/E with fallback calculation (allows negative for losses)"""
         pe = self._safe_extract('trailingPE')
         if pe is not None:
             return pe
@@ -478,7 +478,8 @@ class ValuationExtractor:
         current_price = self._safe_extract('currentPrice') or self._safe_extract('regularMarketPrice')
         trailing_eps = self._safe_extract('trailingEps')
         
-        if current_price and trailing_eps and trailing_eps > 0:
+        # Allow negative EPS calculation (removed trailing_eps > 0 check)
+        if current_price and trailing_eps and trailing_eps != 0:
             calculated_pe = current_price / trailing_eps
             log.info(f"Calculated trailing P/E for {self.ticker_symbol}: {calculated_pe:.2f}")
             return calculated_pe
@@ -517,13 +518,13 @@ class ValuationExtractor:
     def _validate_metrics(self, metrics: Dict[str, Any]) -> None:
         """Validate extracted metrics for reasonableness"""
         validation_rules = {
-            'trailing_pe': (0, 1000),
+            'trailing_pe': (-1000, 1000),  # Allow negative P/E for companies with losses
             'forward_pe': (0, 1000),
             'peg_ratio': (0, 10),
             'price_to_book': (0, 100),
             'price_to_sales': (0, 200),
             'ev_revenue': (0, 500),
-            'ev_ebitda': (0, 1000)
+            'ev_ebitda': (-100, 1000)  # Allow negative EV/EBITDA
         }
         
         for metric, (min_val, max_val) in validation_rules.items():
@@ -559,9 +560,9 @@ class ValuationExtractor:
             return f"{value:,.0f} NOK"
     
     def _format_ratio(self, value: Optional[float]) -> str:
-        """Format financial ratios"""
+        """Format financial ratios (shows '-' for negative or missing data)"""
         if value is None or value <= 0:
-            return "Ikke tilgjengelig"
+            return "−"  # Dash for both negative earnings and no data
         return f"{value:.2f}"
     
     def _get_fallback_metrics(self) -> Dict[str, Any]:
@@ -995,6 +996,62 @@ def serialize_for_json(obj):
         return None
     raise TypeError(f"Type {type(obj)} not serializable")
 
+def generate_all_stocks_metrics():
+    """Generate metrics for all stocks (called after daily stock selection)"""
+    log.info(">> Starting bulk metrics generation for all stocks")
+    
+    oslo_companies_path = DATA_DIR / "oslo_companies_short_no.json"
+    with open(oslo_companies_path, 'r', encoding='utf-8') as f:
+        companies = json.load(f)
+    
+    all_data = {}
+    total = len(companies)
+    
+    log.info(f"Processing {total} companies (est. {total * 1.5 / 60:.1f} minutes)...")
+    
+    for i, company in enumerate(companies, 1):
+        ticker = company['ticker']
+        base_ticker = ticker.replace('.OL', '')
+        
+        if i % 50 == 0:  # Progress update every 50 stocks
+            log.info(f"Progress: {i}/{total} ({i/total*100:.1f}%)")
+        
+        try:
+            extractor = ValuationExtractor(ticker)
+            metrics = extractor.get_comprehensive_metrics()
+            
+            all_data[base_ticker] = {
+                'sector': company.get('sector', '-'),
+                'industry': company.get('industry', '-'),
+                'revenue_2024_formatted': metrics.get('revenue_formatted', '-'),
+                'ebitda_2024_formatted': metrics.get('ebitda_formatted', '-'),
+                'net_earnings_2024_formatted': metrics.get('net_income_formatted', '-'),
+                'market_cap': metrics.get('market_cap'),
+                'market_cap_formatted': metrics.get('market_cap_formatted', '-'),
+            }
+            
+            time.sleep(1.5)  # Rate limit protection
+            
+        except Exception as e:
+            log.debug(f"Failed for {ticker}: {e}")
+            all_data[base_ticker] = {
+                'sector': company.get('sector', '-'),
+                'industry': company.get('industry', '-'),
+                'revenue_2024_formatted': '-',
+                'ebitda_2024_formatted': '-',
+                'net_earnings_2024_formatted': '-',
+                'market_cap': None,
+                'market_cap_formatted': '-',
+            }
+            time.sleep(1.5)
+    
+    # Save to file
+    output_path = DATA_DIR / "all_stocks_metrics.json"
+    with open(output_path, 'w', encoding='utf-8') as f:
+        json.dump(all_data, f, indent=2, ensure_ascii=False)
+    
+    log.info(f"✅ Saved metrics for {len(all_data)} stocks to {output_path}")
+
 def main():
     """Main function to generate daily stock data"""
     log.info(">> Starting Finansle stock data generation")
@@ -1003,8 +1060,8 @@ def main():
     try:
         ensure_data_dir()
         
+        # Step 1: Generate daily stock
         selected_stock = select_daily_stock()
-        
         base_ticker = selected_stock.get("ticker") or selected_stock.get("symbol") or ""
         if not base_ticker:
             log.error("Selected stock has no ticker/symbol field")
@@ -1021,29 +1078,24 @@ def main():
         if not check_if_data_changed(data):
             log.info("Data unchanged, skipping write")
             print_summary(data)
-            sys.exit(0)
+        else:
+            tmp_path = DAILY_PATH.with_suffix(".json.tmp")
+            try:
+                with tmp_path.open("w", encoding="utf-8") as f:
+                    json.dump(data, f, ensure_ascii=False, indent=2, default=serialize_for_json)
+                tmp_path.replace(DAILY_PATH)
+                log.info(f"[SUCCESS] Successfully saved {DAILY_PATH}")
+            except Exception as e:
+                log.error(f"Failed to write data file: {e}")
+                if tmp_path.exists():
+                    tmp_path.unlink()
+                sys.exit(1)
+            
+            print_summary(data)
         
-        tmp_path = DAILY_PATH.with_suffix(".json.tmp")
-        try:
-            with tmp_path.open("w", encoding="utf-8") as f:
-                json.dump(data, f, ensure_ascii=False, indent=2, default=serialize_for_json)
-            tmp_path.replace(DAILY_PATH)
-            log.info(f"[SUCCESS] Successfully saved {DAILY_PATH}")
-        except Exception as e:
-            log.error(f"Failed to write data file: {e}")
-            if tmp_path.exists():
-                tmp_path.unlink()
-            sys.exit(1)
-        
-        print_summary(data)
-        
-        chart_points = len(data.get('chart_data', []))
-        quality_score = data.get('data_quality_score', 0)
-        
-        if chart_points < 100:
-            log.warning(f"Low chart data points: {chart_points}")
-        if quality_score < 0.5:
-            log.warning(f"Low data quality score: {quality_score}")
+        # Step 2: Generate all stocks metrics (NEW!)
+        log.info("\n" + "="*60)
+        generate_all_stocks_metrics()
         
         log.info("[COMPLETE] Finansle data generation completed successfully!")
         

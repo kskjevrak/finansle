@@ -116,6 +116,31 @@ body {
   padding: 40px 0;
 }
 
+/* Chart X-Axis Labels */
+.chart-x-axis {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 30px 0 30px;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-top: 8px;
+}
+
+.chart-x-axis span {
+  flex: 1;
+  text-align: center;
+}
+
+.chart-x-axis span:first-child {
+  text-align: left;
+}
+
+.chart-x-axis span:last-child {
+  text-align: right;
+}
+
 /* Hint Bar - Fixed Width with Tight Vertical Expansion */
 .hint-bar {
   display: flex;
@@ -197,7 +222,6 @@ body {
   opacity: 0.7;
 }
 
-/* Autocomplete Dropdown */
 .autocomplete-dropdown {
   position: absolute;
   top: 100%;
@@ -206,10 +230,12 @@ body {
   background: var(--bg-modal);
   border: 1px solid var(--border-color);
   border-radius: 4px;
-  max-height: 200px;
+  max-height: 300px;        /* Økt høyde */
   overflow-y: auto;
   z-index: 9999;
   display: none;
+  min-width: 100%;          /* LEGG TIL */
+  width: auto;              /* LEGG TIL */
 }
 
 .autocomplete-item {
@@ -218,6 +244,11 @@ body {
   border-bottom: 1px solid var(--border-color);
   transition: background 0.15s;
   color: var(--text-primary);
+  white-space: normal !important;
+  line-height: 1.5 !important;
+  min-height: 48px !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
 }
 
 .autocomplete-item.highlighted {
@@ -1058,4 +1089,281 @@ body {
 
 .btn-secondary:hover {
   background: var(--bg-secondary);
+}
+
+/* ============================================================================
+   GUESS HISTORY STYLES
+   ============================================================================ */
+
+/* Guess History Container */
+.guess-history {
+  max-width: var(--chart-width);
+  margin: 16px auto;
+  background: var(--bg-secondary);
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+/* Guess History Header */
+.guess-history-header {
+  display: grid;
+  grid-template-columns: 2fr 1.2fr 1.2fr 1fr 1fr 1fr;
+  gap: 8px;
+  padding: 10px 12px;
+  background: var(--bg-tertiary);
+  border-bottom: 2px solid var(--border-color);
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-primary);
+}
+
+.header-cell {
+  text-align: center;
+  color: var(--text-primary);
+}
+
+.header-cell:first-child {
+  text-align: left;
+}
+
+/* Guess Row */
+.guess-row {
+  display: grid;
+  grid-template-columns: 2fr 1.2fr 1.2fr 1fr 1fr 1fr;
+  gap: 8px;
+  padding: 12px;
+  border-bottom: 1px solid var(--border-color);
+  align-items: center;
+  transition: background 0.2s;
+}
+
+.guess-row:hover {
+  background: rgba(107, 122, 138, 0.1);
+}
+
+.guess-row:last-child {
+  border-bottom: none;
+}
+
+.guess-row.correct-guess {
+  background: rgba(51, 180, 0, 0.1);
+  border-left: 4px solid #33b400;
+}
+
+/* Company Name Column */
+.guess-company {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Metric Cells */
+.guess-metric {
+  text-align: center;
+  padding: 6px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+/* Match - Green */
+.metric-match {
+  background: rgba(51, 180, 0, 0.2);
+  color: #33b400;
+  border: 1px solid rgba(51, 180, 0, 0.3);
+}
+
+/* Different - Gray */
+.metric-different {
+  background: rgba(107, 122, 138, 0.15);
+  color: #B0BCC8 !important;
+  border: 1px solid rgba(107, 122, 138, 0.2);
+  opacity: 1 !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+}
+
+/* Unknown/Not Available - Muted */
+.metric-unknown {
+  background: transparent;
+  color: #B0BCC8 !important;
+  opacity: 1 !important;
+  font-style: normal !important;
+  border: 1px solid transparent;
+  font-weight: 500 !important;
+}
+
+/* Yellow (Close) - For future use with numeric comparisons */
+.metric-close {
+  background: rgba(255, 193, 7, 0.15);
+  color: #ffc107;
+  border: 1px solid rgba(255, 193, 7, 0.3);
+}
+
+/* Arrow indicators for numeric comparisons */
+.metric-arrow {
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 0.7rem;
+}
+
+.metric-arrow.up::before {
+  content: "↑";
+  color: #d93939;
+}
+
+.metric-arrow.down::before {
+  content: "↓";
+  color: #33b400;
+}
+
+/* Autocomplete - Mark already guessed companies */
+.autocomplete-item.guessed {
+  opacity: 0.5;
+  font-style: normal !important;
+  background: rgba(217, 57, 57, 0.1);
+}
+
+.autocomplete-item.guessed:hover {
+  background: rgba(217, 57, 57, 0.15);
+}
+
+/* ============================================================================
+   RESPONSIVE ADJUSTMENTS FOR GUESS HISTORY
+   ============================================================================ */
+
+/* Tablet Landscape (900px - 1199px) */
+@media (min-width: 900px) and (max-width: 1199px) {
+  .guess-history-header,
+  .guess-row {
+    grid-template-columns: 2fr 1fr 1fr 0.9fr 0.9fr 0.9fr;
+    gap: 6px;
+    font-size: 0.7rem;
+  }
+  
+  .guess-metric {
+    padding: 5px 6px;
+    font-size: 0.75rem;
+  }
+  
+  .guess-company {
+    font-size: 0.85rem;
+  }
+}
+
+/* Tablet Portrait (640px - 899px) */
+@media (min-width: 640px) and (max-width: 899px) {
+  .guess-history-header {
+    font-size: 0.65rem;
+    padding: 8px 10px;
+  }
+  
+  .guess-history-header,
+  .guess-row {
+    grid-template-columns: 1.5fr 1fr 1fr 0.8fr 0.8fr 0.8fr;
+    gap: 5px;
+  }
+  
+  .guess-row {
+    padding: 10px;
+  }
+  
+  .guess-metric {
+    padding: 4px 5px;
+    font-size: 0.7rem;
+  }
+  
+  .guess-company {
+    font-size: 0.8rem;
+  }
+}
+
+/* Mobile (639px and below) */
+@media (max-width: 639px) {
+  .guess-history {
+    margin: 12px auto;
+  }
+  
+  /* Stack guess history vertically on mobile */
+  .guess-history-header {
+    display: none; /* Hide header on mobile */
+  }
+  
+  .guess-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    background: var(--bg-secondary);
+  }
+  
+  .guess-company {
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-align: center;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 4px;
+  }
+  
+  .guess-metric {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 8px;
+    font-size: 0.75rem;
+    text-align: left;
+  }
+  
+  /* Add labels on mobile */
+  .guess-metric::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--text-primary);
+    opacity: 0.8;
+    margin-right: 8px;
+  }
+  
+  /* Specific metric labels for mobile */
+  .guess-row .guess-metric:nth-child(2)::before {
+    content: "Sektor: ";
+  }
+  
+  .guess-row .guess-metric:nth-child(3)::before {
+    content: "Industri: ";
+  }
+  
+  .guess-row .guess-metric:nth-child(4)::before {
+    content: "Omsetning: ";
+  }
+  
+  .guess-row .guess-metric:nth-child(5)::before {
+    content: "EBITDA: ";
+  }
+  
+  .guess-row .guess-metric:nth-child(6)::before {
+    content: "Resultat: ";
+  }
+}
+
+/* Very small mobile (400px and below) */
+@media (max-width: 400px) {
+  .guess-metric {
+    font-size: 0.7rem;
+    padding: 5px 6px;
+  }
+  
+  .guess-company {
+    font-size: 0.85rem;
+  }
 }
