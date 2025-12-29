@@ -323,13 +323,17 @@ class FinansleGame {
   }
 
   selectStock(stock) {
-    const input = document.getElementById("stock-search");
-    const dropdown = document.getElementById("autocomplete-dropdown");
-    const guessBtn = document.getElementById("guess-btn");
-    if (input) input.value = stock.name;
-    if (dropdown) dropdown.style.display = "none";
-    if (guessBtn) guessBtn.disabled = false;
+  const input = document.getElementById("stock-search");
+  const dropdown = document.getElementById("autocomplete-dropdown");
+  const guessBtn = document.getElementById("guess-btn");
+  
+  if (input) {
+    input.value = stock.name;
+    input.blur();  // Mist fokus
   }
+  if (dropdown) dropdown.style.display = "none";
+  if (guessBtn) guessBtn.disabled = false;
+}
 
   handleSearchKeydown(e) {
     const guessBtn = document.getElementById("guess-btn");
@@ -508,7 +512,7 @@ class FinansleGame {
       <div class="guess-history-header">
         <div class="header-cell">Selskap</div>
         <div class="header-cell">Sektor</div>
-        <div class="header-cell">Industri</div>
+        <div class="header-cell">Bransje</div>
         <div class="header-cell">Omsetning</div>
         <div class="header-cell">EBITDA</div>
         <div class="header-cell">Resultat</div>
@@ -942,15 +946,44 @@ drawChartLine() {
 
   // ------------------ Clues ------------------
   generateClueCards() {
-    const s = this.dailyStock;
-    this.clueTypes = [
-      { id: "sector", title: "Sektor", unlock: 1, getValue: () => s?.sector || "Ikke tilgjengelig" },
-      { id: "industry", title: "Industri", unlock: 2, getValue: () => s?.industry || "Ikke tilgjengelig" },
-      { id: "revenue", title: "FY24 Omsetning", unlock: 3, getValue: () => s?.revenue_2024_formatted || "Ikke tilgjengelig" },
-      { id: "ebitda", title: "FY24 EBITDA", unlock: 4, getValue: () => s?.ebitda_2024_formatted || "Ikke tilgjengelig" },
-      { id: "net-earnings", title: "FY24 Resultat", unlock: 5, getValue: () => s?.net_earnings_2024_formatted || "Ikke tilgjengelig" },
-      { id: "description", title: "Hovedvirksomhet", unlock: 6, getValue: () => this.getShortDescription(s?.ticker, s?.description) }
-    ];
+  const s = this.dailyStock;
+  const ticker = s?.ticker;
+  const baseTicker = ticker?.replace('.OL', '');
+  const metrics = this.allMetrics?.[baseTicker] || {};
+  
+  this.clueTypes = [
+    { 
+      id: "sector", 
+      title: "Sektor", 
+      unlock: 1, 
+      getValue: () => this.getSector(ticker) || s?.sector || "Ikke tilgjengelig" 
+    },
+    { 
+      id: "industry", 
+      title: "Bransje", 
+      unlock: 2, 
+      getValue: () => this.getIndustry(ticker) || s?.industry || "Ikke tilgjengelig" 
+    },
+    { 
+      id: "revenue", 
+      title: "FY24 Omsetning", 
+      unlock: 3, 
+      getValue: () => metrics.revenue_2024_formatted || s?.revenue_2024_formatted || "Ikke tilgjengelig" 
+    },
+    { 
+      id: "ebitda", 
+      title: "FY24 EBITDA", 
+      unlock: 4, 
+      getValue: () => metrics.ebitda_2024_formatted || s?.ebitda_2024_formatted || "Ikke tilgjengelig" 
+    },
+    { 
+      id: "net-earnings", 
+      title: "FY24 Resultat", 
+      unlock: 5, 
+      getValue: () => metrics.net_earnings_2024_formatted || s?.net_earnings_2024_formatted || "Ikke tilgjengelig" 
+    },
+    { id: "description", title: "Hovedvirksomhet", unlock: 6, getValue: () => this.getShortDescription(s?.ticker, s?.description) }
+  ];
 
     const host = document.getElementById("clues-section");
     if (!host) return;
