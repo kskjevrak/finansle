@@ -952,37 +952,42 @@ drawChartLine() {
   const metrics = this.allMetrics?.[baseTicker] || {};
   
   this.clueTypes = [
-    { 
-      id: "sector", 
-      title: "Sektor", 
-      unlock: 1, 
-      getValue: () => this.getSector(ticker) || s?.sector || "Ikke tilgjengelig" 
+    {
+      id: "sector",
+      title: "Sektor",
+      unlock: 1,
+      getValue: () => this.getSector(ticker) || s?.sector || "Ikke tilgjengelig"
     },
-    { 
-      id: "industry", 
-      title: "Bransje", 
-      unlock: 2, 
-      getValue: () => this.getIndustry(ticker) || s?.industry || "Ikke tilgjengelig" 
+    {
+      id: "target-mean",
+      title: "Kursmål (snitt)",
+      unlock: 2,
+      getValue: () => metrics.target_mean_formatted || s?.target_mean_formatted || "Ikke tilgjengelig"
     },
-    { 
-      id: "revenue", 
-      title: "FY24 Omsetning", 
-      unlock: 3, 
-      getValue: () => metrics.revenue_2024_formatted || s?.revenue_2024_formatted || "Ikke tilgjengelig" 
+    {
+      id: "industry",
+      title: "Bransje",
+      unlock: 3,
+      getValue: () => this.getIndustry(ticker) || s?.industry || "Ikke tilgjengelig"
     },
-    { 
-      id: "ebitda", 
-      title: "FY24 EBITDA", 
-      unlock: 4, 
-      getValue: () => metrics.ebitda_2024_formatted || s?.ebitda_2024_formatted || "Ikke tilgjengelig" 
+    {
+      id: "revenue",
+      title: "FY24 Omsetning",
+      unlock: 4,
+      getValue: () => metrics.revenue_2024_formatted || s?.revenue_2024_formatted || "Ikke tilgjengelig"
     },
-    { 
-      id: "net-earnings", 
-      title: "FY24 Resultat", 
-      unlock: 5, 
-      getValue: () => metrics.net_earnings_2024_formatted || s?.net_earnings_2024_formatted || "Ikke tilgjengelig" 
+    {
+      id: "target-range",
+      title: "Kursmål (spread)",
+      unlock: 5,
+      getValue: () => metrics.target_range_formatted || s?.target_range_formatted || "Ikke tilgjengelig"
     },
-    { id: "description", title: "Hovedvirksomhet", unlock: 6, getValue: () => this.getShortDescription(s?.ticker, s?.description) }
+    {
+      id: "description",
+      title: "Hovedvirksomhet",
+      unlock: 6,
+      getValue: () => this.getShortDescription(s?.ticker, s?.description)
+    }
   ];
 
     const host = document.getElementById("clues-section");

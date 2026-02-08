@@ -222,6 +222,11 @@ class ValuationExtractor:
             robust_financial_data, self.ticker_symbol, self.info
         )
         
+        # Hent kursmålsdata
+        target_mean = self._safe_extract('targetMeanPrice')
+        target_high = self._safe_extract('targetHighPrice')
+        target_low = self._safe_extract('targetLowPrice')
+
         metrics = {
             'ticker': self.ticker_symbol,
             'market_cap': self._safe_extract('marketCap'),
@@ -257,6 +262,11 @@ class ValuationExtractor:
             'peg_ratio_formatted': self._format_ratio(self._safe_extract('pegRatio')),
             'price_to_book_formatted': self._format_ratio(self._safe_extract('priceToBook')),
             'ev_revenue_formatted': self._format_ratio(self._safe_extract('enterpriseToRevenue')),
+            'target_mean': target_mean,
+            'target_high': target_high,
+            'target_low': target_low,
+            'target_mean_formatted': f"{target_mean:.0f} NOK" if target_mean else "Ikke tilgjengelig",
+            'target_range_formatted': f"{target_low:.0f} - {target_high:.0f} NOK" if (target_low and target_high) else "Ikke tilgjengelig",
             'data_quality_score': 0,
             'data_quality_issues': self.data_quality_issues + normalized_financial_data.get('data_quality_issues', [])
         }
@@ -1024,8 +1034,8 @@ def generate_all_stocks_metrics():
                 'sector': company.get('sector', '-'),
                 'industry': company.get('industry', '-'),
                 'revenue_2024_formatted': metrics.get('revenue_formatted', '-'),
-                'ebitda_2024_formatted': metrics.get('ebitda_formatted', '-'),
-                'net_earnings_2024_formatted': metrics.get('net_income_formatted', '-'),
+                'target_mean_formatted': metrics.get('target_mean_formatted', 'Ikke tilgjengelig'),
+                'target_range_formatted': metrics.get('target_range_formatted', 'Ikke tilgjengelig'),
                 'market_cap': metrics.get('market_cap'),
                 'market_cap_formatted': metrics.get('market_cap_formatted', '-'),
             }
@@ -1038,8 +1048,8 @@ def generate_all_stocks_metrics():
                 'sector': company.get('sector', '-'),
                 'industry': company.get('industry', '-'),
                 'revenue_2024_formatted': '-',
-                'ebitda_2024_formatted': '-',
-                'net_earnings_2024_formatted': '-',
+                'target_mean_formatted': 'Ikke tilgjengelig',
+                'target_range_formatted': 'Ikke tilgjengelig',
                 'market_cap': None,
                 'market_cap_formatted': '-',
             }
