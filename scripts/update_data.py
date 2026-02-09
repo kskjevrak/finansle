@@ -5,6 +5,7 @@ Fixed version with proper timezone handling and error reporting
 
 import json
 import logging
+import os
 import random
 import time
 import requests
@@ -34,9 +35,73 @@ DATA_DIR = REPO_ROOT / "data"
 OBX_PATH = DATA_DIR / "obx.json"
 DAILY_PATH = DATA_DIR / "daily.json"
 
+EODHD_API_TOKEN = os.environ.get("EODHD_API_TOKEN", "")
+STOCK_LIST_REFRESH_DAYS = 7
+
 def ensure_data_dir():
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     log.info(f"Data directory ensured at: {DATA_DIR}")
+
+
+def refresh_obx_list() -> bool:
+    """Refresh data/obx.json from EODHD if older than STOCK_LIST_REFRESH_DAYS.
+
+    Returns True if the list was refreshed, False if skipped.
+    """
+    ensure_data_dir()
+
+    # Check if refresh is needed
+    if OBX_PATH.exists():
+        try:
+            with OBX_PATH.open("r", encoding="utf-8") as f:
+                existing = json.load(f)
+            extracted = existing.get("metadata", {}).get("extracted_date", "")
+            if extracted:
+                last_update = datetime.fromisoformat(extracted)
+                age = datetime.now(timezone.utc) - last_update.replace(tzinfo=timezone.utc)
+                if age < timedelta(days=STOCK_LIST_REFRESH_DAYS):
+                    log.info(f"obx.json is {age.days}d old (< {STOCK_LIST_REFRESH_DAYS}d), skipping refresh")
+                    return False
+        except (json.JSONDecodeError, ValueError, KeyError) as exc:
+            log.warning(f"Could not parse existing obx.json metadata: {exc}")
+
+    if not EODHD_API_TOKEN:
+        log.warning("EODHD_API_TOKEN not set — skipping stock list refresh")
+        return False
+
+    log.info("Refreshing Oslo Børs stock list from EODHD...")
+    url = f"https://eodhd.com/api/exchange-symbol-list/OL?api_token={EODHD_API_TOKEN}&fmt=json"
+    resp = requests.get(url, timeout=30)
+    resp.raise_for_status()
+    raw_stocks = resp.json()
+
+    # Filter to common stocks only
+    stocks = [
+        {"name": s.get("Name", ""), "symbol": s.get("Code", "")}
+        for s in raw_stocks
+        if s.get("Type") == "Common Stock" and s.get("Code")
+    ]
+
+    if not stocks:
+        log.error("EODHD returned 0 common stocks — keeping existing obx.json")
+        return False
+
+    payload = {
+        "metadata": {
+            "source": "EODHD",
+            "extracted_date": datetime.now(timezone.utc).isoformat(),
+            "total_stocks": len(stocks),
+        },
+        "stocks": stocks,
+    }
+
+    tmp_path = OBX_PATH.with_suffix(".json.tmp")
+    with tmp_path.open("w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False, indent=2)
+    tmp_path.replace(OBX_PATH)
+
+    log.info(f"✅ Updated obx.json with {len(stocks)} common stocks from EODHD")
+    return True
 
 def get_oslo_date() -> str:
     """Get current date in Oslo timezone (UTC+1/UTC+2)"""
@@ -1069,7 +1134,10 @@ def main():
     
     try:
         ensure_data_dir()
-        
+
+        # Step 0: Refresh stock list if stale (weekly)
+        refresh_obx_list()
+
         # Step 1: Generate daily stock
         selected_stock = select_daily_stock()
         base_ticker = selected_stock.get("ticker") or selected_stock.get("symbol") or ""

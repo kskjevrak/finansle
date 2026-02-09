@@ -29,9 +29,11 @@ jobs:
         
     - name: Install dependencies
       run: |
-        pip install yfinance python-dotenv
-        
+        pip install yfinance python-dotenv requests
+
     - name: Update stock data
+      env:
+        EODHD_API_TOKEN: ${{ secrets.EODHD_API_TOKEN }}
       run: |
         python scripts/update_data.py
         
