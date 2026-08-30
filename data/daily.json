@@ -1,4467 +1,1461 @@
 {
-  "company_name": "Observe Medical ASA",
-  "ticker": "OBSRV.OL",
-  "current_price": 0.96,
-  "sector": "Healthcare",
-  "industry": "Medical Devices",
-  "employees": 5,
+  "company_name": "Appear ASA",
+  "ticker": "APR.OL",
+  "current_price": 42.7,
+  "sector": "Technology",
+  "industry": "Computer Hardware",
+  "employees": 246,
   "headquarters": "Oslo, Norway",
-  "description": "Observe Medical ASA develops and commercialize medical technology products for patients, healthcare professionals, and hospitals in Europe, Asia, and the Americas. The company offers UnoMeter portfolio comprising Unometer, Safeti Plus, Unometer 500, and UnoMeter AbdoPressure products used for manual urine output measurement and for measuring intra-abdominal pressure. It also provides Sippi, a digital and automated urine measurement system for urine monitoring and biofilm control. Observe Medical ASA was founded in 2009 and is headquartered in Oslo, Norway.",
-  "price_52w_high": 1.39,
-  "price_52w_low": 0.53,
-  "performance_5y": -99.43,
-  "performance_2y": -84.71,
-  "performance_1y": 1.05,
-  "volatility": 217.57,
-  "market_cap": 130702480.0,
-  "market_cap_formatted": "130.7 mill NOK",
-  "enterprise_value": 170456448.0,
-  "enterprise_value_formatted": "170.5 mill NOK",
-  "trailing_pe": 3.1999998,
-  "forward_pe": null,
+  "description": "Appear ASA develops and provides solutions for processing, transport, and delivery of live video for the broadcast, media, and sports industries in Europe, the Middle East, Africa, the Americas, and the Asia Pacific. The company offers various software and platforms, such as VX platform, an open media technology software platform built for broadcast workflows; XC platform, a modular head-end solution for IPTV and broadcast distribution that supports distribution across cable, satellite, terrestrial networks, and hospitality applications; and X platform, which offers media processing and gateway hardware platform. It also provides customer support and technology development services. The company serves sports leagues and federations, broadcasters and streaming platforms, production service providers, and connectivity providers. Appear ASA was incorporated in 2004 and is based in Oslo, Norway.",
+  "price_52w_high": 89.19,
+  "price_52w_low": 40.2,
+  "performance_5y": -38.57,
+  "performance_2y": -38.57,
+  "performance_1y": -38.57,
+  "volatility": 53.5,
+  "market_cap": 1733440512.0,
+  "market_cap_formatted": "1.7 mrd NOK",
+  "enterprise_value": 1376414848.0,
+  "enterprise_value_formatted": "1.4 mrd NOK",
+  "trailing_pe": 19.0625,
+  "forward_pe": 9.202586,
   "peg_ratio": null,
-  "price_to_book": 4.549763,
-  "price_to_sales": 6.948194141725586,
-  "ev_revenue": 7.78,
-  "ev_ebitda": -6.237,
-  "total_revenue": 18811000.0,
-  "revenue_formatted": "18.8 mill NOK",
-  "revenue_latest": 18811000.0,
-  "ebitda": -30150000.0,
-  "ebitda_formatted": "-30.1 mill NOK",
-  "ebitda_latest": -30150000.0,
-  "ebitda_source": "annual_financials.EBITDA",
-  "ebitda_period": "2025",
-  "ebitda_timestamp": "2025-12-31",
+  "price_to_book": 2.7188795,
+  "price_to_sales": 2.040409993467168,
+  "ev_revenue": 1.745,
+  "ev_ebitda": 7.375573888906751,
+  "total_revenue": 849555000.0,
+  "revenue_formatted": "849.6 mill NOK",
+  "revenue_latest": 231677000.0,
+  "ebitda": 186618000.0,
+  "ebitda_formatted": "186.6 mill NOK",
+  "ebitda_latest": 43295000.0,
+  "ebitda_source": "quarterly_ttm.EBITDA",
+  "ebitda_period": "TTM_ending_2026-Q%q",
+  "ebitda_timestamp": "2026-03-31",
   "financial_currency_detected": "NOK",
   "currency_conversion_applied": false,
-  "net_income": -24030000.0,
-  "net_income_formatted": "-24.0 mill NOK",
-  "total_cash": 7824000.0,
-  "total_debt": 42314000.0,
-  "ev_ebitda_formatted": "−",
-  "price_to_sales_formatted": "6.95",
-  "trailing_pe_formatted": "3.20",
-  "forward_pe_formatted": "−",
+  "net_income": 90908000.0,
+  "net_income_formatted": "90.9 mill NOK",
+  "total_cash": 425620992.0,
+  "total_debt": 67391000.0,
+  "ev_ebitda_formatted": "7.38",
+  "price_to_sales_formatted": "2.04",
+  "trailing_pe_formatted": "19.06",
+  "forward_pe_formatted": "9.20",
   "peg_ratio_formatted": "−",
-  "price_to_book_formatted": "4.55",
-  "ev_revenue_formatted": "7.78",
-  "target_mean": null,
-  "target_high": null,
-  "target_low": null,
-  "target_mean_formatted": "Ikke tilgjengelig",
-  "target_range_formatted": "Ikke tilgjengelig",
+  "price_to_book_formatted": "2.72",
+  "ev_revenue_formatted": "1.75",
+  "target_mean": 80.0,
+  "target_high": 90.0,
+  "target_low": 70.0,
+  "target_mean_formatted": "80 NOK",
+  "target_range_formatted": "70 - 90 NOK",
   "data_quality_score": 1.0,
-  "data_quality_issues": [
-    "Using yfinance EV/EBITDA (our calculation failed)",
-    "Using yfinance EV/EBITDA (our calculation failed)"
-  ],
+  "data_quality_issues": [],
   "chart_data": [
     {
-      "date": "2021-08-30",
-      "price": 167.98,
-      "high": 172.09,
-      "low": 167.98,
-      "volume": 8
-    },
-    {
-      "date": "2021-09-01",
-      "price": 168.49,
-      "high": 168.49,
-      "low": 164.39,
-      "volume": 511
-    },
-    {
-      "date": "2021-09-03",
-      "price": 167.47,
-      "high": 172.6,
-      "low": 166.44,
-      "volume": 101
-    },
-    {
-      "date": "2021-09-07",
-      "price": 165.93,
-      "high": 172.09,
-      "low": 163.36,
-      "volume": 166
-    },
-    {
-      "date": "2021-09-09",
-      "price": 173.63,
-      "high": 180.82,
-      "low": 165.41,
-      "volume": 51
-    },
-    {
-      "date": "2021-09-13",
-      "price": 194.18,
-      "high": 197.26,
-      "low": 170.55,
-      "volume": 1269
-    },
-    {
-      "date": "2021-09-15",
-      "price": 184.42,
-      "high": 202.4,
-      "low": 179.8,
-      "volume": 1370
-    },
-    {
-      "date": "2021-09-17",
-      "price": 192.64,
-      "high": 193.15,
-      "low": 192.64,
-      "volume": 139
-    },
-    {
-      "date": "2021-09-21",
-      "price": 170.04,
-      "high": 195.21,
-      "low": 170.04,
-      "volume": 3844
-    },
-    {
-      "date": "2021-09-23",
-      "price": 186.99,
-      "high": 195.21,
-      "low": 180.31,
-      "volume": 1603
-    },
-    {
-      "date": "2021-09-27",
-      "price": 176.71,
-      "high": 200.34,
-      "low": 174.15,
-      "volume": 4305
-    },
-    {
-      "date": "2021-09-29",
-      "price": 174.15,
-      "high": 177.23,
-      "low": 167.47,
-      "volume": 498
-    },
-    {
-      "date": "2021-10-01",
-      "price": 171.06,
-      "high": 174.66,
-      "low": 163.87,
-      "volume": 789
-    },
-    {
-      "date": "2021-10-05",
-      "price": 164.9,
-      "high": 170.55,
-      "low": 163.36,
-      "volume": 833
-    },
-    {
-      "date": "2021-10-07",
-      "price": 174.66,
-      "high": 174.66,
-      "low": 174.66,
-      "volume": 0
-    },
-    {
-      "date": "2021-10-11",
-      "price": 169.01,
-      "high": 174.66,
-      "low": 162.84,
-      "volume": 97
-    },
-    {
-      "date": "2021-10-13",
-      "price": 166.44,
-      "high": 172.09,
-      "low": 159.76,
-      "volume": 445
-    },
-    {
-      "date": "2021-10-15",
-      "price": 169.52,
-      "high": 172.6,
-      "low": 157.19,
-      "volume": 1860
-    },
-    {
-      "date": "2021-10-19",
-      "price": 167.98,
-      "high": 167.98,
-      "low": 157.19,
-      "volume": 115
-    },
-    {
-      "date": "2021-10-21",
-      "price": 168.49,
-      "high": 169.01,
-      "low": 162.33,
-      "volume": 1664
-    },
-    {
-      "date": "2021-10-25",
-      "price": 174.15,
-      "high": 174.66,
-      "low": 157.71,
-      "volume": 2951
-    },
-    {
-      "date": "2021-10-27",
-      "price": 174.66,
-      "high": 174.66,
-      "low": 160.79,
-      "volume": 6655
-    },
-    {
-      "date": "2021-10-29",
-      "price": 174.66,
-      "high": 174.66,
-      "low": 166.44,
-      "volume": 1658
-    },
-    {
-      "date": "2021-11-02",
-      "price": 192.13,
-      "high": 199.83,
-      "low": 169.52,
-      "volume": 7724
-    },
-    {
-      "date": "2021-11-04",
-      "price": 187.5,
-      "high": 205.48,
-      "low": 181.85,
-      "volume": 2875
-    },
-    {
-      "date": "2021-11-08",
-      "price": 193.67,
-      "high": 196.23,
-      "low": 179.8,
-      "volume": 2946
-    },
-    {
-      "date": "2021-11-10",
-      "price": 214.73,
-      "high": 214.73,
-      "low": 194.18,
-      "volume": 1921
-    },
-    {
-      "date": "2021-11-12",
-      "price": 225.0,
-      "high": 247.61,
-      "low": 212.67,
-      "volume": 13625
-    },
-    {
-      "date": "2021-11-16",
-      "price": 248.63,
-      "high": 261.99,
-      "low": 236.3,
-      "volume": 6473
-    },
-    {
-      "date": "2021-11-18",
-      "price": 213.7,
-      "high": 236.3,
-      "low": 200.86,
-      "volume": 4580
-    },
-    {
-      "date": "2021-11-22",
-      "price": 198.8,
-      "high": 217.81,
-      "low": 180.82,
-      "volume": 4880
-    },
-    {
-      "date": "2021-11-24",
-      "price": 174.66,
-      "high": 186.99,
-      "low": 169.52,
-      "volume": 3531
-    },
-    {
-      "date": "2021-11-26",
-      "price": 170.04,
-      "high": 183.91,
-      "low": 164.39,
-      "volume": 1464
-    },
-    {
-      "date": "2021-11-30",
-      "price": 172.09,
-      "high": 177.74,
-      "low": 164.39,
-      "volume": 662
-    },
-    {
-      "date": "2021-12-02",
-      "price": 181.85,
-      "high": 184.93,
-      "low": 172.6,
-      "volume": 768
-    },
-    {
-      "date": "2021-12-06",
-      "price": 184.93,
-      "high": 194.18,
-      "low": 175.69,
-      "volume": 924
-    },
-    {
-      "date": "2021-12-08",
-      "price": 189.56,
-      "high": 194.18,
-      "low": 176.2,
-      "volume": 944
-    },
-    {
-      "date": "2021-12-10",
-      "price": 182.88,
-      "high": 196.75,
-      "low": 180.82,
-      "volume": 548
-    },
-    {
-      "date": "2021-12-14",
-      "price": 172.6,
-      "high": 193.15,
-      "low": 172.6,
-      "volume": 1088
-    },
-    {
-      "date": "2021-12-16",
-      "price": 176.71,
-      "high": 194.18,
-      "low": 170.04,
-      "volume": 1375
-    },
-    {
-      "date": "2021-12-20",
-      "price": 175.17,
-      "high": 184.42,
-      "low": 166.44,
-      "volume": 439
-    },
-    {
-      "date": "2021-12-22",
-      "price": 180.31,
-      "high": 183.91,
-      "low": 175.17,
-      "volume": 871
-    },
-    {
-      "date": "2021-12-27",
-      "price": 184.93,
-      "high": 191.1,
-      "low": 174.66,
-      "volume": 2747
-    },
-    {
-      "date": "2021-12-29",
-      "price": 190.07,
-      "high": 191.61,
-      "low": 186.47,
-      "volume": 508
-    },
-    {
-      "date": "2022-01-03",
-      "price": 216.78,
-      "high": 222.95,
-      "low": 209.59,
-      "volume": 5539
-    },
-    {
-      "date": "2022-01-05",
-      "price": 237.33,
-      "high": 242.47,
-      "low": 215.76,
-      "volume": 2991
-    },
-    {
-      "date": "2022-01-07",
-      "price": 229.11,
-      "high": 237.33,
-      "low": 216.78,
-      "volume": 851
-    },
-    {
-      "date": "2022-01-11",
-      "price": 209.59,
-      "high": 228.08,
-      "low": 205.48,
-      "volume": 872
-    },
-    {
-      "date": "2022-01-13",
-      "price": 214.73,
-      "high": 217.81,
-      "low": 204.97,
-      "volume": 1103
-    },
-    {
-      "date": "2022-01-17",
-      "price": 211.65,
-      "high": 215.76,
-      "low": 210.62,
-      "volume": 3647
-    },
-    {
-      "date": "2022-01-19",
-      "price": 192.13,
-      "high": 207.54,
-      "low": 184.93,
-      "volume": 3830
-    },
-    {
-      "date": "2022-01-21",
-      "price": 184.93,
-      "high": 185.45,
-      "low": 169.52,
-      "volume": 6690
-    },
-    {
-      "date": "2022-01-25",
-      "price": 173.12,
-      "high": 174.66,
-      "low": 173.12,
-      "volume": 627
-    },
-    {
-      "date": "2022-01-27",
-      "price": 175.17,
-      "high": 192.13,
-      "low": 173.12,
-      "volume": 2306
-    },
-    {
-      "date": "2022-01-31",
-      "price": 154.11,
-      "high": 174.15,
-      "low": 152.57,
-      "volume": 4006
-    },
-    {
-      "date": "2022-02-02",
-      "price": 143.84,
-      "high": 164.39,
-      "low": 142.3,
-      "volume": 12511
-    },
-    {
-      "date": "2022-02-04",
-      "price": 110.96,
-      "high": 131.51,
-      "low": 97.81,
-      "volume": 28903
-    },
-    {
-      "date": "2022-02-08",
-      "price": 115.53,
-      "high": 128.37,
-      "low": 115.53,
-      "volume": 2822
-    },
-    {
-      "date": "2022-02-10",
-      "price": 96.79,
-      "high": 107.83,
-      "low": 94.99,
-      "volume": 13522
-    },
-    {
-      "date": "2022-02-14",
-      "price": 93.71,
-      "high": 102.69,
-      "low": 92.94,
-      "volume": 6377
-    },
-    {
-      "date": "2022-02-16",
-      "price": 90.63,
-      "high": 101.15,
-      "low": 90.63,
-      "volume": 8948
-    },
-    {
-      "date": "2022-02-18",
-      "price": 90.37,
-      "high": 94.48,
-      "low": 90.11,
-      "volume": 14538
-    },
-    {
-      "date": "2022-02-22",
-      "price": 92.68,
-      "high": 92.68,
-      "low": 84.21,
-      "volume": 10257
-    },
-    {
-      "date": "2022-02-24",
-      "price": 86.52,
-      "high": 89.34,
-      "low": 82.93,
-      "volume": 14048
-    },
-    {
-      "date": "2022-02-28",
-      "price": 80.1,
-      "high": 84.47,
-      "low": 80.1,
-      "volume": 10454
-    },
-    {
-      "date": "2022-03-02",
-      "price": 82.93,
-      "high": 83.18,
-      "low": 78.3,
-      "volume": 5104
-    },
-    {
-      "date": "2022-03-04",
-      "price": 86.01,
-      "high": 90.88,
-      "low": 81.9,
-      "volume": 23299
-    },
-    {
-      "date": "2022-03-08",
-      "price": 75.22,
-      "high": 82.93,
-      "low": 74.45,
-      "volume": 22285
-    },
-    {
-      "date": "2022-03-10",
-      "price": 85.75,
-      "high": 89.34,
-      "low": 82.16,
-      "volume": 14441
-    },
-    {
-      "date": "2022-03-14",
-      "price": 83.18,
-      "high": 88.06,
-      "low": 79.84,
-      "volume": 9263
-    },
-    {
-      "date": "2022-03-16",
-      "price": 81.64,
-      "high": 82.16,
-      "low": 79.84,
-      "volume": 2949
-    },
-    {
-      "date": "2022-03-18",
-      "price": 86.78,
-      "high": 87.8,
-      "low": 80.87,
-      "volume": 37317
-    },
-    {
-      "date": "2022-03-22",
-      "price": 86.78,
-      "high": 87.8,
-      "low": 83.44,
-      "volume": 9982
-    },
-    {
-      "date": "2022-03-24",
-      "price": 86.26,
-      "high": 94.99,
-      "low": 85.49,
-      "volume": 38958
-    },
-    {
-      "date": "2022-03-28",
-      "price": 88.57,
-      "high": 89.86,
-      "low": 87.55,
-      "volume": 32583
-    },
-    {
-      "date": "2022-03-30",
-      "price": 81.9,
-      "high": 89.86,
-      "low": 80.87,
-      "volume": 60815
-    },
-    {
-      "date": "2022-04-01",
-      "price": 79.59,
-      "high": 85.75,
-      "low": 79.59,
-      "volume": 21188
-    },
-    {
-      "date": "2022-04-05",
-      "price": 79.59,
-      "high": 83.95,
-      "low": 77.53,
-      "volume": 18524
-    },
-    {
-      "date": "2022-04-07",
-      "price": 76.76,
-      "high": 77.02,
-      "low": 73.17,
-      "volume": 15750
-    },
-    {
-      "date": "2022-04-11",
-      "price": 74.2,
-      "high": 75.22,
-      "low": 72.91,
-      "volume": 18313
-    },
-    {
-      "date": "2022-04-13",
-      "price": 73.17,
-      "high": 75.74,
-      "low": 72.14,
-      "volume": 4950
-    },
-    {
-      "date": "2022-04-20",
-      "price": 75.74,
-      "high": 75.74,
-      "low": 74.45,
-      "volume": 2075
-    },
-    {
-      "date": "2022-04-22",
-      "price": 77.79,
-      "high": 79.59,
-      "low": 76.76,
-      "volume": 4290
-    },
-    {
-      "date": "2022-04-26",
-      "price": 76.76,
-      "high": 78.3,
-      "low": 75.74,
-      "volume": 11354
-    },
-    {
-      "date": "2022-04-28",
-      "price": 75.74,
-      "high": 77.79,
-      "low": 74.71,
-      "volume": 17571
-    },
-    {
-      "date": "2022-05-02",
-      "price": 77.28,
-      "high": 83.44,
-      "low": 75.74,
-      "volume": 12949
-    },
-    {
-      "date": "2022-05-04",
-      "price": 83.44,
-      "high": 87.03,
-      "low": 82.16,
-      "volume": 20383
-    },
-    {
-      "date": "2022-05-06",
-      "price": 82.41,
-      "high": 83.95,
-      "low": 78.3,
-      "volume": 14243
-    },
-    {
-      "date": "2022-05-10",
-      "price": 79.07,
-      "high": 86.01,
-      "low": 77.79,
-      "volume": 8737
-    },
-    {
-      "date": "2022-05-12",
-      "price": 73.17,
-      "high": 80.62,
-      "low": 72.66,
-      "volume": 17304
-    },
-    {
-      "date": "2022-05-16",
-      "price": 74.97,
-      "high": 80.1,
-      "low": 72.91,
-      "volume": 15995
-    },
-    {
-      "date": "2022-05-19",
-      "price": 76.76,
-      "high": 77.02,
-      "low": 72.91,
-      "volume": 17623
-    },
-    {
-      "date": "2022-05-23",
-      "price": 78.05,
-      "high": 78.05,
-      "low": 74.45,
-      "volume": 11435
-    },
-    {
-      "date": "2022-05-25",
-      "price": 77.02,
-      "high": 79.33,
-      "low": 75.99,
-      "volume": 4653
-    },
-    {
-      "date": "2022-05-30",
-      "price": 81.13,
-      "high": 81.13,
-      "low": 75.74,
-      "volume": 13566
-    },
-    {
-      "date": "2022-06-01",
-      "price": 80.1,
-      "high": 82.67,
-      "low": 77.28,
-      "volume": 22228
-    },
-    {
-      "date": "2022-06-03",
-      "price": 72.14,
-      "high": 78.3,
-      "low": 70.09,
-      "volume": 61648
-    },
-    {
-      "date": "2022-06-08",
-      "price": 69.32,
-      "high": 71.89,
-      "low": 68.04,
-      "volume": 24694
-    },
-    {
-      "date": "2022-06-10",
-      "price": 64.95,
-      "high": 68.04,
-      "low": 61.1,
-      "volume": 36483
-    },
-    {
-      "date": "2022-06-14",
-      "price": 50.06,
-      "high": 60.97,
-      "low": 50.06,
-      "volume": 86217
-    },
-    {
-      "date": "2022-06-16",
-      "price": 50.06,
-      "high": 52.37,
-      "low": 48.78,
-      "volume": 7423
-    },
-    {
-      "date": "2022-06-20",
-      "price": 48.39,
-      "high": 53.91,
-      "low": 47.5,
-      "volume": 14767
-    },
-    {
-      "date": "2022-06-22",
-      "price": 51.35,
-      "high": 51.86,
-      "low": 48.39,
-      "volume": 32831
-    },
-    {
-      "date": "2022-06-24",
-      "price": 51.6,
-      "high": 51.6,
-      "low": 47.88,
-      "volume": 10398
-    },
-    {
-      "date": "2022-06-28",
-      "price": 50.96,
-      "high": 51.48,
-      "low": 50.06,
-      "volume": 4887
-    },
-    {
-      "date": "2022-06-30",
-      "price": 48.01,
-      "high": 51.09,
-      "low": 46.21,
-      "volume": 9835
-    },
-    {
-      "date": "2022-07-04",
-      "price": 52.25,
-      "high": 53.91,
-      "low": 50.06,
-      "volume": 10923
-    },
-    {
-      "date": "2022-07-06",
-      "price": 52.5,
-      "high": 53.66,
-      "low": 50.96,
-      "volume": 5733
-    },
-    {
-      "date": "2022-07-08",
-      "price": 52.37,
-      "high": 54.17,
-      "low": 49.94,
-      "volume": 3019
-    },
-    {
-      "date": "2022-07-12",
-      "price": 53.91,
-      "high": 57.77,
-      "low": 51.48,
-      "volume": 10959
-    },
-    {
-      "date": "2022-07-14",
-      "price": 53.79,
-      "high": 54.94,
-      "low": 53.79,
-      "volume": 1573
-    },
-    {
-      "date": "2022-07-18",
-      "price": 52.89,
-      "high": 53.27,
-      "low": 51.09,
-      "volume": 13101
-    },
-    {
-      "date": "2022-07-20",
-      "price": 54.43,
-      "high": 54.43,
-      "low": 51.99,
-      "volume": 16695
-    },
-    {
-      "date": "2022-07-22",
-      "price": 56.48,
-      "high": 56.48,
-      "low": 55.07,
-      "volume": 12800
-    },
-    {
-      "date": "2022-07-26",
-      "price": 64.18,
-      "high": 67.78,
-      "low": 58.54,
-      "volume": 34306
-    },
-    {
-      "date": "2022-07-28",
-      "price": 64.18,
-      "high": 67.78,
-      "low": 63.54,
-      "volume": 33306
-    },
-    {
-      "date": "2022-08-01",
-      "price": 67.26,
-      "high": 71.37,
-      "low": 63.93,
-      "volume": 61442
-    },
-    {
-      "date": "2022-08-03",
-      "price": 64.7,
-      "high": 67.52,
-      "low": 63.93,
-      "volume": 18564
-    },
-    {
-      "date": "2022-08-05",
-      "price": 62.9,
-      "high": 66.24,
-      "low": 62.26,
-      "volume": 11063
-    },
-    {
-      "date": "2022-08-09",
-      "price": 63.67,
-      "high": 65.21,
-      "low": 62.77,
-      "volume": 28398
-    },
-    {
-      "date": "2022-08-11",
-      "price": 64.06,
-      "high": 64.44,
-      "low": 63.03,
-      "volume": 9821
-    },
-    {
-      "date": "2022-08-15",
-      "price": 64.18,
-      "high": 65.47,
-      "low": 63.16,
-      "volume": 19922
-    },
-    {
-      "date": "2022-08-17",
-      "price": 63.29,
-      "high": 65.21,
-      "low": 63.29,
-      "volume": 6771
-    },
-    {
-      "date": "2022-08-19",
-      "price": 64.18,
-      "high": 64.95,
-      "low": 62.9,
-      "volume": 31672
-    },
-    {
-      "date": "2022-08-23",
-      "price": 64.7,
-      "high": 65.72,
-      "low": 63.93,
-      "volume": 34420
-    },
-    {
-      "date": "2022-08-25",
-      "price": 41.85,
-      "high": 58.92,
-      "low": 36.33,
-      "volume": 367264
-    },
-    {
-      "date": "2022-08-29",
-      "price": 43.13,
-      "high": 44.54,
-      "low": 39.41,
-      "volume": 39978
-    },
-    {
-      "date": "2022-08-31",
-      "price": 40.44,
-      "high": 43.26,
-      "low": 38.13,
-      "volume": 38230
-    },
-    {
-      "date": "2022-09-02",
-      "price": 37.1,
-      "high": 37.61,
-      "low": 35.43,
-      "volume": 24581
-    },
-    {
-      "date": "2022-09-06",
-      "price": 34.66,
-      "high": 35.04,
-      "low": 32.86,
-      "volume": 29368
-    },
-    {
-      "date": "2022-09-08",
-      "price": 34.53,
-      "high": 34.53,
-      "low": 30.55,
-      "volume": 37160
-    },
-    {
-      "date": "2022-09-12",
-      "price": 33.89,
-      "high": 34.53,
-      "low": 32.73,
-      "volume": 10589
-    },
-    {
-      "date": "2022-09-14",
-      "price": 33.38,
-      "high": 34.79,
-      "low": 31.58,
-      "volume": 20860
-    },
-    {
-      "date": "2022-09-16",
-      "price": 33.38,
-      "high": 34.02,
-      "low": 32.61,
-      "volume": 24484
-    },
-    {
-      "date": "2022-09-20",
-      "price": 34.4,
-      "high": 34.66,
-      "low": 33.89,
-      "volume": 13500
-    },
-    {
-      "date": "2022-09-22",
-      "price": 36.2,
-      "high": 38.51,
-      "low": 35.3,
-      "volume": 14066
-    },
-    {
-      "date": "2022-09-26",
-      "price": 33.38,
-      "high": 34.4,
-      "low": 31.32,
-      "volume": 17469
-    },
-    {
-      "date": "2022-09-28",
-      "price": 30.17,
-      "high": 31.84,
-      "low": 28.63,
-      "volume": 23392
-    },
-    {
-      "date": "2022-09-30",
-      "price": 31.32,
-      "high": 32.09,
-      "low": 27.6,
-      "volume": 29640
-    },
-    {
-      "date": "2022-10-04",
-      "price": 32.35,
-      "high": 35.17,
-      "low": 30.55,
-      "volume": 23207
-    },
-    {
-      "date": "2022-10-06",
-      "price": 32.61,
-      "high": 34.27,
-      "low": 30.81,
-      "volume": 8151
-    },
-    {
-      "date": "2022-10-10",
-      "price": 31.84,
-      "high": 32.09,
-      "low": 30.94,
-      "volume": 2559
-    },
-    {
-      "date": "2022-10-12",
-      "price": 30.17,
-      "high": 31.19,
-      "low": 29.27,
-      "volume": 8923
-    },
-    {
-      "date": "2022-10-14",
-      "price": 30.55,
-      "high": 32.61,
-      "low": 28.5,
-      "volume": 22820
-    },
-    {
-      "date": "2022-10-18",
-      "price": 27.98,
-      "high": 28.88,
-      "low": 25.1,
-      "volume": 39410
-    },
-    {
-      "date": "2022-10-20",
-      "price": 27.21,
-      "high": 28.75,
-      "low": 26.06,
-      "volume": 6217
-    },
-    {
-      "date": "2022-10-24",
-      "price": 28.24,
-      "high": 28.37,
-      "low": 24.97,
-      "volume": 34087
-    },
-    {
-      "date": "2022-10-26",
-      "price": 30.68,
-      "high": 34.53,
-      "low": 29.52,
-      "volume": 34470
-    },
-    {
-      "date": "2022-10-28",
-      "price": 34.79,
-      "high": 34.79,
-      "low": 30.29,
-      "volume": 40914
-    },
-    {
-      "date": "2022-11-01",
-      "price": 35.17,
-      "high": 35.69,
-      "low": 34.15,
-      "volume": 18049
-    },
-    {
-      "date": "2022-11-03",
-      "price": 24.39,
-      "high": 33.12,
-      "low": 24.39,
-      "volume": 105083
-    },
-    {
-      "date": "2022-11-07",
-      "price": 23.56,
-      "high": 25.67,
-      "low": 22.98,
-      "volume": 32887
-    },
-    {
-      "date": "2022-11-09",
-      "price": 23.04,
-      "high": 25.29,
-      "low": 21.82,
-      "volume": 22866
-    },
-    {
-      "date": "2022-11-11",
-      "price": 28.11,
-      "high": 28.24,
-      "low": 21.95,
-      "volume": 131683
-    },
-    {
-      "date": "2022-11-15",
-      "price": 32.35,
-      "high": 33.38,
-      "low": 29.52,
-      "volume": 155291
-    },
-    {
-      "date": "2022-11-17",
-      "price": 29.27,
-      "high": 33.38,
-      "low": 29.27,
-      "volume": 19420
-    },
-    {
-      "date": "2022-11-21",
-      "price": 29.65,
-      "high": 30.42,
-      "low": 26.96,
-      "volume": 21268
-    },
-    {
-      "date": "2022-11-23",
-      "price": 30.29,
-      "high": 31.96,
-      "low": 30.29,
-      "volume": 13628
-    },
-    {
-      "date": "2022-11-25",
-      "price": 28.11,
-      "high": 28.75,
-      "low": 26.44,
-      "volume": 18772
-    },
-    {
-      "date": "2022-11-29",
-      "price": 26.57,
-      "high": 29.52,
-      "low": 26.44,
-      "volume": 17350
-    },
-    {
-      "date": "2022-12-01",
-      "price": 27.86,
-      "high": 28.75,
-      "low": 25.29,
-      "volume": 37848
-    },
-    {
-      "date": "2022-12-05",
-      "price": 27.6,
-      "high": 27.73,
-      "low": 26.96,
-      "volume": 4018
-    },
-    {
-      "date": "2022-12-07",
-      "price": 27.47,
-      "high": 28.11,
-      "low": 26.44,
-      "volume": 5152
-    },
-    {
-      "date": "2022-12-09",
-      "price": 27.47,
-      "high": 27.86,
-      "low": 26.44,
-      "volume": 2919
-    },
-    {
-      "date": "2022-12-13",
-      "price": 27.73,
-      "high": 28.24,
-      "low": 25.67,
-      "volume": 32077
-    },
-    {
-      "date": "2022-12-15",
-      "price": 30.81,
-      "high": 34.27,
-      "low": 29.4,
-      "volume": 42778
-    },
-    {
-      "date": "2022-12-19",
-      "price": 31.96,
-      "high": 33.5,
-      "low": 29.14,
-      "volume": 33759
-    },
-    {
-      "date": "2022-12-21",
-      "price": 28.88,
-      "high": 31.96,
-      "low": 28.24,
-      "volume": 43340
-    },
-    {
-      "date": "2022-12-23",
-      "price": 30.68,
-      "high": 30.81,
-      "low": 28.24,
-      "volume": 14460
-    },
-    {
-      "date": "2022-12-28",
-      "price": 29.78,
-      "high": 30.29,
-      "low": 28.63,
-      "volume": 9474
-    },
-    {
-      "date": "2022-12-30",
-      "price": 30.68,
-      "high": 31.45,
-      "low": 29.4,
-      "volume": 23668
-    },
-    {
-      "date": "2023-01-03",
-      "price": 31.19,
-      "high": 31.96,
-      "low": 28.11,
-      "volume": 33732
-    },
-    {
-      "date": "2023-01-05",
-      "price": 30.68,
-      "high": 31.19,
-      "low": 28.11,
-      "volume": 78897
-    },
-    {
-      "date": "2023-01-09",
-      "price": 28.75,
-      "high": 30.17,
-      "low": 26.7,
-      "volume": 22123
-    },
-    {
-      "date": "2023-01-11",
-      "price": 26.19,
-      "high": 27.47,
-      "low": 25.03,
-      "volume": 66225
-    },
-    {
-      "date": "2023-01-13",
-      "price": 27.09,
-      "high": 28.24,
-      "low": 26.83,
-      "volume": 3684
-    },
-    {
-      "date": "2023-01-17",
-      "price": 27.09,
-      "high": 29.91,
-      "low": 26.44,
-      "volume": 16047
-    },
-    {
-      "date": "2023-01-19",
-      "price": 27.6,
-      "high": 27.6,
-      "low": 26.32,
-      "volume": 8690
-    },
-    {
-      "date": "2023-01-23",
-      "price": 28.11,
-      "high": 28.11,
-      "low": 27.09,
-      "volume": 3838
-    },
-    {
-      "date": "2023-01-25",
-      "price": 27.34,
-      "high": 28.88,
-      "low": 26.96,
-      "volume": 7148
-    },
-    {
-      "date": "2023-01-27",
-      "price": 27.21,
-      "high": 27.34,
-      "low": 26.57,
-      "volume": 469
-    },
-    {
-      "date": "2023-01-31",
-      "price": 26.96,
-      "high": 26.96,
-      "low": 25.93,
-      "volume": 4339
-    },
-    {
-      "date": "2023-02-02",
-      "price": 26.19,
-      "high": 27.21,
-      "low": 26.19,
-      "volume": 10727
-    },
-    {
-      "date": "2023-02-06",
-      "price": 25.61,
-      "high": 26.06,
-      "low": 25.35,
-      "volume": 6168
-    },
-    {
-      "date": "2023-02-08",
-      "price": 27.09,
-      "high": 27.09,
-      "low": 23.81,
-      "volume": 11608
-    },
-    {
-      "date": "2023-02-10",
-      "price": 26.83,
-      "high": 28.11,
-      "low": 26.06,
-      "volume": 32167
-    },
-    {
-      "date": "2023-02-14",
-      "price": 23.17,
-      "high": 27.98,
-      "low": 22.46,
-      "volume": 164196
-    },
-    {
-      "date": "2023-02-16",
-      "price": 23.11,
-      "high": 23.88,
-      "low": 21.89,
-      "volume": 29757
-    },
-    {
-      "date": "2023-02-20",
-      "price": 21.12,
-      "high": 22.46,
-      "low": 19.58,
-      "volume": 11776
-    },
-    {
-      "date": "2023-02-22",
-      "price": 20.41,
-      "high": 21.57,
-      "low": 20.41,
-      "volume": 16455
-    },
-    {
-      "date": "2023-02-24",
-      "price": 19.9,
-      "high": 20.54,
-      "low": 19.77,
-      "volume": 3008
-    },
-    {
-      "date": "2023-02-28",
-      "price": 19.51,
-      "high": 19.64,
-      "low": 18.36,
-      "volume": 1252
-    },
-    {
-      "date": "2023-03-02",
-      "price": 19.9,
-      "high": 20.54,
-      "low": 17.07,
-      "volume": 41203
-    },
-    {
-      "date": "2023-03-06",
-      "price": 22.02,
-      "high": 23.11,
-      "low": 18.61,
-      "volume": 28353
-    },
-    {
-      "date": "2023-03-08",
-      "price": 21.37,
-      "high": 23.62,
-      "low": 21.37,
-      "volume": 8972
-    },
-    {
-      "date": "2023-03-10",
-      "price": 21.37,
-      "high": 22.34,
-      "low": 19.26,
-      "volume": 3550
-    },
-    {
-      "date": "2023-03-14",
-      "price": 20.8,
-      "high": 23.75,
-      "low": 19.77,
-      "volume": 6327
-    },
-    {
-      "date": "2023-03-16",
-      "price": 20.15,
-      "high": 20.15,
-      "low": 18.48,
-      "volume": 12781
-    },
-    {
-      "date": "2023-03-20",
-      "price": 20.41,
-      "high": 20.86,
-      "low": 19.13,
-      "volume": 3181
-    },
-    {
-      "date": "2023-03-22",
-      "price": 20.54,
-      "high": 22.27,
-      "low": 19.0,
-      "volume": 16867
-    },
-    {
-      "date": "2023-03-24",
-      "price": 19.0,
-      "high": 21.05,
-      "low": 18.23,
-      "volume": 26503
-    },
-    {
-      "date": "2023-03-28",
-      "price": 17.84,
-      "high": 19.13,
-      "low": 16.43,
-      "volume": 11932
-    },
-    {
-      "date": "2023-03-30",
-      "price": 18.61,
-      "high": 19.26,
-      "low": 18.1,
-      "volume": 2049
-    },
-    {
-      "date": "2023-04-03",
-      "price": 19.38,
-      "high": 20.51,
-      "low": 18.23,
-      "volume": 6618
-    },
-    {
-      "date": "2023-04-05",
-      "price": 18.97,
-      "high": 19.1,
-      "low": 18.23,
-      "volume": 907
-    },
-    {
-      "date": "2023-04-12",
-      "price": 19.49,
-      "high": 19.49,
-      "low": 18.72,
-      "volume": 4668
-    },
-    {
-      "date": "2023-04-14",
-      "price": 18.1,
-      "high": 18.46,
-      "low": 16.69,
-      "volume": 5122
-    },
-    {
-      "date": "2023-04-18",
-      "price": 17.82,
-      "high": 17.82,
-      "low": 14.69,
-      "volume": 927
-    },
-    {
-      "date": "2023-04-20",
-      "price": 18.61,
-      "high": 18.61,
-      "low": 15.15,
-      "volume": 8436
-    },
-    {
-      "date": "2023-04-24",
-      "price": 20.38,
-      "high": 20.8,
-      "low": 14.81,
-      "volume": 8560
-    },
-    {
-      "date": "2023-04-26",
-      "price": 19.13,
-      "high": 19.26,
-      "low": 18.51,
-      "volume": 1569
-    },
-    {
-      "date": "2023-04-28",
-      "price": 19.13,
-      "high": 23.08,
-      "low": 17.95,
-      "volume": 13270
-    },
-    {
-      "date": "2023-05-03",
-      "price": 18.61,
-      "high": 18.92,
-      "low": 17.46,
-      "volume": 8712
-    },
-    {
-      "date": "2023-05-05",
-      "price": 19.77,
-      "high": 19.77,
-      "low": 18.1,
-      "volume": 12399
-    },
-    {
-      "date": "2023-05-09",
-      "price": 19.1,
-      "high": 20.15,
-      "low": 18.23,
-      "volume": 1423
-    },
-    {
-      "date": "2023-05-11",
-      "price": 19.51,
-      "high": 21.82,
-      "low": 18.61,
-      "volume": 15265
-    },
-    {
-      "date": "2023-05-15",
-      "price": 19.23,
-      "high": 19.64,
-      "low": 18.23,
-      "volume": 2755
-    },
-    {
-      "date": "2023-05-19",
-      "price": 18.74,
-      "high": 20.44,
-      "low": 18.54,
-      "volume": 1396
-    },
-    {
-      "date": "2023-05-23",
-      "price": 19.87,
-      "high": 19.87,
-      "low": 18.72,
-      "volume": 3153
-    },
-    {
-      "date": "2023-05-25",
-      "price": 19.13,
-      "high": 19.79,
-      "low": 18.69,
-      "volume": 2013
-    },
-    {
-      "date": "2023-05-30",
-      "price": 19.85,
-      "high": 21.39,
-      "low": 18.0,
-      "volume": 4489
-    },
-    {
-      "date": "2023-06-01",
-      "price": 19.26,
-      "high": 19.26,
-      "low": 17.33,
-      "volume": 1819
-    },
-    {
-      "date": "2023-06-05",
-      "price": 18.59,
-      "high": 19.26,
-      "low": 17.97,
-      "volume": 2742
-    },
-    {
-      "date": "2023-06-07",
-      "price": 17.95,
-      "high": 17.95,
-      "low": 16.07,
-      "volume": 7068
-    },
-    {
-      "date": "2023-06-09",
-      "price": 18.59,
-      "high": 18.61,
-      "low": 16.56,
-      "volume": 13166
-    },
-    {
-      "date": "2023-06-13",
-      "price": 16.38,
-      "high": 16.38,
-      "low": 15.4,
-      "volume": 6674
-    },
-    {
-      "date": "2023-06-15",
-      "price": 16.69,
-      "high": 17.97,
-      "low": 15.64,
-      "volume": 3346
-    },
-    {
-      "date": "2023-06-19",
-      "price": 15.66,
-      "high": 16.35,
-      "low": 15.51,
-      "volume": 3805
-    },
-    {
-      "date": "2023-06-21",
-      "price": 16.05,
-      "high": 16.15,
-      "low": 15.25,
-      "volume": 1154
-    },
-    {
-      "date": "2023-06-23",
-      "price": 14.71,
-      "high": 15.61,
-      "low": 13.63,
-      "volume": 7189
-    },
-    {
-      "date": "2023-06-27",
-      "price": 14.27,
-      "high": 14.3,
-      "low": 12.32,
-      "volume": 11652
-    },
-    {
-      "date": "2023-06-29",
-      "price": 14.74,
-      "high": 14.74,
-      "low": 12.84,
-      "volume": 4312
-    },
-    {
-      "date": "2023-07-03",
-      "price": 14.58,
-      "high": 14.74,
-      "low": 13.02,
-      "volume": 6211
-    },
-    {
-      "date": "2023-07-05",
-      "price": 6.8,
-      "high": 10.78,
-      "low": 6.05,
-      "volume": 225659
-    },
-    {
-      "date": "2023-07-07",
-      "price": 7.96,
-      "high": 7.96,
-      "low": 6.43,
-      "volume": 31267
-    },
-    {
-      "date": "2023-07-11",
-      "price": 6.87,
-      "high": 8.4,
-      "low": 6.46,
-      "volume": 37225
-    },
-    {
-      "date": "2023-07-13",
-      "price": 7.3,
-      "high": 7.7,
-      "low": 7.06,
-      "volume": 314
-    },
-    {
-      "date": "2023-07-17",
-      "price": 6.91,
-      "high": 7.7,
-      "low": 6.55,
-      "volume": 4995
-    },
-    {
-      "date": "2023-07-19",
-      "price": 7.3,
-      "high": 7.96,
-      "low": 7.06,
-      "volume": 6344
-    },
-    {
-      "date": "2023-07-21",
-      "price": 6.57,
-      "high": 7.51,
-      "low": 6.42,
-      "volume": 11587
-    },
-    {
-      "date": "2023-07-25",
-      "price": 7.14,
-      "high": 7.32,
-      "low": 6.42,
-      "volume": 4710
-    },
-    {
-      "date": "2023-07-27",
-      "price": 7.56,
-      "high": 7.56,
-      "low": 6.55,
-      "volume": 3059
-    },
-    {
-      "date": "2023-07-31",
-      "price": 7.56,
-      "high": 7.56,
-      "low": 7.56,
-      "volume": 77
-    },
-    {
-      "date": "2023-08-02",
-      "price": 7.57,
-      "high": 7.7,
-      "low": 6.55,
-      "volume": 18875
-    },
-    {
-      "date": "2023-08-04",
-      "price": 12.7,
-      "high": 16.38,
-      "low": 9.63,
-      "volume": 114051
-    },
-    {
-      "date": "2023-08-08",
-      "price": 10.89,
-      "high": 12.19,
-      "low": 10.27,
-      "volume": 8032
-    },
-    {
-      "date": "2023-08-10",
-      "price": 10.68,
-      "high": 11.41,
-      "low": 9.64,
-      "volume": 2592
-    },
-    {
-      "date": "2023-08-14",
-      "price": 11.26,
-      "high": 11.3,
-      "low": 9.91,
-      "volume": 1213
-    },
-    {
-      "date": "2023-08-16",
-      "price": 12.32,
-      "high": 12.75,
-      "low": 10.81,
-      "volume": 41878
-    },
-    {
-      "date": "2023-08-18",
-      "price": 11.03,
-      "high": 11.03,
-      "low": 8.73,
-      "volume": 33544
-    },
-    {
-      "date": "2023-08-22",
-      "price": 11.87,
-      "high": 11.87,
-      "low": 10.24,
-      "volume": 13627
-    },
-    {
-      "date": "2023-08-24",
-      "price": 12.19,
-      "high": 12.19,
-      "low": 9.96,
-      "volume": 3443
-    },
-    {
-      "date": "2023-08-28",
-      "price": 10.08,
-      "high": 12.19,
-      "low": 9.58,
-      "volume": 11765
-    },
-    {
-      "date": "2023-08-30",
-      "price": 10.27,
-      "high": 10.53,
-      "low": 10.26,
-      "volume": 998
-    },
-    {
-      "date": "2023-09-01",
-      "price": 11.17,
-      "high": 11.42,
-      "low": 10.12,
-      "volume": 2662
-    },
-    {
-      "date": "2023-09-05",
-      "price": 12.0,
-      "high": 12.84,
-      "low": 10.65,
-      "volume": 37796
-    },
-    {
-      "date": "2023-09-07",
-      "price": 13.43,
-      "high": 13.56,
-      "low": 11.68,
-      "volume": 21170
-    },
-    {
-      "date": "2023-09-11",
-      "price": 14.12,
-      "high": 16.71,
-      "low": 11.9,
-      "volume": 50368
-    },
-    {
-      "date": "2023-09-13",
-      "price": 15.66,
-      "high": 17.3,
-      "low": 14.71,
-      "volume": 11019
-    },
-    {
-      "date": "2023-09-15",
-      "price": 14.61,
-      "high": 15.89,
-      "low": 12.89,
-      "volume": 6148
-    },
-    {
-      "date": "2023-09-19",
-      "price": 13.48,
-      "high": 14.58,
-      "low": 12.41,
-      "volume": 7240
-    },
-    {
-      "date": "2023-09-21",
-      "price": 12.44,
-      "high": 13.48,
-      "low": 11.91,
-      "volume": 19807
-    },
-    {
-      "date": "2023-09-25",
-      "price": 12.52,
-      "high": 13.43,
-      "low": 10.4,
-      "volume": 16188
-    },
-    {
-      "date": "2023-09-27",
-      "price": 11.72,
-      "high": 12.62,
-      "low": 10.78,
-      "volume": 3097
-    },
-    {
-      "date": "2023-09-29",
-      "price": 11.4,
-      "high": 11.51,
-      "low": 10.91,
-      "volume": 11120
-    },
-    {
-      "date": "2023-10-03",
-      "price": 18.54,
-      "high": 18.54,
-      "low": 10.71,
-      "volume": 67856
-    },
-    {
-      "date": "2023-10-05",
-      "price": 15.35,
-      "high": 15.38,
-      "low": 14.38,
-      "volume": 8025
-    },
-    {
-      "date": "2023-10-09",
-      "price": 15.15,
-      "high": 17.15,
-      "low": 14.12,
-      "volume": 7180
-    },
-    {
-      "date": "2023-10-11",
-      "price": 14.43,
-      "high": 15.99,
-      "low": 12.89,
-      "volume": 4293
-    },
-    {
-      "date": "2023-10-13",
-      "price": 15.15,
-      "high": 15.53,
-      "low": 14.33,
-      "volume": 5358
-    },
-    {
-      "date": "2023-10-17",
-      "price": 17.18,
-      "high": 18.61,
-      "low": 14.89,
-      "volume": 38666
-    },
-    {
-      "date": "2023-10-19",
-      "price": 16.05,
-      "high": 17.71,
-      "low": 14.94,
-      "volume": 16023
-    },
-    {
-      "date": "2023-10-23",
-      "price": 15.12,
-      "high": 15.15,
-      "low": 13.48,
-      "volume": 2266
-    },
-    {
-      "date": "2023-10-25",
-      "price": 15.4,
-      "high": 15.4,
-      "low": 14.15,
-      "volume": 2265
-    },
-    {
-      "date": "2023-10-27",
-      "price": 16.69,
-      "high": 17.3,
-      "low": 15.3,
-      "volume": 3458
-    },
-    {
-      "date": "2023-10-31",
-      "price": 17.33,
-      "high": 18.46,
-      "low": 16.69,
-      "volume": 7555
-    },
-    {
-      "date": "2023-11-02",
-      "price": 9.86,
-      "high": 10.82,
-      "low": 9.11,
-      "volume": 19242
-    },
-    {
-      "date": "2023-11-06",
-      "price": 9.63,
-      "high": 10.26,
-      "low": 8.46,
-      "volume": 25334
-    },
-    {
-      "date": "2023-11-08",
-      "price": 9.36,
-      "high": 9.36,
-      "low": 8.23,
-      "volume": 2914
-    },
-    {
-      "date": "2023-11-10",
-      "price": 8.99,
-      "high": 9.61,
-      "low": 8.64,
-      "volume": 24079
-    },
-    {
-      "date": "2023-11-14",
-      "price": 9.1,
-      "high": 9.37,
-      "low": 8.34,
-      "volume": 19381
-    },
-    {
-      "date": "2023-11-16",
-      "price": 9.49,
-      "high": 9.52,
-      "low": 8.99,
-      "volume": 2362
-    },
-    {
-      "date": "2023-11-20",
-      "price": 8.97,
-      "high": 9.37,
-      "low": 8.6,
-      "volume": 6418
-    },
-    {
-      "date": "2023-11-22",
-      "price": 3.8,
-      "high": 6.42,
-      "low": 4.51,
-      "volume": 254602
-    },
-    {
-      "date": "2023-11-24",
-      "price": 4.57,
-      "high": 5.65,
-      "low": 4.25,
-      "volume": 40699
-    },
-    {
-      "date": "2023-11-28",
-      "price": 4.18,
-      "high": 4.82,
-      "low": 4.05,
-      "volume": 153077
-    },
-    {
-      "date": "2023-11-30",
-      "price": 4.13,
-      "high": 4.39,
-      "low": 4.02,
-      "volume": 92648
-    },
-    {
-      "date": "2023-12-04",
-      "price": 4.48,
-      "high": 4.98,
-      "low": 4.27,
-      "volume": 77182
-    },
-    {
-      "date": "2023-12-06",
-      "price": 4.41,
-      "high": 4.43,
-      "low": 3.99,
-      "volume": 44558
-    },
-    {
-      "date": "2023-12-08",
-      "price": 4.09,
-      "high": 4.83,
-      "low": 4.07,
-      "volume": 160806
-    },
-    {
-      "date": "2023-12-12",
-      "price": 4.12,
-      "high": 4.27,
-      "low": 3.75,
-      "volume": 111722
-    },
-    {
-      "date": "2023-12-14",
-      "price": 5.11,
-      "high": 5.95,
-      "low": 4.27,
-      "volume": 110936
-    },
-    {
-      "date": "2023-12-18",
-      "price": 4.9,
-      "high": 5.29,
-      "low": 4.84,
-      "volume": 53644
-    },
-    {
-      "date": "2023-12-20",
-      "price": 4.96,
-      "high": 5.33,
-      "low": 4.63,
-      "volume": 34400
-    },
-    {
-      "date": "2023-12-22",
-      "price": 4.68,
-      "high": 4.76,
-      "low": 3.98,
-      "volume": 326617
-    },
-    {
-      "date": "2023-12-28",
-      "price": 4.68,
-      "high": 4.98,
-      "low": 4.41,
-      "volume": 83666
-    },
-    {
-      "date": "2024-01-02",
-      "price": 4.82,
-      "high": 4.97,
-      "low": 4.43,
-      "volume": 54968
-    },
-    {
-      "date": "2024-01-04",
-      "price": 4.8,
-      "high": 4.96,
-      "low": 4.56,
-      "volume": 135169
-    },
-    {
-      "date": "2024-01-08",
-      "price": 4.9,
-      "high": 4.9,
-      "low": 4.43,
-      "volume": 8155
-    },
-    {
-      "date": "2024-01-10",
-      "price": 4.76,
-      "high": 4.83,
-      "low": 4.56,
-      "volume": 48226
-    },
-    {
-      "date": "2024-01-12",
-      "price": 4.8,
-      "high": 4.83,
-      "low": 4.27,
-      "volume": 36758
-    },
-    {
-      "date": "2024-01-16",
-      "price": 4.79,
-      "high": 4.79,
-      "low": 4.54,
-      "volume": 15270
-    },
-    {
-      "date": "2024-01-18",
-      "price": 4.27,
-      "high": 4.79,
-      "low": 3.7,
-      "volume": 516811
-    },
-    {
-      "date": "2024-01-22",
-      "price": 4.4,
-      "high": 4.6,
-      "low": 4.06,
-      "volume": 22601
-    },
-    {
-      "date": "2024-01-24",
-      "price": 4.26,
-      "high": 4.37,
-      "low": 4.0,
-      "volume": 5730
-    },
-    {
-      "date": "2024-01-26",
-      "price": 4.18,
-      "high": 4.32,
-      "low": 3.7,
-      "volume": 222850
-    },
-    {
-      "date": "2024-01-30",
-      "price": 4.13,
-      "high": 4.32,
-      "low": 4.09,
-      "volume": 45352
-    },
-    {
-      "date": "2024-02-01",
-      "price": 4.83,
-      "high": 4.98,
-      "low": 4.27,
-      "volume": 102209
-    },
-    {
-      "date": "2024-02-05",
-      "price": 4.83,
-      "high": 5.09,
-      "low": 4.27,
-      "volume": 52196
-    },
-    {
-      "date": "2024-02-07",
-      "price": 4.54,
-      "high": 4.56,
-      "low": 4.36,
-      "volume": 943
-    },
-    {
-      "date": "2024-02-09",
-      "price": 5.25,
-      "high": 5.69,
-      "low": 4.88,
-      "volume": 101992
-    },
-    {
-      "date": "2024-02-13",
-      "price": 5.69,
-      "high": 6.11,
-      "low": 5.54,
-      "volume": 236576
-    },
-    {
-      "date": "2024-02-15",
-      "price": 5.11,
-      "high": 5.25,
-      "low": 4.84,
-      "volume": 51405
-    },
-    {
-      "date": "2024-02-19",
-      "price": 5.53,
-      "high": 5.53,
-      "low": 4.7,
-      "volume": 84704
-    },
-    {
-      "date": "2024-02-21",
-      "price": 4.97,
-      "high": 5.25,
-      "low": 4.62,
-      "volume": 7492
-    },
-    {
-      "date": "2024-02-23",
-      "price": 4.92,
-      "high": 5.32,
-      "low": 4.68,
-      "volume": 97829
-    },
-    {
-      "date": "2024-02-27",
-      "price": 4.98,
-      "high": 5.05,
-      "low": 4.69,
-      "volume": 93449
-    },
-    {
-      "date": "2024-02-29",
-      "price": 5.26,
-      "high": 5.54,
-      "low": 4.86,
-      "volume": 108321
-    },
-    {
-      "date": "2024-03-04",
-      "price": 5.17,
-      "high": 5.17,
-      "low": 4.69,
-      "volume": 2369
-    },
-    {
-      "date": "2024-03-06",
-      "price": 5.11,
-      "high": 5.27,
-      "low": 4.55,
-      "volume": 24425
-    },
-    {
-      "date": "2024-03-08",
-      "price": 5.69,
-      "high": 5.94,
-      "low": 5.08,
-      "volume": 95637
-    },
-    {
-      "date": "2024-03-12",
-      "price": 5.96,
-      "high": 5.96,
-      "low": 5.47,
-      "volume": 50329
-    },
-    {
-      "date": "2024-03-14",
-      "price": 6.11,
-      "high": 6.11,
-      "low": 5.68,
-      "volume": 66796
-    },
-    {
-      "date": "2024-03-18",
-      "price": 5.76,
-      "high": 5.82,
-      "low": 5.57,
-      "volume": 10288
-    },
-    {
-      "date": "2024-03-20",
-      "price": 6.26,
-      "high": 6.26,
-      "low": 5.69,
-      "volume": 20849
-    },
-    {
-      "date": "2024-03-22",
-      "price": 6.04,
-      "high": 6.11,
-      "low": 5.1,
-      "volume": 49403
-    },
-    {
-      "date": "2024-03-26",
-      "price": 5.83,
-      "high": 5.96,
-      "low": 5.58,
-      "volume": 2453
-    },
-    {
-      "date": "2024-04-02",
-      "price": 6.31,
-      "high": 6.45,
-      "low": 5.54,
-      "volume": 3347
-    },
-    {
-      "date": "2024-04-04",
-      "price": 6.04,
-      "high": 6.95,
-      "low": 5.54,
-      "volume": 22314
-    },
-    {
-      "date": "2024-04-08",
-      "price": 5.97,
-      "high": 6.2,
-      "low": 5.62,
-      "volume": 11454
-    },
-    {
-      "date": "2024-04-10",
-      "price": 6.26,
-      "high": 6.9,
-      "low": 5.83,
-      "volume": 17233
-    },
-    {
-      "date": "2024-04-12",
-      "price": 6.17,
-      "high": 6.4,
-      "low": 5.89,
-      "volume": 9385
-    },
-    {
-      "date": "2024-04-16",
-      "price": 5.84,
-      "high": 5.84,
-      "low": 5.69,
-      "volume": 24747
-    },
-    {
-      "date": "2024-04-18",
-      "price": 5.4,
-      "high": 5.42,
-      "low": 5.26,
-      "volume": 106388
-    },
-    {
-      "date": "2024-04-22",
-      "price": 5.69,
-      "high": 6.0,
-      "low": 4.9,
-      "volume": 78926
-    },
-    {
-      "date": "2024-04-24",
-      "price": 6.78,
-      "high": 6.78,
-      "low": 5.7,
-      "volume": 47727
-    },
-    {
-      "date": "2024-04-26",
-      "price": 7.53,
-      "high": 7.82,
-      "low": 5.81,
-      "volume": 168603
-    },
-    {
-      "date": "2024-04-30",
-      "price": 7.34,
-      "high": 7.79,
-      "low": 6.97,
-      "volume": 21418
-    },
-    {
-      "date": "2024-05-03",
-      "price": 7.88,
-      "high": 8.05,
-      "low": 7.39,
-      "volume": 22225
-    },
-    {
-      "date": "2024-05-07",
-      "price": 7.04,
-      "high": 7.34,
-      "low": 6.43,
-      "volume": 11142
-    },
-    {
-      "date": "2024-05-10",
-      "price": 6.97,
-      "high": 7.25,
-      "low": 6.75,
-      "volume": 10164
-    },
-    {
-      "date": "2024-05-14",
-      "price": 6.65,
-      "high": 7.09,
-      "low": 6.3,
-      "volume": 4670
-    },
-    {
-      "date": "2024-05-16",
-      "price": 6.54,
-      "high": 7.11,
-      "low": 6.41,
-      "volume": 2040
-    },
-    {
-      "date": "2024-05-22",
-      "price": 6.54,
-      "high": 6.57,
-      "low": 6.0,
-      "volume": 32457
-    },
-    {
-      "date": "2024-05-24",
-      "price": 7.11,
-      "high": 7.28,
-      "low": 6.04,
-      "volume": 38990
-    },
-    {
-      "date": "2024-05-28",
-      "price": 7.45,
-      "high": 8.25,
-      "low": 6.82,
-      "volume": 57207
-    },
-    {
-      "date": "2024-05-30",
-      "price": 7.11,
-      "high": 7.22,
-      "low": 6.54,
-      "volume": 59333
-    },
-    {
-      "date": "2024-06-03",
-      "price": 6.63,
-      "high": 7.96,
-      "low": 6.4,
-      "volume": 132940
-    },
-    {
-      "date": "2024-06-05",
-      "price": 7.39,
-      "high": 7.62,
-      "low": 6.72,
-      "volume": 19235
-    },
-    {
-      "date": "2024-06-07",
-      "price": 7.22,
-      "high": 7.56,
-      "low": 6.84,
-      "volume": 2091
-    },
-    {
-      "date": "2024-06-11",
-      "price": 7.17,
-      "high": 7.51,
-      "low": 6.77,
-      "volume": 937
-    },
-    {
-      "date": "2024-06-13",
-      "price": 7.04,
-      "high": 7.19,
-      "low": 6.84,
-      "volume": 13309
-    },
-    {
-      "date": "2024-06-17",
-      "price": 7.22,
-      "high": 7.22,
-      "low": 6.63,
-      "volume": 5308
-    },
-    {
-      "date": "2024-06-19",
-      "price": 6.95,
-      "high": 7.25,
-      "low": 6.54,
-      "volume": 4884
-    },
-    {
-      "date": "2024-06-21",
-      "price": 6.81,
-      "high": 6.81,
-      "low": 6.41,
-      "volume": 12815
-    },
-    {
-      "date": "2024-06-25",
-      "price": 6.75,
-      "high": 7.2,
-      "low": 6.46,
-      "volume": 41948
-    },
-    {
-      "date": "2024-06-27",
-      "price": 6.58,
-      "high": 6.6,
-      "low": 6.45,
-      "volume": 15592
-    },
-    {
-      "date": "2024-07-01",
-      "price": 7.2,
-      "high": 7.35,
-      "low": 6.15,
-      "volume": 17584
-    },
-    {
-      "date": "2024-07-03",
-      "price": 7.39,
-      "high": 7.5,
-      "low": 6.99,
-      "volume": 4895
-    },
-    {
-      "date": "2024-07-05",
-      "price": 7.33,
-      "high": 7.8,
-      "low": 6.87,
-      "volume": 5521
-    },
-    {
-      "date": "2024-07-09",
-      "price": 7.33,
-      "high": 7.33,
-      "low": 6.76,
-      "volume": 3484
-    },
-    {
-      "date": "2024-07-11",
-      "price": 7.15,
-      "high": 7.8,
-      "low": 6.76,
-      "volume": 2362
-    },
-    {
-      "date": "2024-07-15",
-      "price": 6.42,
-      "high": 6.81,
-      "low": 6.15,
-      "volume": 7577
-    },
-    {
-      "date": "2024-07-17",
-      "price": 6.79,
-      "high": 6.84,
-      "low": 6.54,
-      "volume": 2577
-    },
-    {
-      "date": "2024-07-19",
-      "price": 6.61,
-      "high": 7.03,
-      "low": 6.61,
-      "volume": 6942
-    },
-    {
-      "date": "2024-07-23",
-      "price": 6.54,
-      "high": 6.7,
-      "low": 6.54,
-      "volume": 13694
-    },
-    {
-      "date": "2024-07-25",
-      "price": 6.45,
-      "high": 7.21,
-      "low": 6.06,
-      "volume": 1264
-    },
-    {
-      "date": "2024-07-29",
-      "price": 6.67,
-      "high": 7.24,
-      "low": 6.3,
-      "volume": 7461
-    },
-    {
-      "date": "2024-07-31",
-      "price": 6.43,
-      "high": 6.6,
-      "low": 6.01,
-      "volume": 9702
-    },
-    {
-      "date": "2024-08-02",
-      "price": 6.78,
-      "high": 6.78,
-      "low": 6.78,
-      "volume": 3
-    },
-    {
-      "date": "2024-08-06",
-      "price": 6.0,
-      "high": 6.42,
-      "low": 5.58,
-      "volume": 13217
-    },
-    {
-      "date": "2024-08-08",
-      "price": 6.22,
-      "high": 6.28,
-      "low": 5.86,
-      "volume": 9919
-    },
-    {
-      "date": "2024-08-12",
-      "price": 6.37,
-      "high": 6.6,
-      "low": 5.7,
-      "volume": 14836
-    },
-    {
-      "date": "2024-08-14",
-      "price": 6.33,
-      "high": 6.33,
-      "low": 6.01,
-      "volume": 5092
-    },
-    {
-      "date": "2024-08-16",
-      "price": 6.0,
-      "high": 6.3,
-      "low": 5.7,
-      "volume": 13507
-    },
-    {
-      "date": "2024-08-20",
-      "price": 6.07,
-      "high": 6.07,
-      "low": 5.82,
-      "volume": 5788
-    },
-    {
-      "date": "2024-08-22",
-      "price": 6.57,
-      "high": 6.73,
-      "low": 6.3,
-      "volume": 6599
-    },
-    {
-      "date": "2024-08-26",
-      "price": 6.0,
-      "high": 6.0,
-      "low": 5.73,
-      "volume": 28807
-    },
-    {
-      "date": "2024-08-28",
-      "price": 6.28,
-      "high": 6.3,
-      "low": 6.28,
-      "volume": 155
-    },
-    {
-      "date": "2024-08-30",
-      "price": 5.91,
-      "high": 6.18,
-      "low": 5.85,
-      "volume": 9863
-    },
-    {
-      "date": "2024-09-03",
-      "price": 6.15,
-      "high": 6.15,
-      "low": 5.26,
-      "volume": 10450
-    },
-    {
-      "date": "2024-09-05",
-      "price": 5.85,
-      "high": 5.98,
-      "low": 5.41,
-      "volume": 5883
-    },
-    {
-      "date": "2024-09-09",
-      "price": 5.55,
-      "high": 5.8,
-      "low": 5.25,
-      "volume": 2721
-    },
-    {
-      "date": "2024-09-11",
-      "price": 5.95,
-      "high": 6.0,
-      "low": 5.4,
-      "volume": 577
-    },
-    {
-      "date": "2024-09-13",
-      "price": 5.71,
-      "high": 5.91,
-      "low": 5.4,
-      "volume": 5274
-    },
-    {
-      "date": "2024-09-17",
-      "price": 5.7,
-      "high": 5.7,
-      "low": 5.7,
-      "volume": 33
-    },
-    {
-      "date": "2024-09-19",
-      "price": 5.56,
-      "high": 5.56,
-      "low": 5.25,
-      "volume": 4884
-    },
-    {
-      "date": "2024-09-23",
-      "price": 5.97,
-      "high": 5.97,
-      "low": 4.93,
-      "volume": 170
-    },
-    {
-      "date": "2024-09-25",
-      "price": 5.97,
-      "high": 5.97,
-      "low": 5.7,
-      "volume": 221
-    },
-    {
-      "date": "2024-09-27",
-      "price": 5.62,
-      "high": 5.62,
-      "low": 5.32,
-      "volume": 1273
-    },
-    {
-      "date": "2024-10-01",
-      "price": 5.7,
-      "high": 5.7,
-      "low": 5.31,
-      "volume": 16934
-    },
-    {
-      "date": "2024-10-03",
-      "price": 5.92,
-      "high": 5.92,
-      "low": 5.73,
-      "volume": 1317
-    },
-    {
-      "date": "2024-10-07",
-      "price": 5.62,
-      "high": 5.92,
-      "low": 5.47,
-      "volume": 6075
-    },
-    {
-      "date": "2024-10-09",
-      "price": 5.47,
-      "high": 5.68,
-      "low": 5.47,
-      "volume": 7667
-    },
-    {
-      "date": "2024-10-11",
-      "price": 5.7,
-      "high": 5.85,
-      "low": 5.7,
-      "volume": 6975
-    },
-    {
-      "date": "2024-10-15",
-      "price": 5.79,
-      "high": 5.83,
-      "low": 5.49,
-      "volume": 9
-    },
-    {
-      "date": "2024-10-17",
-      "price": 5.92,
-      "high": 6.0,
-      "low": 5.65,
-      "volume": 10882
-    },
-    {
-      "date": "2024-10-21",
-      "price": 5.59,
-      "high": 6.0,
-      "low": 5.4,
-      "volume": 128573
-    },
-    {
-      "date": "2024-10-23",
-      "price": 5.31,
-      "high": 5.82,
-      "low": 5.1,
-      "volume": 8071
-    },
-    {
-      "date": "2024-10-25",
-      "price": 5.05,
-      "high": 5.29,
-      "low": 4.8,
-      "volume": 8260
-    },
-    {
-      "date": "2024-10-29",
-      "price": 4.57,
-      "high": 4.57,
-      "low": 4.57,
-      "volume": 1083
-    },
-    {
-      "date": "2024-10-31",
-      "price": 4.72,
-      "high": 4.72,
-      "low": 4.5,
-      "volume": 2248
-    },
-    {
-      "date": "2024-11-04",
-      "price": 5.23,
-      "high": 5.23,
-      "low": 4.38,
-      "volume": 5725
-    },
-    {
-      "date": "2024-11-06",
-      "price": 4.81,
-      "high": 4.81,
-      "low": 4.35,
-      "volume": 3226
-    },
-    {
-      "date": "2024-11-08",
-      "price": 4.81,
-      "high": 4.87,
-      "low": 4.5,
-      "volume": 6044
-    },
-    {
-      "date": "2024-11-12",
-      "price": 5.23,
-      "high": 5.25,
-      "low": 4.45,
-      "volume": 49921
-    },
-    {
-      "date": "2024-11-14",
-      "price": 4.74,
-      "high": 5.1,
-      "low": 4.33,
-      "volume": 33188
-    },
-    {
-      "date": "2024-11-18",
-      "price": 4.51,
-      "high": 4.8,
-      "low": 4.23,
-      "volume": 6332
-    },
-    {
-      "date": "2024-11-20",
-      "price": 5.49,
-      "high": 5.49,
-      "low": 4.8,
-      "volume": 9894
-    },
-    {
-      "date": "2024-11-22",
-      "price": 5.1,
-      "high": 5.17,
-      "low": 4.51,
-      "volume": 32560
-    },
-    {
-      "date": "2024-11-26",
-      "price": 5.65,
-      "high": 6.21,
-      "low": 5.55,
-      "volume": 51244
-    },
-    {
-      "date": "2024-11-28",
-      "price": 5.77,
-      "high": 5.85,
-      "low": 5.62,
-      "volume": 4130
-    },
-    {
-      "date": "2024-12-02",
-      "price": 5.95,
-      "high": 6.0,
-      "low": 5.52,
-      "volume": 22898
-    },
-    {
-      "date": "2024-12-04",
-      "price": 6.0,
-      "high": 6.13,
-      "low": 5.85,
-      "volume": 11801
-    },
-    {
-      "date": "2024-12-06",
-      "price": 5.98,
-      "high": 6.15,
-      "low": 5.7,
-      "volume": 17136
-    },
-    {
-      "date": "2024-12-10",
-      "price": 6.0,
-      "high": 6.0,
-      "low": 5.7,
-      "volume": 5348
-    },
-    {
-      "date": "2024-12-12",
-      "price": 5.56,
-      "high": 6.15,
-      "low": 5.56,
-      "volume": 54840
-    },
-    {
-      "date": "2024-12-16",
-      "price": 6.45,
-      "high": 6.45,
-      "low": 6.07,
-      "volume": 25803
-    },
-    {
-      "date": "2024-12-18",
-      "price": 6.75,
-      "high": 6.75,
-      "low": 5.7,
-      "volume": 62482
-    },
-    {
-      "date": "2024-12-20",
-      "price": 5.98,
-      "high": 6.58,
-      "low": 5.7,
-      "volume": 12049
-    },
-    {
-      "date": "2024-12-27",
-      "price": 5.7,
-      "high": 6.3,
-      "low": 5.1,
-      "volume": 127891
-    },
-    {
-      "date": "2025-01-02",
-      "price": 5.38,
-      "high": 5.62,
-      "low": 5.32,
-      "volume": 19329
-    },
-    {
-      "date": "2025-01-06",
-      "price": 5.34,
-      "high": 5.7,
-      "low": 5.34,
-      "volume": 9717
-    },
-    {
-      "date": "2025-01-08",
-      "price": 5.32,
-      "high": 5.32,
-      "low": 5.32,
-      "volume": 10962
-    },
-    {
-      "date": "2025-01-10",
-      "price": 5.32,
-      "high": 5.43,
-      "low": 5.32,
-      "volume": 13189
-    },
-    {
-      "date": "2025-01-14",
-      "price": 4.68,
-      "high": 5.7,
-      "low": 4.68,
-      "volume": 837
-    },
-    {
-      "date": "2025-01-16",
-      "price": 5.5,
-      "high": 6.0,
-      "low": 5.5,
-      "volume": 6044
-    },
-    {
-      "date": "2025-01-20",
-      "price": 5.5,
-      "high": 5.9,
-      "low": 5.49,
-      "volume": 7851
-    },
-    {
-      "date": "2025-01-22",
-      "price": 5.5,
-      "high": 5.5,
-      "low": 5.5,
-      "volume": 0
-    },
-    {
-      "date": "2025-01-24",
-      "price": 5.0,
-      "high": 5.06,
-      "low": 4.68,
-      "volume": 6259
-    },
-    {
-      "date": "2025-01-28",
-      "price": 4.9,
-      "high": 4.9,
-      "low": 4.9,
-      "volume": 882
-    },
-    {
-      "date": "2025-01-30",
-      "price": 4.78,
-      "high": 4.8,
-      "low": 4.55,
-      "volume": 5568
-    },
-    {
-      "date": "2025-02-03",
-      "price": 4.94,
-      "high": 5.48,
-      "low": 4.94,
-      "volume": 9190
-    },
-    {
-      "date": "2025-02-05",
-      "price": 4.38,
-      "high": 4.4,
-      "low": 3.8,
-      "volume": 13697
-    },
-    {
-      "date": "2025-02-07",
-      "price": 4.29,
-      "high": 4.29,
-      "low": 3.52,
-      "volume": 19397
-    },
-    {
-      "date": "2025-02-11",
-      "price": 4.38,
-      "high": 4.38,
-      "low": 4.38,
-      "volume": 4463
-    },
-    {
-      "date": "2025-02-13",
-      "price": 4.24,
-      "high": 4.5,
-      "low": 4.22,
-      "volume": 8315
-    },
-    {
-      "date": "2025-02-17",
-      "price": 4.3,
-      "high": 4.3,
-      "low": 4.3,
-      "volume": 9254
-    },
-    {
-      "date": "2025-02-19",
-      "price": 4.05,
-      "high": 4.05,
-      "low": 4.0,
-      "volume": 2520
-    },
-    {
-      "date": "2025-02-21",
-      "price": 4.0,
-      "high": 4.02,
-      "low": 4.0,
-      "volume": 2783
-    },
-    {
-      "date": "2025-02-25",
-      "price": 4.4,
-      "high": 4.82,
-      "low": 4.26,
-      "volume": 2823
-    },
-    {
-      "date": "2025-02-27",
-      "price": 3.9,
-      "high": 4.0,
-      "low": 3.9,
-      "volume": 51350
-    },
-    {
-      "date": "2025-03-03",
-      "price": 4.6,
-      "high": 5.0,
-      "low": 4.6,
-      "volume": 7519
-    },
-    {
-      "date": "2025-03-05",
-      "price": 4.01,
-      "high": 4.01,
-      "low": 3.99,
-      "volume": 9923
-    },
-    {
-      "date": "2025-03-07",
-      "price": 4.0,
-      "high": 4.45,
-      "low": 3.9,
-      "volume": 31113
-    },
-    {
-      "date": "2025-03-11",
-      "price": 3.85,
-      "high": 3.9,
-      "low": 3.8,
-      "volume": 8043
-    },
-    {
-      "date": "2025-03-13",
-      "price": 4.5,
-      "high": 4.5,
-      "low": 4.2,
-      "volume": 4749
-    },
-    {
-      "date": "2025-03-17",
-      "price": 3.88,
-      "high": 4.5,
-      "low": 3.8,
-      "volume": 12129
-    },
-    {
-      "date": "2025-03-19",
-      "price": 2.5,
-      "high": 3.5,
-      "low": 2.21,
-      "volume": 110244
-    },
-    {
-      "date": "2025-03-21",
-      "price": 2.0,
-      "high": 2.4,
-      "low": 1.75,
-      "volume": 63771
-    },
-    {
-      "date": "2025-03-25",
-      "price": 1.98,
-      "high": 2.2,
-      "low": 1.61,
-      "volume": 75009
-    },
-    {
-      "date": "2025-03-27",
-      "price": 1.75,
-      "high": 1.75,
-      "low": 1.62,
-      "volume": 12299
-    },
-    {
-      "date": "2025-03-31",
-      "price": 1.75,
-      "high": 1.75,
-      "low": 1.62,
-      "volume": 2037
-    },
-    {
-      "date": "2025-04-02",
-      "price": 1.45,
-      "high": 1.6,
-      "low": 1.45,
-      "volume": 70699
-    },
-    {
-      "date": "2025-04-04",
-      "price": 1.24,
-      "high": 1.35,
-      "low": 1.15,
-      "volume": 41750
-    },
-    {
-      "date": "2025-04-08",
-      "price": 1.15,
-      "high": 1.3,
-      "low": 1.0,
-      "volume": 39643
-    },
-    {
-      "date": "2025-04-10",
-      "price": 1.0,
-      "high": 1.2,
-      "low": 0.98,
-      "volume": 86245
-    },
-    {
-      "date": "2025-04-14",
-      "price": 0.99,
-      "high": 1.08,
-      "low": 0.98,
-      "volume": 36814
-    },
-    {
-      "date": "2025-04-16",
-      "price": 0.95,
-      "high": 0.95,
-      "low": 0.87,
-      "volume": 39201
-    },
-    {
-      "date": "2025-04-23",
-      "price": 0.84,
-      "high": 0.85,
-      "low": 0.75,
-      "volume": 39267
-    },
-    {
-      "date": "2025-04-25",
-      "price": 0.81,
-      "high": 0.91,
-      "low": 0.7,
-      "volume": 83200
-    },
-    {
-      "date": "2025-04-29",
-      "price": 2.0,
-      "high": 3.14,
-      "low": 1.5,
-      "volume": 1509474
-    },
-    {
-      "date": "2025-05-02",
-      "price": 1.68,
-      "high": 1.89,
-      "low": 1.43,
-      "volume": 293324
-    },
-    {
-      "date": "2025-05-06",
-      "price": 1.55,
-      "high": 1.57,
-      "low": 1.35,
-      "volume": 115494
-    },
-    {
-      "date": "2025-05-08",
-      "price": 1.5,
-      "high": 1.63,
-      "low": 1.16,
-      "volume": 219220
-    },
-    {
-      "date": "2025-05-12",
-      "price": 1.59,
-      "high": 1.61,
-      "low": 1.3,
-      "volume": 107210
-    },
-    {
-      "date": "2025-05-14",
-      "price": 1.38,
-      "high": 1.57,
-      "low": 1.34,
-      "volume": 30404
-    },
-    {
-      "date": "2025-05-16",
-      "price": 1.34,
-      "high": 1.45,
-      "low": 1.2,
-      "volume": 113491
-    },
-    {
-      "date": "2025-05-20",
-      "price": 1.17,
-      "high": 1.49,
-      "low": 1.16,
-      "volume": 416400
-    },
-    {
-      "date": "2025-05-22",
-      "price": 1.16,
-      "high": 1.16,
-      "low": 0.92,
-      "volume": 3200
-    },
-    {
-      "date": "2025-05-26",
-      "price": 1.06,
-      "high": 1.16,
-      "low": 0.87,
-      "volume": 53924
-    },
-    {
-      "date": "2025-05-28",
-      "price": 1.15,
-      "high": 1.16,
-      "low": 1.15,
-      "volume": 79328
-    },
-    {
-      "date": "2025-06-02",
-      "price": 1.28,
-      "high": 1.3,
-      "low": 1.07,
-      "volume": 89537
-    },
-    {
-      "date": "2025-06-04",
-      "price": 1.13,
-      "high": 1.2,
-      "low": 1.09,
-      "volume": 144045
-    },
-    {
-      "date": "2025-06-06",
-      "price": 1.12,
-      "high": 1.22,
-      "low": 1.05,
-      "volume": 36127
-    },
-    {
-      "date": "2025-06-11",
-      "price": 1.11,
-      "high": 1.18,
-      "low": 1.04,
-      "volume": 184392
-    },
-    {
-      "date": "2025-06-13",
-      "price": 0.85,
-      "high": 0.96,
-      "low": 0.75,
-      "volume": 930516
-    },
-    {
-      "date": "2025-06-17",
-      "price": 0.83,
-      "high": 0.9,
-      "low": 0.83,
-      "volume": 12329
-    },
-    {
-      "date": "2025-06-19",
-      "price": 0.83,
-      "high": 0.83,
-      "low": 0.75,
-      "volume": 19137
-    },
-    {
-      "date": "2025-06-23",
-      "price": 0.84,
-      "high": 0.86,
-      "low": 0.76,
-      "volume": 22650
-    },
-    {
-      "date": "2025-06-25",
-      "price": 0.8,
-      "high": 0.86,
-      "low": 0.76,
-      "volume": 23497
-    },
-    {
-      "date": "2025-06-27",
-      "price": 1.33,
-      "high": 2.4,
-      "low": 1.32,
-      "volume": 3826473
-    },
-    {
-      "date": "2025-07-01",
-      "price": 0.92,
-      "high": 1.19,
-      "low": 0.92,
-      "volume": 426779
-    },
-    {
-      "date": "2025-07-03",
-      "price": 1.05,
-      "high": 1.13,
-      "low": 0.98,
-      "volume": 286459
-    },
-    {
-      "date": "2025-07-07",
-      "price": 1.0,
-      "high": 1.0,
-      "low": 0.94,
-      "volume": 29326
-    },
-    {
-      "date": "2025-07-09",
-      "price": 1.0,
-      "high": 1.18,
-      "low": 1.0,
-      "volume": 211498
-    },
-    {
-      "date": "2025-07-11",
-      "price": 1.34,
-      "high": 1.4,
-      "low": 1.0,
-      "volume": 671840
-    },
-    {
-      "date": "2025-07-15",
-      "price": 1.27,
-      "high": 1.33,
-      "low": 1.07,
-      "volume": 397270
-    },
-    {
-      "date": "2025-07-17",
-      "price": 1.19,
-      "high": 1.27,
-      "low": 1.1,
-      "volume": 253469
-    },
-    {
-      "date": "2025-07-21",
-      "price": 1.2,
-      "high": 1.22,
-      "low": 1.06,
-      "volume": 66172
-    },
-    {
-      "date": "2025-07-23",
-      "price": 1.2,
-      "high": 1.2,
-      "low": 1.13,
-      "volume": 35513
-    },
-    {
-      "date": "2025-07-25",
-      "price": 1.18,
-      "high": 1.2,
-      "low": 1.12,
-      "volume": 75472
-    },
-    {
-      "date": "2025-07-29",
-      "price": 1.17,
-      "high": 1.28,
-      "low": 1.15,
-      "volume": 35605
-    },
-    {
-      "date": "2025-07-31",
-      "price": 1.15,
-      "high": 1.2,
-      "low": 0.99,
-      "volume": 250259
-    },
-    {
-      "date": "2025-08-04",
-      "price": 1.07,
-      "high": 1.07,
-      "low": 0.95,
-      "volume": 297676
-    },
-    {
-      "date": "2025-08-06",
-      "price": 1.02,
-      "high": 1.1,
-      "low": 0.95,
-      "volume": 169094
-    },
-    {
-      "date": "2025-08-08",
-      "price": 0.99,
-      "high": 1.07,
-      "low": 0.92,
-      "volume": 15852
-    },
-    {
-      "date": "2025-08-12",
-      "price": 0.94,
-      "high": 0.94,
-      "low": 0.9,
-      "volume": 88237
-    },
-    {
-      "date": "2025-08-14",
-      "price": 0.93,
-      "high": 0.94,
-      "low": 0.9,
-      "volume": 56270
-    },
-    {
-      "date": "2025-08-18",
-      "price": 0.87,
-      "high": 0.92,
-      "low": 0.85,
-      "volume": 247366
-    },
-    {
-      "date": "2025-08-20",
-      "price": 0.87,
-      "high": 0.88,
-      "low": 0.81,
-      "volume": 15847
-    },
-    {
-      "date": "2025-08-22",
-      "price": 0.97,
-      "high": 1.19,
-      "low": 0.92,
-      "volume": 377505
-    },
-    {
-      "date": "2025-08-26",
-      "price": 1.0,
-      "high": 1.04,
-      "low": 0.82,
-      "volume": 23430
-    },
-    {
-      "date": "2025-08-28",
-      "price": 0.95,
-      "high": 1.03,
-      "low": 0.84,
-      "volume": 125193
-    },
-    {
-      "date": "2025-09-01",
-      "price": 0.95,
-      "high": 1.03,
-      "low": 0.88,
-      "volume": 58094
-    },
-    {
-      "date": "2025-09-03",
-      "price": 0.88,
-      "high": 0.97,
-      "low": 0.84,
-      "volume": 84137
-    },
-    {
-      "date": "2025-09-05",
-      "price": 0.99,
-      "high": 0.99,
-      "low": 0.87,
-      "volume": 72700
-    },
-    {
-      "date": "2025-09-09",
-      "price": 0.88,
-      "high": 0.95,
-      "low": 0.88,
-      "volume": 45609
-    },
-    {
-      "date": "2025-09-11",
-      "price": 1.1,
-      "high": 1.1,
-      "low": 0.86,
-      "volume": 384781
-    },
-    {
-      "date": "2025-09-15",
-      "price": 0.98,
-      "high": 1.05,
-      "low": 0.98,
-      "volume": 38244
-    },
-    {
-      "date": "2025-09-17",
-      "price": 0.87,
-      "high": 0.92,
-      "low": 0.86,
-      "volume": 188081
-    },
-    {
-      "date": "2025-09-19",
-      "price": 0.88,
-      "high": 1.0,
-      "low": 0.87,
-      "volume": 17133
-    },
-    {
-      "date": "2025-09-23",
-      "price": 0.85,
-      "high": 0.88,
-      "low": 0.8,
-      "volume": 97275
-    },
-    {
-      "date": "2025-09-25",
-      "price": 0.86,
-      "high": 0.99,
-      "low": 0.75,
-      "volume": 538073
-    },
-    {
-      "date": "2025-09-29",
-      "price": 0.63,
-      "high": 0.73,
-      "low": 0.63,
-      "volume": 779937
-    },
-    {
-      "date": "2025-10-01",
-      "price": 0.63,
-      "high": 0.63,
-      "low": 0.57,
-      "volume": 377531
-    },
-    {
-      "date": "2025-10-03",
-      "price": 0.6,
-      "high": 0.61,
-      "low": 0.56,
-      "volume": 403716
-    },
-    {
-      "date": "2025-10-07",
-      "price": 0.6,
-      "high": 0.66,
-      "low": 0.52,
-      "volume": 161107
-    },
-    {
-      "date": "2025-10-09",
-      "price": 0.58,
-      "high": 0.6,
-      "low": 0.55,
-      "volume": 232526
-    },
-    {
-      "date": "2025-10-13",
-      "price": 0.75,
-      "high": 0.89,
-      "low": 0.55,
-      "volume": 3257188
-    },
-    {
-      "date": "2025-10-15",
-      "price": 0.78,
-      "high": 0.94,
-      "low": 0.77,
-      "volume": 4676927
-    },
-    {
-      "date": "2025-10-17",
-      "price": 0.75,
-      "high": 0.8,
-      "low": 0.67,
-      "volume": 764586
-    },
-    {
-      "date": "2025-10-21",
-      "price": 0.67,
-      "high": 0.8,
-      "low": 0.6,
-      "volume": 1372835
-    },
-    {
-      "date": "2025-10-23",
-      "price": 0.71,
-      "high": 0.74,
-      "low": 0.68,
-      "volume": 459811
-    },
-    {
-      "date": "2025-10-27",
-      "price": 0.64,
-      "high": 0.7,
-      "low": 0.63,
-      "volume": 788036
-    },
-    {
-      "date": "2025-10-29",
-      "price": 0.64,
-      "high": 0.69,
-      "low": 0.64,
-      "volume": 227880
-    },
-    {
-      "date": "2025-10-31",
-      "price": 0.64,
-      "high": 0.67,
-      "low": 0.62,
-      "volume": 201392
-    },
-    {
-      "date": "2025-11-04",
-      "price": 0.61,
-      "high": 0.62,
-      "low": 0.59,
-      "volume": 365799
-    },
-    {
       "date": "2025-11-06",
-      "price": 0.56,
-      "high": 0.63,
-      "low": 0.56,
-      "volume": 294027
+      "price": 70.0,
+      "high": 76.0,
+      "low": 70.0,
+      "volume": 15256973
+    },
+    {
+      "date": "2025-11-07",
+      "price": 70.0,
+      "high": 72.41,
+      "low": 69.0,
+      "volume": 486640
     },
     {
       "date": "2025-11-10",
-      "price": 0.62,
-      "high": 0.68,
-      "low": 0.58,
-      "volume": 310637
+      "price": 71.48,
+      "high": 73.48,
+      "low": 71.02,
+      "volume": 585834
+    },
+    {
+      "date": "2025-11-11",
+      "price": 72.7,
+      "high": 73.15,
+      "low": 72.24,
+      "volume": 242727
     },
     {
       "date": "2025-11-12",
-      "price": 0.64,
-      "high": 0.65,
-      "low": 0.61,
-      "volume": 211494
+      "price": 73.0,
+      "high": 73.4,
+      "low": 72.9,
+      "volume": 192509
+    },
+    {
+      "date": "2025-11-13",
+      "price": 74.4,
+      "high": 75.0,
+      "low": 73.0,
+      "volume": 113641
     },
     {
       "date": "2025-11-14",
-      "price": 0.63,
-      "high": 0.63,
-      "low": 0.6,
-      "volume": 175734
+      "price": 76.99,
+      "high": 76.99,
+      "low": 74.1,
+      "volume": 181843
+    },
+    {
+      "date": "2025-11-17",
+      "price": 79.67,
+      "high": 81.98,
+      "low": 77.46,
+      "volume": 261341
     },
     {
       "date": "2025-11-18",
-      "price": 0.59,
-      "high": 0.61,
-      "low": 0.57,
-      "volume": 350554
+      "price": 77.0,
+      "high": 79.7,
+      "low": 76.0,
+      "volume": 141571
+    },
+    {
+      "date": "2025-11-19",
+      "price": 75.7,
+      "high": 77.0,
+      "low": 72.5,
+      "volume": 156345
     },
     {
       "date": "2025-11-20",
-      "price": 0.62,
-      "high": 0.64,
-      "low": 0.6,
-      "volume": 59298
+      "price": 79.5,
+      "high": 79.99,
+      "low": 76.6,
+      "volume": 159420
+    },
+    {
+      "date": "2025-11-21",
+      "price": 78.0,
+      "high": 80.0,
+      "low": 76.01,
+      "volume": 131292
     },
     {
       "date": "2025-11-24",
-      "price": 0.57,
-      "high": 0.6,
-      "low": 0.57,
-      "volume": 313334
+      "price": 82.0,
+      "high": 82.0,
+      "low": 78.8,
+      "volume": 190512
+    },
+    {
+      "date": "2025-11-25",
+      "price": 77.2,
+      "high": 86.0,
+      "low": 77.14,
+      "volume": 437083
     },
     {
       "date": "2025-11-26",
-      "price": 0.6,
-      "high": 0.62,
-      "low": 0.58,
-      "volume": 211150
+      "price": 76.41,
+      "high": 78.25,
+      "low": 75.54,
+      "volume": 126769
+    },
+    {
+      "date": "2025-11-27",
+      "price": 76.27,
+      "high": 77.59,
+      "low": 75.25,
+      "volume": 95827
     },
     {
       "date": "2025-11-28",
-      "price": 0.57,
-      "high": 0.61,
-      "low": 0.56,
-      "volume": 352669
+      "price": 76.0,
+      "high": 76.9,
+      "low": 75.25,
+      "volume": 84896
+    },
+    {
+      "date": "2025-12-01",
+      "price": 74.15,
+      "high": 76.39,
+      "low": 73.4,
+      "volume": 105462
     },
     {
       "date": "2025-12-02",
-      "price": 0.58,
-      "high": 0.59,
-      "low": 0.56,
-      "volume": 195663
+      "price": 74.0,
+      "high": 75.5,
+      "low": 73.3,
+      "volume": 68803
+    },
+    {
+      "date": "2025-12-03",
+      "price": 73.7,
+      "high": 74.85,
+      "low": 73.3,
+      "volume": 76411
     },
     {
       "date": "2025-12-04",
-      "price": 0.63,
-      "high": 0.65,
-      "low": 0.62,
-      "volume": 74913
+      "price": 74.96,
+      "high": 75.24,
+      "low": 73.52,
+      "volume": 87401
+    },
+    {
+      "date": "2025-12-05",
+      "price": 76.0,
+      "high": 76.41,
+      "low": 75.01,
+      "volume": 157559
     },
     {
       "date": "2025-12-08",
-      "price": 0.7,
-      "high": 0.75,
-      "low": 0.66,
-      "volume": 584935
+      "price": 76.9,
+      "high": 77.0,
+      "low": 75.04,
+      "volume": 95511
+    },
+    {
+      "date": "2025-12-09",
+      "price": 76.98,
+      "high": 77.2,
+      "low": 76.1,
+      "volume": 163200
     },
     {
       "date": "2025-12-10",
-      "price": 0.69,
-      "high": 0.7,
-      "low": 0.66,
-      "volume": 152241
+      "price": 77.14,
+      "high": 77.27,
+      "low": 76.44,
+      "volume": 87722
+    },
+    {
+      "date": "2025-12-11",
+      "price": 83.12,
+      "high": 85.42,
+      "low": 78.59,
+      "volume": 500318
     },
     {
       "date": "2025-12-12",
-      "price": 0.8,
-      "high": 0.9,
-      "low": 0.71,
-      "volume": 4421718
+      "price": 87.99,
+      "high": 88.39,
+      "low": 83.84,
+      "volume": 242367
+    },
+    {
+      "date": "2025-12-15",
+      "price": 88.21,
+      "high": 89.19,
+      "low": 84.5,
+      "volume": 109688
     },
     {
       "date": "2025-12-16",
-      "price": 0.76,
-      "high": 0.78,
-      "low": 0.75,
-      "volume": 148948
+      "price": 85.88,
+      "high": 89.0,
+      "low": 85.38,
+      "volume": 115723
+    },
+    {
+      "date": "2025-12-17",
+      "price": 85.61,
+      "high": 86.9,
+      "low": 84.72,
+      "volume": 52210
     },
     {
       "date": "2025-12-18",
-      "price": 0.68,
-      "high": 0.76,
-      "low": 0.66,
-      "volume": 285888
+      "price": 82.2,
+      "high": 85.61,
+      "low": 82.13,
+      "volume": 112629
+    },
+    {
+      "date": "2025-12-19",
+      "price": 83.97,
+      "high": 84.69,
+      "low": 80.0,
+      "volume": 69621
     },
     {
       "date": "2025-12-22",
-      "price": 0.75,
-      "high": 0.75,
-      "low": 0.67,
-      "volume": 1960245
+      "price": 84.0,
+      "high": 85.11,
+      "low": 83.0,
+      "volume": 62810
+    },
+    {
+      "date": "2025-12-23",
+      "price": 83.26,
+      "high": 84.43,
+      "low": 82.4,
+      "volume": 39182
     },
     {
       "date": "2025-12-29",
-      "price": 0.7,
-      "high": 0.81,
-      "low": 0.69,
-      "volume": 784420
+      "price": 83.5,
+      "high": 84.69,
+      "low": 83.0,
+      "volume": 48380
+    },
+    {
+      "date": "2025-12-30",
+      "price": 83.32,
+      "high": 84.0,
+      "low": 82.3,
+      "volume": 66585
     },
     {
       "date": "2026-01-02",
-      "price": 0.7,
-      "high": 0.74,
-      "low": 0.7,
-      "volume": 283596
+      "price": 82.25,
+      "high": 83.32,
+      "low": 80.51,
+      "volume": 56298
+    },
+    {
+      "date": "2026-01-05",
+      "price": 80.0,
+      "high": 81.9,
+      "low": 79.25,
+      "volume": 80406
     },
     {
       "date": "2026-01-06",
-      "price": 0.75,
-      "high": 0.76,
-      "low": 0.74,
-      "volume": 140645
+      "price": 79.11,
+      "high": 80.49,
+      "low": 78.61,
+      "volume": 65195
+    },
+    {
+      "date": "2026-01-07",
+      "price": 80.2,
+      "high": 80.2,
+      "low": 79.14,
+      "volume": 80925
     },
     {
       "date": "2026-01-08",
-      "price": 0.76,
-      "high": 0.76,
-      "low": 0.67,
-      "volume": 421207
+      "price": 80.4,
+      "high": 80.99,
+      "low": 79.02,
+      "volume": 25288
+    },
+    {
+      "date": "2026-01-09",
+      "price": 79.52,
+      "high": 80.43,
+      "low": 79.0,
+      "volume": 53312
     },
     {
       "date": "2026-01-12",
-      "price": 0.79,
-      "high": 0.81,
-      "low": 0.78,
-      "volume": 250712
+      "price": 79.76,
+      "high": 80.0,
+      "low": 78.91,
+      "volume": 23533
+    },
+    {
+      "date": "2026-01-13",
+      "price": 78.56,
+      "high": 79.99,
+      "low": 76.99,
+      "volume": 96685
     },
     {
       "date": "2026-01-14",
-      "price": 0.75,
-      "high": 0.79,
-      "low": 0.73,
-      "volume": 400615
+      "price": 77.9,
+      "high": 77.99,
+      "low": 76.5,
+      "volume": 100229
+    },
+    {
+      "date": "2026-01-15",
+      "price": 77.78,
+      "high": 78.3,
+      "low": 76.0,
+      "volume": 28775
     },
     {
       "date": "2026-01-16",
-      "price": 0.71,
-      "high": 0.75,
-      "low": 0.7,
-      "volume": 870770
+      "price": 77.5,
+      "high": 78.3,
+      "low": 77.0,
+      "volume": 25503
+    },
+    {
+      "date": "2026-01-19",
+      "price": 75.63,
+      "high": 76.96,
+      "low": 74.5,
+      "volume": 88861
     },
     {
       "date": "2026-01-20",
-      "price": 0.7,
-      "high": 0.7,
-      "low": 0.68,
-      "volume": 384351
+      "price": 74.23,
+      "high": 76.74,
+      "low": 73.5,
+      "volume": 110907
+    },
+    {
+      "date": "2026-01-21",
+      "price": 74.0,
+      "high": 75.0,
+      "low": 73.3,
+      "volume": 72243
     },
     {
       "date": "2026-01-22",
-      "price": 0.68,
-      "high": 0.7,
-      "low": 0.65,
-      "volume": 143414
+      "price": 75.5,
+      "high": 76.31,
+      "low": 75.0,
+      "volume": 39559
+    },
+    {
+      "date": "2026-01-23",
+      "price": 76.5,
+      "high": 76.59,
+      "low": 75.12,
+      "volume": 23977
     },
     {
       "date": "2026-01-26",
-      "price": 0.7,
-      "high": 0.7,
-      "low": 0.68,
-      "volume": 298904
+      "price": 75.0,
+      "high": 76.83,
+      "low": 75.0,
+      "volume": 33778
+    },
+    {
+      "date": "2026-01-27",
+      "price": 75.6,
+      "high": 76.71,
+      "low": 75.05,
+      "volume": 54918
     },
     {
       "date": "2026-01-28",
-      "price": 0.69,
-      "high": 0.7,
-      "low": 0.67,
-      "volume": 83645
+      "price": 74.5,
+      "high": 76.4,
+      "low": 74.2,
+      "volume": 76417
+    },
+    {
+      "date": "2026-01-29",
+      "price": 73.33,
+      "high": 74.2,
+      "low": 72.58,
+      "volume": 129967
     },
     {
       "date": "2026-01-30",
-      "price": 0.7,
-      "high": 0.7,
-      "low": 0.69,
-      "volume": 90091
+      "price": 72.3,
+      "high": 73.2,
+      "low": 72.02,
+      "volume": 89197
+    },
+    {
+      "date": "2026-02-02",
+      "price": 71.0,
+      "high": 72.12,
+      "low": 70.01,
+      "volume": 68334
     },
     {
       "date": "2026-02-03",
-      "price": 0.7,
-      "high": 0.7,
-      "low": 0.67,
-      "volume": 317653
+      "price": 69.3,
+      "high": 72.49,
+      "low": 69.21,
+      "volume": 108300
+    },
+    {
+      "date": "2026-02-04",
+      "price": 70.4,
+      "high": 71.89,
+      "low": 69.7,
+      "volume": 149624
     },
     {
       "date": "2026-02-05",
-      "price": 0.65,
-      "high": 0.67,
-      "low": 0.62,
-      "volume": 108411
+      "price": 69.63,
+      "high": 70.99,
+      "low": 68.71,
+      "volume": 92711
+    },
+    {
+      "date": "2026-02-06",
+      "price": 68.8,
+      "high": 69.98,
+      "low": 68.52,
+      "volume": 62471
     },
     {
       "date": "2026-02-09",
-      "price": 0.67,
-      "high": 0.67,
-      "low": 0.64,
-      "volume": 90650
+      "price": 70.3,
+      "high": 71.31,
+      "low": 68.8,
+      "volume": 89546
+    },
+    {
+      "date": "2026-02-10",
+      "price": 73.7,
+      "high": 74.0,
+      "low": 70.5,
+      "volume": 91984
     },
     {
       "date": "2026-02-11",
-      "price": 0.96,
-      "high": 0.96,
-      "low": 0.69,
-      "volume": 6998920
+      "price": 74.25,
+      "high": 76.69,
+      "low": 73.99,
+      "volume": 163223
+    },
+    {
+      "date": "2026-02-12",
+      "price": 70.0,
+      "high": 79.38,
+      "low": 69.52,
+      "volume": 431854
     },
     {
       "date": "2026-02-13",
-      "price": 0.82,
-      "high": 0.89,
-      "low": 0.75,
-      "volume": 1404565
+      "price": 68.1,
+      "high": 70.0,
+      "low": 67.07,
+      "volume": 144299
+    },
+    {
+      "date": "2026-02-16",
+      "price": 67.8,
+      "high": 69.88,
+      "low": 67.4,
+      "volume": 79568
     },
     {
       "date": "2026-02-17",
-      "price": 0.81,
-      "high": 0.86,
-      "low": 0.75,
-      "volume": 896390
+      "price": 65.1,
+      "high": 67.29,
+      "low": 65.0,
+      "volume": 240689
+    },
+    {
+      "date": "2026-02-18",
+      "price": 65.4,
+      "high": 65.89,
+      "low": 64.91,
+      "volume": 116785
     },
     {
       "date": "2026-02-19",
-      "price": 0.8,
-      "high": 0.84,
-      "low": 0.77,
-      "volume": 236194
+      "price": 68.3,
+      "high": 69.2,
+      "low": 65.5,
+      "volume": 87076
+    },
+    {
+      "date": "2026-02-20",
+      "price": 67.18,
+      "high": 68.78,
+      "low": 66.61,
+      "volume": 87572
     },
     {
       "date": "2026-02-23",
-      "price": 0.79,
-      "high": 0.91,
-      "low": 0.79,
-      "volume": 677777
+      "price": 67.0,
+      "high": 67.5,
+      "low": 66.36,
+      "volume": 66208
+    },
+    {
+      "date": "2026-02-24",
+      "price": 68.28,
+      "high": 69.83,
+      "low": 66.69,
+      "volume": 68545
     },
     {
       "date": "2026-02-25",
-      "price": 1.05,
-      "high": 1.1,
-      "low": 0.86,
-      "volume": 3529487
+      "price": 68.14,
+      "high": 69.38,
+      "low": 67.57,
+      "volume": 59394
+    },
+    {
+      "date": "2026-02-26",
+      "price": 67.55,
+      "high": 68.45,
+      "low": 65.24,
+      "volume": 75852
     },
     {
       "date": "2026-02-27",
-      "price": 1.1,
-      "high": 1.25,
-      "low": 0.93,
-      "volume": 5758107
+      "price": 66.0,
+      "high": 67.87,
+      "low": 65.5,
+      "volume": 118990
+    },
+    {
+      "date": "2026-03-02",
+      "price": 64.72,
+      "high": 65.03,
+      "low": 63.66,
+      "volume": 59066
     },
     {
       "date": "2026-03-03",
-      "price": 0.89,
-      "high": 0.95,
-      "low": 0.84,
-      "volume": 1292232
+      "price": 63.0,
+      "high": 64.7,
+      "low": 63.0,
+      "volume": 85786
+    },
+    {
+      "date": "2026-03-04",
+      "price": 64.84,
+      "high": 65.33,
+      "low": 62.54,
+      "volume": 101750
     },
     {
       "date": "2026-03-05",
-      "price": 0.93,
-      "high": 0.93,
-      "low": 0.87,
-      "volume": 478983
+      "price": 64.88,
+      "high": 65.0,
+      "low": 63.76,
+      "volume": 48075
+    },
+    {
+      "date": "2026-03-06",
+      "price": 63.45,
+      "high": 65.49,
+      "low": 63.26,
+      "volume": 69789
     },
     {
       "date": "2026-03-09",
-      "price": 0.88,
-      "high": 0.92,
-      "low": 0.84,
-      "volume": 225238
+      "price": 61.36,
+      "high": 63.3,
+      "low": 61.1,
+      "volume": 98885
+    },
+    {
+      "date": "2026-03-10",
+      "price": 63.5,
+      "high": 65.12,
+      "low": 62.0,
+      "volume": 49802
     },
     {
       "date": "2026-03-11",
-      "price": 0.94,
-      "high": 0.94,
-      "low": 0.86,
-      "volume": 849632
+      "price": 63.81,
+      "high": 65.0,
+      "low": 63.0,
+      "volume": 57929
+    },
+    {
+      "date": "2026-03-12",
+      "price": 63.4,
+      "high": 64.98,
+      "low": 63.4,
+      "volume": 47903
     },
     {
       "date": "2026-03-13",
-      "price": 0.89,
-      "high": 0.92,
-      "low": 0.86,
-      "volume": 529405
+      "price": 61.69,
+      "high": 63.4,
+      "low": 61.69,
+      "volume": 90303
+    },
+    {
+      "date": "2026-03-16",
+      "price": 61.73,
+      "high": 62.99,
+      "low": 61.51,
+      "volume": 58949
     },
     {
       "date": "2026-03-17",
-      "price": 0.91,
-      "high": 0.92,
-      "low": 0.86,
-      "volume": 305822
+      "price": 61.83,
+      "high": 64.0,
+      "low": 61.83,
+      "volume": 45357
+    },
+    {
+      "date": "2026-03-18",
+      "price": 62.0,
+      "high": 63.9,
+      "low": 61.8,
+      "volume": 26400
     },
     {
       "date": "2026-03-19",
-      "price": 1.01,
-      "high": 1.07,
-      "low": 0.93,
-      "volume": 2694606
+      "price": 60.4,
+      "high": 62.5,
+      "low": 60.13,
+      "volume": 50850
+    },
+    {
+      "date": "2026-03-20",
+      "price": 60.12,
+      "high": 61.85,
+      "low": 60.12,
+      "volume": 54087
     },
     {
       "date": "2026-03-23",
-      "price": 1.25,
-      "high": 1.39,
-      "low": 1.1,
-      "volume": 1624671
+      "price": 59.43,
+      "high": 60.0,
+      "low": 57.5,
+      "volume": 152321
+    },
+    {
+      "date": "2026-03-24",
+      "price": 60.61,
+      "high": 60.8,
+      "low": 59.0,
+      "volume": 40134
     },
     {
       "date": "2026-03-25",
-      "price": 1.25,
-      "high": 1.3,
-      "low": 1.14,
-      "volume": 2617614
+      "price": 61.03,
+      "high": 62.4,
+      "low": 61.03,
+      "volume": 37244
+    },
+    {
+      "date": "2026-03-26",
+      "price": 59.52,
+      "high": 61.97,
+      "low": 59.52,
+      "volume": 56983
     },
     {
       "date": "2026-03-27",
-      "price": 1.15,
-      "high": 1.2,
-      "low": 1.1,
-      "volume": 806412
+      "price": 59.12,
+      "high": 61.0,
+      "low": 58.51,
+      "volume": 156137
+    },
+    {
+      "date": "2026-03-30",
+      "price": 59.09,
+      "high": 61.85,
+      "low": 58.55,
+      "volume": 48869
     },
     {
       "date": "2026-03-31",
-      "price": 1.08,
-      "high": 1.11,
-      "low": 1.02,
-      "volume": 453577
+      "price": 60.8,
+      "high": 60.8,
+      "low": 59.09,
+      "volume": 36703
+    },
+    {
+      "date": "2026-04-01",
+      "price": 61.2,
+      "high": 61.75,
+      "low": 60.75,
+      "volume": 11584
     },
     {
       "date": "2026-04-07",
-      "price": 1.03,
-      "high": 1.13,
-      "low": 1.0,
-      "volume": 782284
+      "price": 59.2,
+      "high": 63.8,
+      "low": 58.6,
+      "volume": 86122
+    },
+    {
+      "date": "2026-04-08",
+      "price": 64.2,
+      "high": 64.4,
+      "low": 61.2,
+      "volume": 288556
     },
     {
       "date": "2026-04-09",
-      "price": 1.11,
-      "high": 1.19,
-      "low": 1.02,
-      "volume": 1626069
+      "price": 64.4,
+      "high": 65.4,
+      "low": 63.8,
+      "volume": 48240
+    },
+    {
+      "date": "2026-04-10",
+      "price": 65.8,
+      "high": 66.8,
+      "low": 61.0,
+      "volume": 54179
     },
     {
       "date": "2026-04-13",
-      "price": 1.08,
-      "high": 1.21,
-      "low": 1.06,
-      "volume": 1148782
+      "price": 66.8,
+      "high": 67.4,
+      "low": 65.0,
+      "volume": 48147
+    },
+    {
+      "date": "2026-04-14",
+      "price": 72.2,
+      "high": 72.8,
+      "low": 67.4,
+      "volume": 345881
     },
     {
       "date": "2026-04-15",
-      "price": 1.09,
-      "high": 1.12,
-      "low": 1.05,
-      "volume": 538870
+      "price": 74.0,
+      "high": 74.4,
+      "low": 72.6,
+      "volume": 124351
+    },
+    {
+      "date": "2026-04-16",
+      "price": 76.2,
+      "high": 77.2,
+      "low": 74.0,
+      "volume": 69043
     },
     {
       "date": "2026-04-17",
-      "price": 1.09,
-      "high": 1.12,
-      "low": 1.02,
-      "volume": 345066
+      "price": 75.0,
+      "high": 76.0,
+      "low": 72.6,
+      "volume": 185230
+    },
+    {
+      "date": "2026-04-20",
+      "price": 75.0,
+      "high": 75.8,
+      "low": 74.4,
+      "volume": 34855
     },
     {
       "date": "2026-04-21",
-      "price": 1.09,
-      "high": 1.12,
-      "low": 1.08,
-      "volume": 194531
+      "price": 75.4,
+      "high": 76.8,
+      "low": 75.0,
+      "volume": 80255
+    },
+    {
+      "date": "2026-04-22",
+      "price": 75.0,
+      "high": 77.6,
+      "low": 75.0,
+      "volume": 34866
     },
     {
       "date": "2026-04-23",
-      "price": 1.12,
-      "high": 1.14,
-      "low": 1.1,
-      "volume": 351114
+      "price": 72.6,
+      "high": 76.0,
+      "low": 72.6,
+      "volume": 42573
+    },
+    {
+      "date": "2026-04-24",
+      "price": 72.8,
+      "high": 74.2,
+      "low": 72.0,
+      "volume": 23341
     },
     {
       "date": "2026-04-27",
-      "price": 1.17,
-      "high": 1.2,
-      "low": 1.14,
-      "volume": 784690
+      "price": 77.0,
+      "high": 77.4,
+      "low": 76.0,
+      "volume": 88758
+    },
+    {
+      "date": "2026-04-28",
+      "price": 77.2,
+      "high": 78.6,
+      "low": 77.0,
+      "volume": 86536
     },
     {
       "date": "2026-04-29",
-      "price": 1.15,
-      "high": 1.17,
-      "low": 1.13,
-      "volume": 453421
+      "price": 77.0,
+      "high": 77.6,
+      "low": 71.6,
+      "volume": 255699
+    },
+    {
+      "date": "2026-04-30",
+      "price": 79.2,
+      "high": 80.8,
+      "low": 75.0,
+      "volume": 127040
     },
     {
       "date": "2026-05-04",
-      "price": 1.13,
-      "high": 1.18,
-      "low": 1.08,
-      "volume": 362355
+      "price": 78.2,
+      "high": 82.6,
+      "low": 77.2,
+      "volume": 65216
+    },
+    {
+      "date": "2026-05-05",
+      "price": 76.4,
+      "high": 80.0,
+      "low": 76.4,
+      "volume": 30356
     },
     {
       "date": "2026-05-06",
-      "price": 1.07,
-      "high": 1.09,
-      "low": 1.0,
-      "volume": 307974
+      "price": 78.6,
+      "high": 79.8,
+      "low": 77.2,
+      "volume": 47136
+    },
+    {
+      "date": "2026-05-07",
+      "price": 76.6,
+      "high": 79.0,
+      "low": 76.4,
+      "volume": 24512
     },
     {
       "date": "2026-05-08",
-      "price": 1.05,
-      "high": 1.07,
-      "low": 1.04,
-      "volume": 207634
+      "price": 75.0,
+      "high": 78.0,
+      "low": 74.8,
+      "volume": 54507
+    },
+    {
+      "date": "2026-05-11",
+      "price": 75.0,
+      "high": 75.6,
+      "low": 74.4,
+      "volume": 41138
     },
     {
       "date": "2026-05-12",
-      "price": 1.07,
-      "high": 1.08,
-      "low": 1.02,
-      "volume": 93683
+      "price": 73.4,
+      "high": 75.3,
+      "low": 73.4,
+      "volume": 19873
+    },
+    {
+      "date": "2026-05-13",
+      "price": 75.2,
+      "high": 75.2,
+      "low": 72.8,
+      "volume": 55373
     },
     {
       "date": "2026-05-15",
-      "price": 1.09,
-      "high": 1.09,
-      "low": 1.0,
-      "volume": 462999
+      "price": 73.0,
+      "high": 75.6,
+      "low": 73.0,
+      "volume": 27620
+    },
+    {
+      "date": "2026-05-18",
+      "price": 72.6,
+      "high": 74.0,
+      "low": 72.2,
+      "volume": 19509
     },
     {
       "date": "2026-05-19",
-      "price": 1.07,
-      "high": 1.07,
-      "low": 1.01,
-      "volume": 72810
+      "price": 71.2,
+      "high": 72.8,
+      "low": 71.2,
+      "volume": 1013465
+    },
+    {
+      "date": "2026-05-20",
+      "price": 70.8,
+      "high": 72.4,
+      "low": 70.4,
+      "volume": 52925
     },
     {
       "date": "2026-05-21",
-      "price": 1.05,
-      "high": 1.07,
-      "low": 1.01,
-      "volume": 89777
+      "price": 71.6,
+      "high": 72.8,
+      "low": 70.6,
+      "volume": 19943
+    },
+    {
+      "date": "2026-05-22",
+      "price": 77.0,
+      "high": 77.4,
+      "low": 72.6,
+      "volume": 109445
     },
     {
       "date": "2026-05-26",
-      "price": 1.04,
-      "high": 1.14,
-      "low": 0.93,
-      "volume": 1445055
+      "price": 75.6,
+      "high": 78.0,
+      "low": 75.4,
+      "volume": 42905
+    },
+    {
+      "date": "2026-05-27",
+      "price": 75.4,
+      "high": 76.8,
+      "low": 74.6,
+      "volume": 14985
     },
     {
       "date": "2026-05-28",
-      "price": 1.02,
-      "high": 1.07,
-      "low": 1.02,
-      "volume": 126856
+      "price": 77.0,
+      "high": 78.0,
+      "low": 75.8,
+      "volume": 42906
+    },
+    {
+      "date": "2026-05-29",
+      "price": 78.6,
+      "high": 79.8,
+      "low": 77.4,
+      "volume": 61588
     },
     {
       "date": "2026-06-01",
-      "price": 1.01,
-      "high": 1.1,
-      "low": 1.0,
-      "volume": 191177
+      "price": 77.4,
+      "high": 79.6,
+      "low": 77.4,
+      "volume": 40433
+    },
+    {
+      "date": "2026-06-02",
+      "price": 78.6,
+      "high": 79.6,
+      "low": 78.2,
+      "volume": 60836
     },
     {
       "date": "2026-06-03",
-      "price": 0.99,
-      "high": 1.01,
-      "low": 0.95,
-      "volume": 66014
+      "price": 76.8,
+      "high": 79.2,
+      "low": 76.2,
+      "volume": 40304
+    },
+    {
+      "date": "2026-06-04",
+      "price": 74.4,
+      "high": 76.4,
+      "low": 74.2,
+      "volume": 50090
     },
     {
       "date": "2026-06-05",
-      "price": 1.12,
-      "high": 1.2,
-      "low": 1.1,
-      "volume": 836229
+      "price": 73.6,
+      "high": 75.6,
+      "low": 73.6,
+      "volume": 21550
+    },
+    {
+      "date": "2026-06-08",
+      "price": 73.2,
+      "high": 75.2,
+      "low": 70.8,
+      "volume": 73450
     },
     {
       "date": "2026-06-09",
-      "price": 1.14,
-      "high": 1.14,
-      "low": 1.1,
-      "volume": 411917
+      "price": 76.0,
+      "high": 76.4,
+      "low": 72.2,
+      "volume": 40283
+    },
+    {
+      "date": "2026-06-10",
+      "price": 73.2,
+      "high": 75.6,
+      "low": 73.2,
+      "volume": 42330
     },
     {
       "date": "2026-06-11",
-      "price": 1.03,
-      "high": 1.16,
-      "low": 1.01,
-      "volume": 267693
+      "price": 73.4,
+      "high": 75.8,
+      "low": 73.0,
+      "volume": 21986
+    },
+    {
+      "date": "2026-06-12",
+      "price": 74.4,
+      "high": 75.8,
+      "low": 73.4,
+      "volume": 20003
     },
     {
       "date": "2026-06-15",
-      "price": 1.04,
-      "high": 1.12,
-      "low": 1.04,
-      "volume": 130919
+      "price": 76.4,
+      "high": 76.8,
+      "low": 75.0,
+      "volume": 122117
+    },
+    {
+      "date": "2026-06-16",
+      "price": 75.8,
+      "high": 77.2,
+      "low": 74.8,
+      "volume": 26312
     },
     {
       "date": "2026-06-17",
-      "price": 1.05,
-      "high": 1.12,
-      "low": 1.05,
-      "volume": 109337
+      "price": 74.8,
+      "high": 75.8,
+      "low": 73.2,
+      "volume": 7551
+    },
+    {
+      "date": "2026-06-18",
+      "price": 74.6,
+      "high": 76.2,
+      "low": 74.2,
+      "volume": 16296
     },
     {
       "date": "2026-06-19",
-      "price": 1.14,
-      "high": 1.14,
-      "low": 1.04,
-      "volume": 141091
+      "price": 72.4,
+      "high": 75.0,
+      "low": 72.4,
+      "volume": 25203
+    },
+    {
+      "date": "2026-06-22",
+      "price": 74.0,
+      "high": 74.8,
+      "low": 72.8,
+      "volume": 29065
     },
     {
       "date": "2026-06-23",
-      "price": 1.08,
-      "high": 1.14,
-      "low": 1.04,
-      "volume": 75729
+      "price": 73.2,
+      "high": 74.0,
+      "low": 73.0,
+      "volume": 6366
+    },
+    {
+      "date": "2026-06-24",
+      "price": 73.0,
+      "high": 74.0,
+      "low": 73.0,
+      "volume": 16038
     },
     {
       "date": "2026-06-25",
-      "price": 1.18,
-      "high": 1.18,
-      "low": 1.1,
-      "volume": 405853
+      "price": 73.0,
+      "high": 74.8,
+      "low": 73.0,
+      "volume": 13491
+    },
+    {
+      "date": "2026-06-26",
+      "price": 71.6,
+      "high": 73.4,
+      "low": 70.4,
+      "volume": 39828
     },
     {
       "date": "2026-06-29",
-      "price": 1.16,
-      "high": 1.17,
-      "low": 1.08,
-      "volume": 36280
+      "price": 72.4,
+      "high": 73.8,
+      "low": 72.0,
+      "volume": 4849
+    },
+    {
+      "date": "2026-06-30",
+      "price": 73.6,
+      "high": 74.6,
+      "low": 72.6,
+      "volume": 11637
     },
     {
       "date": "2026-07-01",
-      "price": 1.12,
-      "high": 1.17,
-      "low": 1.12,
-      "volume": 180153
+      "price": 74.0,
+      "high": 74.2,
+      "low": 72.2,
+      "volume": 8650
+    },
+    {
+      "date": "2026-07-02",
+      "price": 74.4,
+      "high": 74.8,
+      "low": 72.4,
+      "volume": 13131
     },
     {
       "date": "2026-07-03",
-      "price": 1.12,
-      "high": 1.12,
-      "low": 1.1,
-      "volume": 100728
+      "price": 73.6,
+      "high": 74.8,
+      "low": 73.6,
+      "volume": 13399
+    },
+    {
+      "date": "2026-07-06",
+      "price": 48.8,
+      "high": 59.8,
+      "low": 48.7,
+      "volume": 516786
     },
     {
       "date": "2026-07-07",
-      "price": 1.13,
-      "high": 1.17,
-      "low": 1.12,
-      "volume": 149639
+      "price": 46.4,
+      "high": 50.0,
+      "low": 45.2,
+      "volume": 233297
+    },
+    {
+      "date": "2026-07-08",
+      "price": 46.7,
+      "high": 47.5,
+      "low": 46.0,
+      "volume": 55756
     },
     {
       "date": "2026-07-09",
-      "price": 1.12,
-      "high": 1.13,
-      "low": 1.08,
-      "volume": 21467
+      "price": 47.5,
+      "high": 49.0,
+      "low": 47.4,
+      "volume": 53170
+    },
+    {
+      "date": "2026-07-10",
+      "price": 46.3,
+      "high": 49.0,
+      "low": 46.3,
+      "volume": 39170
     },
     {
       "date": "2026-07-13",
-      "price": 1.06,
-      "high": 1.07,
-      "low": 1.06,
-      "volume": 67405
+      "price": 45.1,
+      "high": 46.3,
+      "low": 44.9,
+      "volume": 62976
+    },
+    {
+      "date": "2026-07-14",
+      "price": 44.0,
+      "high": 46.4,
+      "low": 44.0,
+      "volume": 77389
     },
     {
       "date": "2026-07-15",
-      "price": 1.04,
-      "high": 1.07,
-      "low": 1.03,
-      "volume": 75497
+      "price": 43.0,
+      "high": 44.4,
+      "low": 43.0,
+      "volume": 69212
+    },
+    {
+      "date": "2026-07-16",
+      "price": 42.5,
+      "high": 43.9,
+      "low": 42.5,
+      "volume": 44646
     },
     {
       "date": "2026-07-17",
-      "price": 1.02,
-      "high": 1.05,
-      "low": 1.02,
-      "volume": 61252
+      "price": 41.7,
+      "high": 43.0,
+      "low": 41.7,
+      "volume": 69399
+    },
+    {
+      "date": "2026-07-20",
+      "price": 41.9,
+      "high": 42.8,
+      "low": 41.5,
+      "volume": 70367
     },
     {
       "date": "2026-07-21",
-      "price": 1.0,
-      "high": 1.09,
-      "low": 1.0,
-      "volume": 74192
+      "price": 42.0,
+      "high": 43.0,
+      "low": 41.9,
+      "volume": 32391
+    },
+    {
+      "date": "2026-07-22",
+      "price": 42.8,
+      "high": 43.3,
+      "low": 42.3,
+      "volume": 41398
     },
     {
       "date": "2026-07-23",
-      "price": 1.04,
-      "high": 1.04,
-      "low": 1.04,
-      "volume": 15239
+      "price": 42.1,
+      "high": 43.4,
+      "low": 42.1,
+      "volume": 37736
+    },
+    {
+      "date": "2026-07-24",
+      "price": 41.6,
+      "high": 42.8,
+      "low": 41.6,
+      "volume": 55202
     },
     {
       "date": "2026-07-27",
-      "price": 1.08,
-      "high": 1.09,
-      "low": 1.01,
-      "volume": 73292
+      "price": 41.6,
+      "high": 42.3,
+      "low": 41.5,
+      "volume": 31576
+    },
+    {
+      "date": "2026-07-28",
+      "price": 40.9,
+      "high": 42.0,
+      "low": 40.9,
+      "volume": 26349
     },
     {
       "date": "2026-07-29",
-      "price": 1.06,
-      "high": 1.09,
-      "low": 1.02,
-      "volume": 57879
+      "price": 40.7,
+      "high": 43.9,
+      "low": 40.6,
+      "volume": 74383
+    },
+    {
+      "date": "2026-07-30",
+      "price": 41.4,
+      "high": 41.4,
+      "low": 40.2,
+      "volume": 44961
     },
     {
       "date": "2026-07-31",
-      "price": 0.98,
-      "high": 1.05,
-      "low": 0.95,
-      "volume": 317621
+      "price": 41.2,
+      "high": 41.8,
+      "low": 41.2,
+      "volume": 35947
+    },
+    {
+      "date": "2026-08-03",
+      "price": 43.0,
+      "high": 44.4,
+      "low": 41.7,
+      "volume": 117141
     },
     {
       "date": "2026-08-04",
-      "price": 0.97,
-      "high": 1.0,
-      "low": 0.97,
-      "volume": 253912
+      "price": 45.2,
+      "high": 45.5,
+      "low": 44.0,
+      "volume": 94784
+    },
+    {
+      "date": "2026-08-05",
+      "price": 45.1,
+      "high": 46.2,
+      "low": 44.7,
+      "volume": 58965
     },
     {
       "date": "2026-08-06",
-      "price": 1.0,
-      "high": 1.04,
-      "low": 0.99,
-      "volume": 81487
+      "price": 45.5,
+      "high": 46.1,
+      "low": 45.2,
+      "volume": 10459
+    },
+    {
+      "date": "2026-08-07",
+      "price": 45.8,
+      "high": 47.0,
+      "low": 45.4,
+      "volume": 58541
     },
     {
       "date": "2026-08-10",
-      "price": 0.98,
-      "high": 1.03,
-      "low": 0.97,
-      "volume": 91742
+      "price": 47.4,
+      "high": 48.1,
+      "low": 46.7,
+      "volume": 54769
+    },
+    {
+      "date": "2026-08-11",
+      "price": 46.4,
+      "high": 47.9,
+      "low": 46.4,
+      "volume": 40945
     },
     {
       "date": "2026-08-12",
-      "price": 0.99,
-      "high": 1.04,
-      "low": 0.98,
-      "volume": 903753
+      "price": 45.3,
+      "high": 46.6,
+      "low": 45.3,
+      "volume": 33160
+    },
+    {
+      "date": "2026-08-13",
+      "price": 45.9,
+      "high": 46.9,
+      "low": 45.3,
+      "volume": 68006
     },
     {
       "date": "2026-08-14",
-      "price": 0.98,
-      "high": 1.0,
-      "low": 0.98,
-      "volume": 260453
+      "price": 45.7,
+      "high": 46.3,
+      "low": 42.5,
+      "volume": 129956
+    },
+    {
+      "date": "2026-08-17",
+      "price": 44.8,
+      "high": 45.7,
+      "low": 44.1,
+      "volume": 68534
     },
     {
       "date": "2026-08-18",
-      "price": 0.93,
-      "high": 0.98,
-      "low": 0.9,
-      "volume": 269022
+      "price": 43.1,
+      "high": 44.6,
+      "low": 43.0,
+      "volume": 42205
+    },
+    {
+      "date": "2026-08-19",
+      "price": 42.9,
+      "high": 43.7,
+      "low": 42.4,
+      "volume": 24708
     },
     {
       "date": "2026-08-20",
-      "price": 0.99,
-      "high": 1.01,
-      "low": 0.92,
-      "volume": 449272
+      "price": 41.9,
+      "high": 44.9,
+      "low": 41.7,
+      "volume": 34728
+    },
+    {
+      "date": "2026-08-21",
+      "price": 42.3,
+      "high": 43.3,
+      "low": 41.9,
+      "volume": 47776
     },
     {
       "date": "2026-08-24",
-      "price": 1.1,
-      "high": 1.17,
-      "low": 1.03,
-      "volume": 413448
+      "price": 42.2,
+      "high": 43.0,
+      "low": 42.0,
+      "volume": 30146
+    },
+    {
+      "date": "2026-08-25",
+      "price": 42.7,
+      "high": 43.6,
+      "low": 42.5,
+      "volume": 49176
     },
     {
       "date": "2026-08-26",
-      "price": 0.98,
-      "high": 1.01,
-      "low": 0.93,
-      "volume": 355402
+      "price": 43.1,
+      "high": 43.3,
+      "low": 42.4,
+      "volume": 36963
     },
     {
-      "date": "2026-08-28",
-      "price": 0.96,
-      "high": 0.99,
-      "low": 0.96,
-      "volume": 213818
+      "date": "2026-08-27",
+      "price": 43.0,
+      "high": 43.4,
+      "low": 42.4,
+      "volume": 18772
     }
   ],
-  "last_updated": "2026-08-28T11:08:38+00:00",
+  "last_updated": "2026-08-30T05:07:41+00:00",
   "difficulty_rating": "Middels",
   "hint_categories": [
     "Sektor",
